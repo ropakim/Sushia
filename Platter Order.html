@@ -299,7 +299,6 @@
             border-radius: 16px;
             overflow: hidden;
             border: 1px solid var(--border-color);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
         .locator-sidebar {
@@ -622,18 +621,36 @@
 
         /* --- Footer --- */
         footer {
-            padding: 30px 40px;
-            max-width: 1600px;
-            margin: 0 auto;
             width: 100%;
+            /* 배경을 화면 끝까지 */
+            background: #fff;
+            /* 흰색 배경 */
+            border-top: 1px solid #eee;
+            display: block;
+            /* Flex 제거 (내부 박스에 줌) */
+            padding: 0;
+            /* 패딩 제거 (내부 박스에 줌) */
+            margin: 0;
+            /* 마진 제거 */
+            max-width: none;
+            /* 너비 제한 해제 */
+        }
+
+        .footer-inner {
+            max-width: 1600px;
+            /* 내용물은 1600px까지만 */
+            width: 100%;
+            margin: 0 auto;
+            /* 내용물 중앙 정렬 */
+            padding: 30px 40px;
+            /* 상하좌우 여백 */
             display: flex;
+            /* 가로 배치 */
             justify-content: space-between;
             align-items: center;
             font-size: 14px;
             color: #000;
             font-weight: 600;
-            background: #fff;
-            border-top: 1px solid #eee;
         }
 
         .social-icons {
@@ -837,9 +854,13 @@
                 flex-direction: column;
                 gap: 20px;
                 text-align: center;
-                padding-bottom: 40px;
             }
-        }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
     </style>
 </head>
 
@@ -955,20 +976,22 @@
     </section>
 
     <footer>
-        <div>© 2025 SUSHIA. All Rights Reserved.</div>
-        <div class="social-icons">
-            <a href="#" class="social-icon" aria-label="Instagram">
-                <svg viewBox="0 0 24 24">
-                    <path
-                        d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" />
-                </svg>
-            </a>
-            <a href="#" class="social-icon" aria-label="Facebook">
-                <svg viewBox="0 0 24 24">
-                    <path
-                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.954 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                </svg>
-            </a>
+        <div class="footer-inner">
+            <div>© 2025 SUSHIA. All Rights Reserved.</div>
+            <div class="social-icons">
+                <a href="#" class="social-icon" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" />
+                    </svg>
+                </a>
+                <a href="#" class="social-icon" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.954 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                </a>
+            </div>
         </div>
     </footer>
 

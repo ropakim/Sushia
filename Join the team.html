@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join the Team - SUSHIA</title>
+
+    <link rel="icon" href="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia-Favicon-02.svg"
+        type="image/svg+xml">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-yellow: #ffc905;
+            --text-black: #111111;
+            --bg-white: #ffffff;
+            --light-yellow-bg: #fffbf0;
+            --border-color: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-white);
+            color: var(--text-black);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* --- 1. Header (Updated to match Main) --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), transparent);
+            backdrop-filter: blur(0px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            transition: all 0.4s ease;
+        }
+
+        header.scrolled {
+            height: 70px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-inner {
+            width: 100%;
+            max-width: 1600px;
+            height: 100%;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 45px;
+            width: auto;
+            transition: 0.3s;
+            display: block;
+        }
+
+        header.scrolled .logo-img {
+            height: 38px;
+        }
+
+        .logo-img:hover {
+            transform: scale(0.9);
+        }
+
+        /* Desktop Nav */
+        .desktop-nav {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .desktop-nav ul {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .desktop-nav .menu-btn {
+            background: transparent;
+            border: 2px solid var(--primary-yellow);
+            border-radius: 999px;
+            color: #000;
+
+            padding: 10px 18px;
+            line-height: 1;
+
+            font-weight: 800;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            transition: all .25s ease;
+        }
+
+        .desktop-nav .menu-btn:hover {
+            background: var(--primary-yellow);
+            color: #000;
+        }
+
+        .desktop-nav li a {
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #000;
+            letter-spacing: 0.5px;
+            transition: transform 0.3s, color 0.3s;
+            display: inline-block;
+        }
+
+        .desktop-nav li a:hover {
+            color: #ffc905;
+            opacity: 1;
+            transform: scale(0.95);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-reserve {
+            padding: 12px 20px;
+            background-color: var(--primary-yellow);
+            color: #000;
+            font-weight: 800;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            white-space: nowrap;
+            height: auto;
+            line-height: 1;
+            display: inline-block;
+            transition: all 0.3s;
+            z-index: 2;
+        }
+
+        .btn-reserve:hover {
+            background-color: #000;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* Hamburger Menu (Mobile) */
+        .hamburger-menu {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            color: #000;
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--primary-yellow);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(-20px);
+        }
+
+        .mobile-nav-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #000;
+        }
+
+        .mobile-nav-list {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .mobile-nav-list a {
+            font-size: 24px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #000;
+        }
+
+        /* --- 2. Hero Section (Container Width) --- */
+        .hero-section {
+            padding-top: 120px;
+            /* Header Height + Space */
+            padding-bottom: 100px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            background-color: #fff;
+        }
+
+        .hero-container {
+            width: 100%;
+            max-width: 1600px;
+            padding: 0 40px;
+        }
+
+        .hero-image-wrap {
+            width: 100%;
+            height: 600px;
+            /* 높이를 자동 조절로 변경 */
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* --- 3. Main Content (Yellow BG) --- */
+        .main-content-wrapper {
+            background-color: var(--light-yellow-bg);
+            padding: 80px 20px 120px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .intro-text-box {
+            text-align: center;
+            max-width: 800px;
+            margin-bottom: 50px;
+        }
+
+        .intro-text-box h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            color: #000;
+        }
+
+        .intro-text-box .jp-sub {
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: var(--primary-yellow);
+            margin-bottom: 30px;
+            display: block;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .intro-text-box p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #444;
+            font-weight: 500;
+        }
+
+        /* --- 4. Form Styling --- */
+        .form-container {
+            background: #fff;
+            width: 100%;
+            max-width: 1300px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .progress-line-bg {
+            width: 100%;
+            height: 6px;
+            background: #eee;
+        }
+
+        .progress-line-fill {
+            height: 100%;
+            background: var(--primary-yellow);
+            width: 50%;
+            transition: width 0.4s ease;
+        }
+
+        .form-header {
+            text-align: center;
+            padding: 80px 20px 60px 20px;
+            border-bottom: 1px solid #fcfcfc;
+        }
+
+        .form-header h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .step-indicator {
+            font-size: 0.9rem;
+            color: #999;
+            font-weight: 600;
+        }
+
+        .form-body {
+            padding: 0px 80px;
+            flex-grow: 1;
+        }
+
+        .form-step {
+            display: none;
+            animation: fadeIn 0.4s;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Grid Layouts & Spacing */
+        .form-row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 800;
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px 18px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #fff;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-yellow);
+            box-shadow: 0 0 0 3px rgba(255, 201, 5, 0.15);
+        }
+
+        .form-control.error {
+            border-color: red;
+            background-color: #fff0f0;
+        }
+
+        /* Date fake placeholder: hidden by default (desktop); enabled in mobile media query */
+        .date-fake-placeholder {
+            display: block;
+            display: none;
+        }
+
+        /* Button Groups */
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 10px;
+        }
+
+        .radio-btn-group {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .checkbox-item,
+        .radio-btn-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 14px 0;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 12px;
+            transition: 0.2s;
+            position: relative;
+            background: #fff;
+            text-transform: uppercase;
+        }
+
+        .checkbox-item:has(input:checked),
+        .radio-btn-item:has(input:checked) {
+            background-color: var(--primary-yellow);
+            border-color: var(--primary-yellow);
+            color: #000;
+            box-shadow: 0 4px 12px rgba(255, 201, 5, 0.25);
+        }
+
+        .checkbox-item input,
+        .radio-btn-item input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* Resume Upload */
+        .file-upload-wrapper {
+            position: relative;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            transition: 0.3s;
+            background-color: #fafafa;
+            cursor: pointer;
+        }
+
+        .file-upload-wrapper:hover {
+            border-color: var(--primary-yellow);
+            background-color: #fffcee;
+        }
+
+        .file-upload-input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-upload-text {
+            font-weight: 600;
+            color: #777;
+            pointer-events: none;
+        }
+
+        .file-icon {
+            width: 35px;
+            height: 35px;
+            margin-bottom: 10px;
+            fill: #aaa;
+        }
+
+        .file-limit-info {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 11px;
+            color: #999;
+            font-weight: 500;
+            pointer-events: none;
+        }
+
+        /* Footer Buttons */
+        .form-footer {
+            padding: 20px 80px 80px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-nav {
+            padding: 16px 45px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: none;
+        }
+
+        .btn-prev {
+            background: #f0f0f0;
+            color: #999;
+        }
+
+        .btn-prev:hover {
+            background: #e0e0e0;
+            color: #555;
+        }
+
+        .btn-next {
+            background: var(--primary-yellow);
+            color: #000;
+            margin-left: auto;
+            box-shadow: 0 5px 15px rgba(255, 201, 5, 0.3);
+        }
+
+        .btn-next:hover {
+            background: #000;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* --- 5. FAQ Section --- */
+        .faq-section {
+            padding: 100px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: left;
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            color: #000;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .jp-sub-faq {
+            text-align: left;
+            color: var(--primary-yellow);
+            font-weight: 500;
+            margin-bottom: 60px;
+            display: block;
+            letter-spacing: 1px;
+            font-size: 1.4rem;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+        }
+
+        .faq-item {
+            margin-bottom: 25px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .faq-question {
+            font-weight: 700;
+            font-size: 1.05rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            line-height: 1.35;
+            padding-right: 10px;
+            transition: color 0.3s;
+        }
+
+        .faq-question:hover {
+            color: var(--primary-yellow);
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            font-weight: 300;
+            transition: 0.3s;
+            margin-top: 2px;
+            line-height: 1;
+        }
+
+        .faq-item.active .faq-question::after {
+            transform: rotate(45deg);
+            color: var(--primary-yellow);
+        }
+
+        .faq-item.active .faq-question {
+            color: #000;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #555;
+            margin-top: 0;
+            padding-right: 20px;
+        }
+
+        .faq-item.active .faq-answer {
+            margin-top: 15px;
+            max-height: 300px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 30px 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: #000;
+            font-weight: 600;
+            border-top: 1px solid #eee;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            transition: 0.3s;
+        }
+
+        .social-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: #000;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary-yellow);
+        }
+
+        /* --- Cookie Banner --- */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--primary-yellow);
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+            z-index: 99999;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s ease-in-out;
+        }
+
+        .cookie-inner {
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cookie-text {
+            color: #000;
+            font-weight: 600;
+            font-size: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .cookie-btns {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .btn-cookie-reject {
+            background: transparent;
+            border: none;
+            text-decoration: underline;
+            font-weight: 700;
+            cursor: pointer;
+            color: #000;
+            font-size: 14px;
+        }
+
+        .btn-cookie-accept {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-cookie-accept:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        /* Responsive Media Queries (Mobile Fix) */
+        @media (max-width: 900px) {
+
+            /* Mobile baseline (match Sushia_v1 feel: stable gutters, readable type, no overflow) */
+            html,
+            body {
+                width: 100%;
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+
+            /* 1) Header */
+            header {
+                height: 80px;
+            }
+
+            .header-inner {
+                padding: 0 15px;
+                gap: 10px;
+            }
+
+            .logo-img {
+                height: 40px;
+            }
+
+            header.scrolled .logo-img {
+                height: 35px;
+            }
+
+            header.scrolled {
+                height: 60px;
+            }
+
+            .btn-reserve {
+                padding: 14px 14px;
+                font-size: 13px;
+                letter-spacing: 0px;
+            }
+
+            .header-right {
+                gap: 10px;
+            }
+
+            .desktop-nav {
+                display: none;
+            }
+
+            .hamburger-menu {
+                display: block;
+            }
+
+            /* 2) Page gutters */
+            .hero-container {
+                padding: 0 14px;
+            }
+
+            .main-content-wrapper {
+                padding: 60px 14px 80px 14px;
+            }
+
+            /* 3) Hero */
+            .hero-section {
+                padding-top: 100px;
+                padding-bottom: 40px;
+            }
+
+            .hero-image-wrap {
+                height: 250px;
+                border-radius: 14px;
+            }
+
+            /* 4) Intro typography */
+            .intro-text-box {
+                margin-bottom: 35px;
+            }
+
+            .intro-text-box h1 {
+                font-size: 2.2rem;
+                line-height: 1.1;
+            }
+
+            .intro-text-box .jp-sub {
+                font-size: 1.2rem;
+                margin-bottom: 18px;
+            }
+
+            .intro-text-box p {
+                padding: 0 30px;
+                font-size: 0.95rem;
+                line-height: 1.7;
+            }
+
+            /* 5) Form layout: make spacing between questions consistent */
+            .form-header {
+                padding: 28px 14px 12px 14px;
+            }
+
+            .form-header h3 {
+                font-size: 1.35rem;
+            }
+
+            .step-indicator {
+                font-size: 0.8rem;
+            }
+
+            .form-body {
+                padding: 24px 14px;
+            }
+
+            .form-footer {
+                padding: 16px 14px 30px 14px;
+                gap: 10px;
+            }
+
+            /* Always single column on mobile */
+            .form-row-2 {
+                grid-template-columns: 1fr;
+                gap: 0;
+                margin-bottom: 0;
+            }
+
+            /* Hide empty placeholder column (e.g., DOB row's empty div) */
+            .form-row-2>div:empty {
+                display: none;
+            }
+
+            .form-group {
+                margin-bottom: 22px;
+            }
+
+            .form-label {
+                font-size: 12px;
+                margin-bottom: 6px;
+            }
+
+            .form-control {
+                width: 100%;
+                max-width: 100%;
+                display: block;
+                padding: 14px 14px;
+                font-size: 14px;
+                line-height: 1.2;
+                min-height: 48px;
+            }
+
+            /* Date inputs: prevent overflow & make the date text visible on iPhone */
+            input[type="date"].form-control {
+                -webkit-appearance: none;
+                appearance: none;
+                padding-right: 44px;
+                /* room for picker icon */
+            }
+
+            input[type="date"].form-control::-webkit-datetime-edit {
+                color: #9b9b9b;
+            }
+
+            input[type="date"].form-control.has-value::-webkit-datetime-edit {
+                color: #111111;
+            }
+
+            input[type="date"].form-control::-webkit-datetime-edit-fields-wrapper {
+                padding: 0;
+            }
+
+            input[type="date"].form-control::-webkit-date-and-time-value {
+                text-align: left;
+            }
+
+            /* iOS date placeholder (overlay) + prevent overflow */
+
+            .date-input-wrap {
+                position: relative;
+                width: 100%;
+            }
+
+            .date-fake-placeholder {
+                position: absolute;
+                left: 14px;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 14px;
+                font-weight: 500;
+                color: #9b9b9b;
+                pointer-events: none;
+                line-height: 1;
+            }
+
+            .date-input-wrap input.form-control {
+                width: 100%;
+                max-width: 100%;
+                min-width: 0;
+            }
+
+            .date-input-wrap input.form-control.has-value+.date-fake-placeholder {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+                font-weight: 900;
+            }
+
+            .faq-question {
+                font-weight: 700;
+                font-size: 1rem;
+            }
+
+            /* Date input text color (prevent iOS/Chrome blue text) */
+            input[type="date"].form-control {
+                color: #111 !important;
+                -webkit-text-fill-color: #111 !important;
+            }
+
+            input[type="date"].form-control::-webkit-date-and-time-value {
+                color: #111 !important;
+            }
+
+            .date-input-wrap input.form-control:focus+.date-fake-placeholder {
+                opacity: 0.0;
+            }
+
+            /* Mobile: keep native date value hidden until selected so fake placeholder is visible */
+            .date-input-wrap input[type="date"].form-control:not(.has-value) {
+                color: transparent !important;
+                -webkit-text-fill-color: transparent !important;
+            }
+
+
+            /* Select overflow safety */
+            select.form-control {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            /* Nav buttons */
+            .btn-nav {
+                width: 48%;
+                padding: 14px 0;
+                font-size: 13px;
+                border-radius: 999px;
+            }
+
+            .btn-next {
+                margin-left: 0;
+            }
+
+            /* Choice grids */
+            .checkbox-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                gap: 8px;
+            }
+
+            .radio-btn-group {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .checkbox-item,
+            .radio-btn-item {
+                font-size: 11px;
+                padding: 12px 0;
+            }
+
+            .radio-btn-item {
+                white-space: nowrap;
+            }
+
+            /* Upload area */
+            .file-upload-wrapper {
+                padding: 24px 16px;
+            }
+
+            .file-limit-info {
+                position: static;
+                display: block;
+                margin-top: 10px;
+                text-align: center;
+            }
+
+            /* FAQ + footer */
+            .faq-grid {
+                grid-template-columns: 1fr;
+                gap: 0px;
+            }
+
+            .faq-section {
+                padding: 70px 14px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+                padding: 30px 20px;
+            }
+
+            /* Cookie */
+            .cookie-inner {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+                padding: 0 14px;
+            }
+
+            .cookie-text {
+                white-space: normal;
+                line-height: 1.4;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-inner">
+            <a href="Sushia_v1.html" class="logo-area">
+                <img src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia-Logo-1.svg" alt="SUSHIA"
+                    class="logo-img">
+            </a>
+
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="Menu.html" class="menu-btn">Menu</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="#" style="color:var(--primary-yellow);">Join the team</a></li>
+                    <li><a href="Sushia_v1.html#locations">Stores</a></li>
+                    <li><a href="Contact.html">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-right">
+                <a href="Platter Order.html" class="btn-reserve">PLATTER ORDER</a>
+                <button class="hamburger-menu" id="hamburgerBtn" aria-label="Open Menu">
+                    <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2.5" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-nav-overlay" id="mobileMenu">
+        <button class="mobile-nav-close" id="closeMenuBtn">
+            <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2.5" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <div class="mobile-nav-list">
+            <a href="Menu.html" onclick="closeMobileMenu()">Menu</a>
+            <a href="About.html" onclick="closeMobileMenu()">About</a>
+            <a href="#" style="color:#fff;" onclick="closeMobileMenu()">Join the Team</a>
+            <a href="Sushia_v1.html#locations" onclick="closeMobileMenu()">Stores</a>
+            <a href="Contact.html" onclick="closeMobileMenu()">Contact</a>
+        </div>
+    </div>
+
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="hero-image-wrap">
+                <img src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/sushia_store-06.jpg"
+                    alt="Sushia Team">
+            </div>
+        </div>
+    </section>
+
+    <section class="main-content-wrapper">
+
+        <div class="intro-text-box">
+            <h1>Join the Team</h1>
+            <span class="jp-sub">チームに参加する</span>
+            <p>
+                When you join the Sushia team you become part of a family. A family who are sushi obsessed, like to have
+                fun and create an extraordinary experience for our customers. If you’re looking to grow your skills,
+                work amongst a team of hardworking individuals and make meaningful connections with customers, then we’d
+                love to hear from you!
+            </p>
+        </div>
+
+        <form id="recruitmentForm" class="form-container" action="mailto:ropa.kim@elleo.com.au" method="POST"
+            enctype="text/plain">
+
+            <div class="progress-line-bg">
+                <div class="progress-line-fill" id="progressBar"></div>
+            </div>
+
+            <div class="form-header">
+                <h3 id="stepTitle">Personal Details</h3>
+                <div class="step-indicator">Step <span id="currentStepNum">1</span> of 2</div>
+            </div>
+
+            <div class="form-body">
+
+                <div class="form-step active" id="step1">
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label class="form-label">Given Name(s) *</label>
+                            <input type="text" class="form-control" name="given_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Family Name *</label>
+                            <input type="text" class="form-control" name="family_name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label class="form-label">Email *</label>
+                            <input type="email" class="form-control" name="email" id="emailInput"
+                                placeholder="example@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Mobile *</label>
+                            <input type="tel" class="form-control" name="mobile" id="mobileInput"
+                                placeholder="0400 000 000" maxlength="12" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label class="form-label">Date of Birth</label>
+                            <div class="date-input-wrap"><input type="date" class="form-control" name="dob"
+                                    data-placeholder="DD/MM/YYYY"><span class="date-fake-placeholder">dd/mm/yyyy</span>
+                            </div>
+                        </div>
+                        <div></div>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label class="form-label">Residential Status *</label>
+                            <select class="form-control" name="residential_status" required>
+                                <option value="" disabled selected>Select status...</option>
+                                <option value="Australian Citizen">Australian Citizen</option>
+                                <option value="Permanent Resident">Permanent Resident</option>
+                                <option value="Partner Visa">Partner / De facto</option>
+                                <option value="International Student">International Student</option>
+                                <option value="Working Holiday">Working Holiday</option>
+                                <option value="TSS Visa">Temporary Skill Shortage (TSS)</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Visa Expiry Date</label>
+                            <div class="date-input-wrap"><input type="date" class="form-control" name="visa_expiry"
+                                    data-placeholder="DD/MM/YYYY"><span class="date-fake-placeholder">dd/mm/yyyy</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-step" id="step2">
+
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label class="form-label">Which store would you like to work at? *</label>
+                            <select class="form-control" name="store" required>
+                                <option value="" disabled selected>Select a location...</option>
+                                <optgroup label="NSW">
+                                    <option value="NSW - Albury">Albury</option>
+                                    <option value="NSW - Bathurst">Bathurst</option>
+                                    <option value="NSW - Belconnen">Belconnen</option>
+                                    <option value="NSW - Birkenhead">Birkenhead</option>
+                                    <option value="NSW - Broadway">Broadway</option>
+                                    <option value="NSW - Darling Square">Darling Square</option>
+                                    <option value="NSW - Dubbo">Dubbo</option>
+                                    <option value="NSW - Glendale">Glendale</option>
+                                    <option value="NSW - Goulburn">Goulburn</option>
+                                    <option value="NSW - Hurstville">Hurstville</option>
+                                    <option value="NSW - Kellyville">Kellyville</option>
+                                    <option value="NSW - Lavington">Lavington</option>
+                                    <option value="NSW - Muswellbrook">Muswellbrook</option>
+                                    <option value="NSW - Narellan">Narellan</option>
+                                    <option value="NSW - Orange">Orange</option>
+                                    <option value="NSW - Port Central">Port Central</option>
+                                    <option value="NSW - Rhodes">Rhodes</option>
+                                    <option value="NSW - Salamander Bay">Salamander Bay</option>
+                                    <option value="NSW - Singleton">Singleton</option>
+                                    <option value="NSW - South City">South City</option>
+                                    <option value="NSW - Sturt Mall">Sturt Mall</option>
+                                    <option value="NSW - Sydney Airport Air">Sydney Airport(Air Side)</option>
+                                    <option value="NSW - Sydney Airport Land">Sydney Airport(Land Side)</option>
+                                    <option value="NSW - Wagga Market Place">Wagga Market Place</option>
+                                </optgroup>
+                                <optgroup label="QLD">
+                                    <option value="QLD - Garden City">Garden City</option>
+                                    <option value="QLD - Kawana">Kawana</option>
+                                    <option value="QLD - Morayfield">Morayfield</option>
+                                    <option value="QLD - Myer">Myer</option>
+                                    <option value="QLD - Queens">Queens</option>
+                                    <option value="QLD - Riverlink">Riverlink</option>
+                                    <option value="QLD - Robina">Robina</option>
+                                    <option value="QLD - Sunshine">Sunshine</option>
+                                    <option value="QLD - William">William</option>
+                                </optgroup>
+                                <optgroup label="WA">
+                                    <option value="WA - Belmont">Belmont</option>
+                                    <option value="WA - Central Park">Central Park</option>
+                                    <option value="WA - Cloisters">Cloisters</option>
+                                    <option value="WA - Cockburn">Cockburn</option>
+                                    <option value="WA - Enex">Enex</option>
+                                    <option value="WA - Enex 100">Enex 100</option>
+                                    <option value="WA - Karrinyup">Karrinyup</option>
+                                    <option value="WA - Mandurah">Mandurah</option>
+                                    <option value="WA - MHKP">MHKP Murdoch</option>
+                                    <option value="WA - Perth Airport">Perth Airport</option>
+                                    <option value="WA - Subiaco">Subiaco</option>
+                                    <option value="WA - Watertown">Watertown</option>
+                                </optgroup>
+                                <optgroup label="VIC">
+                                    <option value="VIC - Mildura">Mildura</option>
+                                    <option value="VIC - Wodonga">Wodonga</option>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Position of Interest *</label>
+                            <div class="radio-btn-group">
+                                <label class="radio-btn-item">
+                                    <input type="radio" name="position" value="Full Time" required>Full Time
+                                </label>
+                                <label class="radio-btn-item">
+                                    <input type="radio" name="position" value="Part Time">Part Time
+                                </label>
+                                <label class="radio-btn-item">
+                                    <input type="radio" name="position" value="Casual">Casual
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Available Days *</label>
+                        <div class="checkbox-grid">
+                            <label class="checkbox-item"><input type="checkbox" id="checkAll">ALL</label>
+                            <label class="checkbox-item"><input type="checkbox" name="days" value="MON">MON</label>
+                            <label class="checkbox-item"><input type="checkbox" name="days" value="TUE">TUE</label>
+                            <label class="checkbox-item"><input type="checkbox" name="days" value="WED">WED</label>
+                            <label class="checkbox-item"><input type="checkbox" name="days" value="THU">THU</label>
+                            <label class="checkbox-item"><input type="checkbox" name="days" value="FRI">FRI</label>
+                            <label class="checkbox-item"><input type="checkbox" name="days" value="SAT">SAT</label>
+                            <label class="checkbox-item"><input type="checkbox" name="days" value="SUN">SUN</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 40px; border-top: 1px dashed #eee; padding-top: 30px;">
+                        <label class="form-label">Upload your Resume *</label>
+                        <div class="file-upload-wrapper">
+                            <input type="file" class="file-upload-input" name="resume" accept=".pdf,.doc,.docx" required
+                                onchange="updateFileName(this)">
+                            <svg class="file-icon" viewBox="0 0 24 24">
+                                <path
+                                    d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z" />
+                            </svg>
+                            <div class="file-upload-text" id="fileNameDisplay">Click or Drag to upload file (PDF, DOC)
+                            </div>
+                            <span class="file-limit-info">Max file size: 5MB</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-footer">
+                <button type="button" class="btn-nav btn-prev" id="prevBtn" style="visibility: hidden;">BACK</button>
+                <button type="button" class="btn-nav btn-next" id="nextBtn">NEXT</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="faq-section">
+        <h2 class="section-title">Job FAQs</h2>
+        <span class="jp-sub-faq">仕事に関するよくある質問</span>
+
+        <div class="faq-grid">
+            <div class="faq-col">
+                <div class="faq-item">
+                    <div class="faq-question">What is the recruitment process?</div>
+                    <div class="faq-answer">Once you have filled out your application and we have received it, we will
+                        do a reference check and give you a buzz to do an interview by phone if you are the right
+                        candidate. From here, you may progress to the next stage which entails an interview in person.
+                        Upon a successful interview, you will be offered a trial at Sushia.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">What does Sushia look for?</div>
+                    <div class="faq-answer">We are passionate and energetic! We don't take life too seriously but we are
+                        sushi obsessed. When we expand our family, we are looking for other hardworking and reliable
+                        team players who love authentic Japanese food just as much as we do.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">What positions do you have available?</div>
+                    <div class="faq-answer">At Sushia we have casual, part-time and full-time positions available. See
+                        the "Current Job Openings" section above or apply via the form to express your interest in the
+                        role that best suits you!</div>
+                </div>
+            </div>
+
+            <div class="faq-col">
+                <div class="faq-item">
+                    <div class="faq-question">I have been invited to an interview – what should I expect?</div>
+                    <div class="faq-answer">If you have progressed to the next stage and have been asked to come in for
+                        an interview in person, you will be meeting with Sushia’s Store Manager or Hiring Manager and be
+                        asked a series of questions about possible scenarios during your interview.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">What do we do with your information?</div>
+                    <div class="faq-answer">The sensitive information we receive from you is only used for tax and
+                        payment purposes. We only store information in regards to your superannuation and bank details
+                        for the sole purpose of making payments into your account. Your information is safe with us.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Minimum age requirements</div>
+                    <div class="faq-answer">The minimum age of employment differs across Australia, because each
+                        State/Territory has its own legislative rules. The minimum age requirement at Sushia adheres to
+                        these rules.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div>© 2025 SUSHIA. All Rights Reserved.</div>
+        <div class="social-icons">
+            <a href="#" class="social-icon"><svg viewBox="0 0 24 24">
+                    <path
+                        d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" />
+                </svg></a>
+            <a href="#" class="social-icon"><svg viewBox="0 0 24 24">
+                    <path
+                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg></a>
+        </div>
+    </footer>
+
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-inner">
+            <div class="cookie-text">
+                We use cookies on our website to provide necessary site functionality and improve your experience. By
+                clicking "Accept", you consent to the use of cookies.
+            </div>
+            <div class="cookie-btns">
+                <button class="btn-cookie-reject" id="btnRejectCookie">Reject</button>
+                <button class="btn-cookie-accept" id="btnAcceptCookie">ACCEPT</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Header Scroll
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(item => {
+            item.addEventListener('click', () => {
+                item.parentElement.classList.toggle('active');
+            });
+        });
+
+        // File Upload Name Display & 5MB Limit
+        function updateFileName(input) {
+            const display = document.getElementById('fileNameDisplay');
+            if (input.files && input.files.length > 0) {
+                const file = input.files[0];
+                const maxSize = 5 * 1024 * 1024; // 5MB
+
+                if (file.size > maxSize) {
+                    alert("File size exceeds 5MB. Please upload a smaller file.");
+                    input.value = ""; // Clear input
+                    display.textContent = "Click or Drag to upload file (PDF, DOC)";
+                    display.style.color = '#777';
+                    return;
+                }
+
+                display.textContent = file.name;
+                display.style.color = '#000';
+            } else {
+                display.textContent = "Click or Drag to upload file (PDF, DOC)";
+                display.style.color = '#777';
+            }
+        }
+
+        // Multi-Step Form Logic
+        const form = document.getElementById('recruitmentForm');
+        const steps = document.querySelectorAll('.form-step');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressBar = document.getElementById('progressBar');
+        const stepTitle = document.getElementById('stepTitle');
+        const currentStepNum = document.getElementById('currentStepNum');
+
+        let currentStep = 0;
+        const titles = ["Personal Details", "Job Preferences & Resume"];
+
+        function updateStep() {
+            steps.forEach((step, index) => {
+                step.classList.toggle('active', index === currentStep);
+            });
+
+            progressBar.style.width = ((currentStep + 1) / steps.length) * 100 + "%";
+            stepTitle.innerText = titles[currentStep];
+            currentStepNum.innerText = currentStep + 1;
+
+            prevBtn.style.visibility = currentStep === 0 ? 'hidden' : 'visible';
+            nextBtn.innerText = currentStep === steps.length - 1 ? 'SUBMIT' : 'NEXT';
+        }
+
+        const checkAll = document.getElementById('checkAll');
+        if (checkAll) {
+            checkAll.addEventListener('change', function () {
+                document.querySelectorAll('input[name="days"]:not(#checkAll)').forEach(box => box.checked = this.checked);
+            });
+        }
+
+        // VALIDATION
+        function validateStep1() {
+            const currentStepEl = steps[0];
+            const requiredInputs = currentStepEl.querySelectorAll('input[required], select[required]');
+            let valid = true;
+            let firstError = null;
+
+            requiredInputs.forEach(input => {
+                if (!input.value) {
+                    valid = false;
+                    input.classList.add('error');
+                    if (!firstError) firstError = input;
+                } else {
+                    input.classList.remove('error');
+                }
+            });
+
+            const emailInput = document.getElementById('emailInput');
+            if (emailInput.value && !emailInput.value.includes('@')) {
+                valid = false;
+                emailInput.classList.add('error');
+                if (!firstError) firstError = emailInput;
+                alert("Please enter a valid email address.");
+            }
+
+            const mobileInput = document.getElementById('mobileInput');
+            const rawMobile = mobileInput.value.replace(/[\s-]/g, '');
+            if (mobileInput.value) {
+                const mobileRegex = /^04\d{8}$/;
+                if (!mobileRegex.test(rawMobile)) {
+                    valid = false;
+                    mobileInput.classList.add('error');
+                    if (!firstError) firstError = mobileInput;
+                    alert("Mobile number must start with '04' and contain exactly 10 digits.");
+                }
+            }
+
+            if (firstError) firstError.focus();
+            return valid;
+        }
+
+        function validateStep2() {
+            const currentStepEl = steps[1];
+            const storeSelect = currentStepEl.querySelector('select[name="store"]');
+            if (!storeSelect.value) {
+                alert("Please select a store.");
+                return false;
+            }
+            const positions = currentStepEl.querySelectorAll('input[name="position"]');
+            let posSelected = false;
+            positions.forEach(p => { if (p.checked) posSelected = true; });
+            if (!posSelected) {
+                alert("Please select a position of interest.");
+                return false;
+            }
+            const days = currentStepEl.querySelectorAll('input[name="days"]');
+            const allDay = currentStepEl.querySelector('#checkAll');
+            let daySelected = false;
+            if (allDay.checked) daySelected = true;
+            days.forEach(d => { if (d.checked) daySelected = true; });
+            if (!daySelected) {
+                alert("Please select available days.");
+                return false;
+            }
+            const resumeInput = currentStepEl.querySelector('input[name="resume"]');
+            if (!resumeInput.value) {
+                alert("Please upload your resume.");
+                return false;
+            }
+            return true;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentStep === 0) {
+                if (!validateStep1()) return;
+            } else if (currentStep === 1) {
+                if (!validateStep2()) return;
+            }
+
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                updateStep();
+                window.scrollTo({ top: form.offsetTop - 150, behavior: 'smooth' });
+            } else {
+                form.submit();
+                alert("Thank you! Opening your email client to send the application.");
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 0) {
+                currentStep--;
+                updateStep();
+                window.scrollTo({ top: form.offsetTop - 150, behavior: 'smooth' });
+            }
+        });
+
+        updateStep();
+
+        // Mobile Menu Logic
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        function openMobileMenu() { mobileMenu.classList.add('active'); }
+        function closeMobileMenu() { mobileMenu.classList.remove('active'); }
+
+        if (hamburgerBtn) hamburgerBtn.addEventListener('click', openMobileMenu);
+        if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMobileMenu);
+
+        // Cookie Banner Logic
+        function initCookieBanner() {
+            const btnAccept = document.getElementById('btnAcceptCookie');
+            const btnReject = document.getElementById('btnRejectCookie');
+            const banner = document.getElementById('cookieBanner');
+
+            if (localStorage.getItem('sushia_cookie_consent')) {
+                if (banner) banner.style.display = 'none';
+                return;
+            }
+
+            if (btnAccept) {
+                btnAccept.addEventListener('click', function () {
+                    localStorage.setItem('sushia_cookie_consent', 'true');
+                    if (banner) {
+                        banner.style.transform = 'translateY(100%)';
+                        setTimeout(() => { banner.style.display = 'none'; }, 400);
+                    }
+                });
+            }
+
+            if (btnReject) {
+                btnReject.addEventListener('click', function () {
+                    if (banner) banner.style.display = 'none';
+                });
+            }
+        }
+        initCookieBanner();
+
+        // --- Mobile date input visibility fix (iOS Safari) ---
+        (function () {
+            const dateInputs = document.querySelectorAll('input[type="date"].form-control');
+            const sync = (el) => {
+                if (el.value) el.classList.add('has-value');
+                else el.classList.remove('has-value');
+            };
+            dateInputs.forEach((el) => {
+                sync(el);
+                el.addEventListener('change', () => sync(el));
+                el.addEventListener('input', () => sync(el));
+            });
+        })();
+
+
+        // iOS date inputs: show placeholder overlay when empty
+        function syncDateInputs() {
+            document.querySelectorAll('input[type="date"].form-control').forEach((inp) => {
+                if (inp.value) inp.classList.add('has-value');
+                else inp.classList.remove('has-value');
+            });
+        }
+        window.addEventListener('load', syncDateInputs);
+        document.addEventListener('change', (e) => {
+            if (e.target && e.target.matches('input[type="date"].form-control')) syncDateInputs();
+        });
+        document.addEventListener('input', (e) => {
+            if (e.target && e.target.matches('input[type="date"].form-control')) syncDateInputs();
+        });
+
+    </script>
+</body>
+
+</html>

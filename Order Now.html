@@ -1,0 +1,2177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Order - SUSHIA</title>
+
+    <link rel="icon" href="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia-Favicon-02.svg"
+        type="image/svg+xml">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-yellow: #ffc905;
+            --text-black: #111111;
+            --bg-white: #ffffff;
+            --light-yellow-bg: #fffbf0;
+            --border-color: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* --- Gold Animation (Common) --- */
+        @keyframes goldShimmer {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .anim-gold-bg {
+            background: linear-gradient(130deg, #f7f1d6, #ead27c, #c9a847, #ead27c, #c9a847, #f7f1d6);
+            background-size: 300% 300%;
+            animation: goldShimmer 10s ease infinite;
+            color: #000;
+        }
+
+        body {
+            background: linear-gradient(130deg, #f7f1d6, #ead27c, #c9a847, #ead27c, #c9a847, #f7f1d6);
+            background-size: 400% 400%;
+            animation: goldShimmer 40s ease infinite;
+            color: var(--text-black);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        /* --- Header --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: transparent;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            transition: all 0.4s ease;
+        }
+
+        header.scrolled {
+            height: 70px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-inner {
+            width: 100%;
+            max-width: 1600px;
+            height: 100%;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 45px;
+            width: auto;
+            transition: 0.3s;
+            display: block;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        header.scrolled .logo-img {
+            height: 38px;
+        }
+
+        .logo-img:hover {
+            transform: scale(0.9);
+        }
+
+        .desktop-nav {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .desktop-nav ul {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .desktop-nav li a {
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #000;
+            letter-spacing: 0.5px;
+            transition: transform 0.3s, color 0.3s;
+            display: inline-block;
+        }
+
+        .desktop-nav li a:hover {
+            color: #ffc905;
+            transform: scale(0.95);
+        }
+
+        .menu-btn {
+            background: transparent;
+            border: 2px solid var(--primary-yellow);
+            border-radius: 999px;
+            color: #000;
+            padding: 10px 18px;
+            line-height: 1;
+            font-weight: 800;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .25s ease;
+        }
+
+        .desktop-nav .menu-btn:hover {
+            background: var(--primary-yellow);
+            color: #000;
+        }
+
+        .btn-reserve {
+            padding: 12px 20px;
+            background-color: var(--primary-yellow);
+            color: #000;
+            font-weight: 800;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .btn-reserve:hover {
+            background-color: #000;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .hamburger-menu {
+            display: none;
+            background: none;
+            border: none;
+            padding: 0;
+            color: #000;
+        }
+
+        /* Mobile Menu */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--primary-yellow);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(-20px);
+        }
+
+        .mobile-nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #000;
+        }
+
+        .mobile-nav-list {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .mobile-nav-list a {
+            font-size: 24px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #000;
+        }
+
+        .mobile-nav-list a:hover {
+            opacity: 0.6;
+        }
+
+        /* --- Main Wrapper --- */
+        .main-wrapper {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+            padding-top: 150px;
+            padding-bottom: 150px;
+        }
+
+        /* --- Title Section --- */
+        .platter-title-wrap {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .party-platter-title {
+            font-size: 3rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            background: #000;
+            color: var(--primary-yellow);
+            padding: 10px 30px;
+            display: inline-block;
+            transform: rotate(-2deg);
+            letter-spacing: -1px;
+        }
+
+        .party-platter-title span {
+            background: linear-gradient(130deg, #f7f1d6, #ead27c, #c9a847, #ead27c, #c9a847, #f7f1d6);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: goldShimmer 10s ease infinite;
+        }
+
+        .platter-jp-sub {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #000;
+            margin-top: 20px;
+            letter-spacing: 2px;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+        }
+
+        /* --- Store Info --- */
+        .store-info-simple {
+            text-align: center;
+            margin-bottom: 60px;
+            color: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .store-name {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .store-address {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 5px;
+        }
+
+        .btn-direction {
+            background: #000;
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.3s;
+            margin-top: 15px;
+        }
+
+        .btn-direction:hover {
+            background: var(--primary-yellow);
+            color: #000;
+            transform: translateY(-2px);
+        }
+
+        .btn-direction svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* --- Platter Grid --- */
+        .platter-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
+        }
+
+        .platter-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            height: 100%;
+            border: none;
+            cursor: default;
+        }
+
+        .platter-card.large-card {
+            grid-column: 1 / 2;
+            grid-row: 1 / 3;
+        }
+
+        .platter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Image & Badge & Responsive Image Logic */
+        .platter-img-wrap {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            background: #f4f4f4;
+            cursor: pointer;
+        }
+
+        .platter-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        /* Grid Images switching handled by CSS utility classes */
+        .img-mobile {
+            display: none;
+        }
+
+        .platter-num-badge {
+            position: absolute;
+            bottom: 10px;
+            left: 20px;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 800;
+            z-index: 10;
+            border-radius: 4px;
+            color: #000;
+        }
+
+        .large-card .platter-img-wrap {
+            height: 603px;
+            flex: none;
+        }
+
+        .small-card .platter-img-wrap {
+            height: 250px;
+            flex: none;
+        }
+
+        .platter-card:hover .platter-img-wrap img {
+            transform: scale(1.05);
+        }
+
+        .platter-info {
+            padding: 20px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: #fff;
+            z-index: 2;
+            position: relative;
+        }
+
+        .platter-name {
+            font-size: 1.15rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            color: #000;
+            line-height: 1.2;
+            padding-right: 35px;
+        }
+
+        .platter-desc-short {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 15px;
+            font-weight: 500;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .action-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .platter-price {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #000;
+            margin-bottom: 0;
+            line-height: 1;
+            margin-right: auto;
+        }
+
+        /* Quantity Selector (Card) */
+        .card-qty-wrap {
+            display: flex;
+            align-items: center;
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 4px;
+            margin-right: 10px;
+        }
+
+        .card-qty-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: #fff;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-qty-btn:hover {
+            background: var(--primary-yellow);
+            color: #000;
+        }
+
+        .card-qty-input {
+            width: 36px;
+            text-align: center;
+            border: none;
+            background: transparent;
+            font-weight: 700;
+            font-size: 15px;
+            pointer-events: none;
+        }
+
+        .btn-add-cart {
+            background: var(--primary-yellow);
+            color: #000;
+            border: none;
+            height: 36px;
+            padding: 0 20px;
+            font-weight: 800;
+            font-size: 13px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+
+        .btn-add-cart:hover {
+            background: #000;
+            color: var(--primary-yellow);
+        }
+
+        .btn-info {
+            position: absolute;
+            top: 18px;
+            right: 20px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #000;
+            color: #fff;
+            border: none;
+            font-weight: 800;
+            font-size: 16px;
+            font-family: serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            cursor: pointer;
+            z-index: 5;
+        }
+
+        .btn-info:hover {
+            background: var(--primary-yellow);
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        /* --- Floating Cart Bar --- */
+        .cart-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #000;
+            z-index: 900;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .cart-bar.active {
+            transform: translateY(0);
+        }
+
+        .cart-bar-inner {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 26px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .cart-info {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .cart-total {
+            color: var(--primary-yellow);
+            margin-left: 10px;
+            font-size: 2rem;
+            font-weight: 900;
+        }
+
+        .btn-view-order {
+            background: var(--primary-yellow);
+            color: #000;
+            padding: 14px 40px;
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            border-radius: 50px;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-view-order:hover {
+            background: #fff;
+            transform: scale(1.05);
+        }
+
+        /* --- Cart Modal (Popup) --- */
+        .cart-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cart-modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-modal {
+            background: #fff;
+            width: 550px;
+            max-width: 95%;
+            max-height: 90vh;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            transition: 0.3s;
+        }
+
+        .cart-modal-overlay.open .cart-modal {
+            transform: translateY(0);
+        }
+
+        .cart-header {
+            padding: 20px 25px;
+            background: linear-gradient(130deg, #f7f1d6, #ead27c, #c9a847, #ead27c, #c9a847, #f7f1d6);
+            background-size: 300% 300%;
+            animation: goldShimmer 10s ease infinite;
+            color: #000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h3 {
+            font-size: 1.2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .cart-close-btn {
+            background: none;
+            border: none;
+            color: #000;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .cart-body {
+            padding: 0;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .cart-list {
+            padding: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .cart-item-thumb {
+            width: 50px;
+            height: 75px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 15px;
+            background: #f0f0f0;
+            flex-shrink: 0;
+        }
+
+        .item-details {
+            flex-grow: 1;
+        }
+
+        .item-details h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: #000;
+        }
+
+        .item-price {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            padding: 5px;
+            margin-left: 10px;
+        }
+
+        .ctrl-btn {
+            width: 24px;
+            height: 24px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #000;
+        }
+
+        .ctrl-btn:hover {
+            background: var(--primary-yellow);
+            border-color: var(--primary-yellow);
+        }
+
+        .item-qty {
+            font-weight: 700;
+            font-size: 14px;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .btn-delete-item {
+            margin-left: 10px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            color: #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .btn-delete-item:hover {
+            color: #d32f2f;
+            transform: scale(1.1);
+        }
+
+        .btn-delete-item svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .cart-footer {
+            padding: 25px;
+            border-top: 1px solid #eee;
+            background: #fcfcfc;
+        }
+
+        .cart-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #000;
+        }
+
+        .btn-checkout-final {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary-yellow);
+            color: #000;
+            font-weight: 900;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-checkout-final:hover {
+            background: #000;
+            color: #fff;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+
+        /* --- Details Modal --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: #fff;
+            width: 900px;
+            height: 600px;
+            max-width: 95vw;
+            max-height: 90vh;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transform: translateY(20px);
+            transition: 0.3s ease;
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #ffffff;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            font-size: 28px;
+            color: #000;
+            z-index: 20;
+            line-height: 1;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background-color: var(--primary-yellow);
+            transform: rotate(90deg);
+        }
+
+        .modal-img-col {
+            flex: none;
+            width: 340px;
+            background: #f0f0f0;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .modal-img-col img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .modal-img-mobile {
+            display: none !important;
+        }
+
+        .modal-info-col {
+            flex: 1;
+            padding: 35px 40px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: hidden;
+            text-align: left;
+        }
+
+        .modal-scroll-area {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .modal-scroll-area::-webkit-scrollbar {
+            display: none;
+        }
+
+        .modal-title-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .modal-num-badge {
+            width: 40px;
+            height: 40px;
+            font-size: 22px;
+            font-weight: 900;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            flex-shrink: 0;
+            color: #000;
+        }
+
+        .modal-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            line-height: 1.1;
+            letter-spacing: -1px;
+        }
+
+        .modal-price {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary-yellow);
+            margin-bottom: 30px;
+        }
+
+        .modal-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .spec-item {
+            background-color: var(--primary-yellow);
+            color: #000;
+            border-radius: 4px;
+            padding: 12px 12px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .modal-ingredients-title {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #999;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .modal-ingredients-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px 30px;
+            list-style: none;
+            padding-bottom: 20px;
+        }
+
+        .modal-ingredients-list li {
+            position: relative;
+            padding-left: 15px;
+            font-size: 1.0rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .modal-ingredients-list li::before {
+            content: "•";
+            color: var(--primary-yellow);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        .modal-action-footer {
+            margin-top: auto;
+            padding-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .modal-qty-wrap {
+            display: flex;
+            align-items: center;
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 5px;
+        }
+
+        .modal-qty-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: #fff;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #000;
+        }
+
+        .modal-qty-btn:hover {
+            background: var(--primary-yellow);
+        }
+
+        .modal-qty-input {
+            width: 40px;
+            text-align: center;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .btn-modal-add {
+            flex-grow: 0;
+            width: 200px;
+            margin-left: 20px;
+            background: var(--primary-yellow);
+            color: #000;
+            border: none;
+            height: 40px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.2s;
+        }
+
+        .btn-modal-add:hover {
+            background: #000;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* --- Footer (Aligned) --- */
+        footer {
+            background: #fff;
+            width: 100%;
+        }
+
+        .footer-inner {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 30px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-right-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: #555;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #000;
+            text-decoration: underline;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            transition: 0.3s;
+        }
+
+        .social-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: #000;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary-yellow);
+        }
+
+
+        /* --- Responsive --- */
+        @media (max-width: 1200px) {
+            .platter-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .platter-card.large-card {
+                grid-column: 1 / 3;
+                grid-row: auto;
+            }
+
+            .large-card .platter-img-wrap {
+                height: 350px;
+                flex: none;
+            }
+
+            .modal-content {
+                flex-direction: column;
+                width: 90vw;
+                height: auto;
+                max-height: 90vh;
+            }
+
+            .modal-img-col {
+                width: 100%;
+                height: 250px;
+            }
+
+            .modal-info-col {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 900px) {
+
+            /* [수정 2] 모바일에서 리스트의 설명 글 숨기기 */
+            .platter-desc-short {
+                display: none;
+            }
+
+            /* [수정 2] 설명 숨긴 후 레이아웃 정돈 */
+            .platter-info {
+                justify-content: flex-end;
+                min-height: 90px;
+            }
+
+            header {
+                height: 80px;
+            }
+
+            .header-inner {
+                padding: 0 15px;
+                justify-content: space-between;
+            }
+
+            .header-right {
+                gap: 10px;
+            }
+
+            .logo-img {
+                height: 40px;
+            }
+
+            .btn-reserve {
+                padding: 14px 14px;
+                font-size: 13px;
+                letter-spacing: 0px;
+                white-space: nowrap;
+            }
+
+            .desktop-nav {
+                display: none;
+            }
+
+            .hamburger-menu {
+                display: block;
+            }
+
+            .main-wrapper {
+                padding: 150px 15px 80px 15px;
+            }
+
+            .party-platter-title {
+                font-size: 2rem;
+                padding: 8px 20px;
+            }
+
+            .platter-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px 10px;
+            }
+
+            .platter-card.large-card {
+                grid-column: 1 / -1;
+            }
+
+            .large-card .platter-img-wrap {
+                height: auto;
+                aspect-ratio: 4 / 3;
+            }
+
+            .small-card .platter-img-wrap {
+                height: 160px;
+            }
+
+            /* Mobile Image Logic - Switch Images */
+            .img-desktop {
+                display: none;
+            }
+
+            .img-mobile {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            /* Modal Images Switching for Mobile */
+            .modal-img-desktop {
+                display: none !important;
+            }
+
+            .modal-img-mobile {
+                display: block !important;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .platter-info {
+                padding: 12px;
+            }
+
+            .platter-name {
+                font-size: 0.95rem;
+                padding-right: 25px;
+                margin-bottom: 2px;
+            }
+
+            .store-name {
+                font-size: 1.5rem;
+            }
+
+            .store-address {
+                font-size: 1rem;
+            }
+
+            .btn-direction {
+                padding: 12px 20px;
+                border-radius: 50px;
+                font-size: 0.9rem;
+            }
+
+            .btn-direction svg {
+                width: 18px;
+                height: 18px;
+            }
+
+            .btn-info {
+                top: 10px;
+                right: 10px;
+                width: 22px;
+                height: 22px;
+                font-size: 12px;
+            }
+
+            .platter-price {
+                font-size: 1.1rem;
+            }
+
+            .btn-add-cart {
+                padding: 0 15px;
+                font-size: 11px;
+                height: 30px;
+            }
+
+            .card-qty-btn {
+                width: 24px;
+                height: 30px;
+            }
+
+            .card-qty-input {
+                width: 20px;
+                font-size: 12px;
+            }
+
+            .cart-bar-inner {
+                padding: 16px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .cart-info {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .btn-view-order {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+                padding-bottom: 20px;
+            }
+
+            .footer-left {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .footer-right-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            /* Mobile Stack */
+            .platter-num-badge {
+                left: 10px;
+                width: 28px;
+                height: 28px;
+                font-size: 16px;
+            }
+
+
+            /* Modal Mobile */
+            .modal-content {
+                max-height: 85vh;
+                width: 80vw;
+            }
+
+            .modal-img-col {
+                height: auto;
+                width: 100%;
+                aspect-ratio: 16 / 9;
+            }
+
+            .modal-info-col {
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .modal-scroll-area {
+                flex: 1;
+                overflow-y: auto;
+            }
+
+            .modal-title-wrap {
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+
+            .modal-num-badge {
+                margin-bottom: 0;
+                width: 32px;
+                height: 32px;
+                font-size: 16px;
+                flex-shrink: 0;
+            }
+
+            .modal-title {
+                font-size: 1.4rem;
+                line-height: 1.2;
+            }
+
+            .modal-price {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+            }
+
+            .modal-specs {
+                margin-bottom: 20px;
+                gap: 5px;
+            }
+
+            .spec-item {
+                font-size: 0.75rem;
+                padding: 8px 10px;
+            }
+
+            .modal-ingredients-list {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+
+            .modal-close {
+                top: 10px;
+                right: 10px;
+                font-size: 30px;
+                width: 35px;
+                height: 35px;
+            }
+
+            .modal-action-footer {
+                flex-direction: row;
+                gap: 10px;
+            }
+
+            .btn-modal-add {
+                width: auto;
+                flex-grow: 1;
+                margin-left: 0;
+            }
+
+            .platter-card[data-id="1"] .platter-name {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-inner">
+            <a href="Sushia_v1.html" class="logo-area">
+                <img src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia-Logo-1.svg" alt="SUSHIA"
+                    class="logo-img">
+            </a>
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="Menu.html" class="menu-btn">Menu</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="Join the team.html">Join the team</a></li>
+                    <li><a href="Sushia_v1.html#locations">Stores</a></li>
+                    <li><a href="Contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-right">
+                <a href="Platter Order.html" class="btn-reserve">PLATTER ORDER</a>
+                <button class="hamburger-menu" id="hamburgerBtn">
+                    <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2.5" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-nav-overlay" id="mobileMenu">
+        <button class="mobile-nav-close" id="closeMenuBtn">
+            <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2.5" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <div class="mobile-nav-list">
+            <a href="Menu.html" onclick="closeMobileMenu()">Menu</a>
+            <a href="About.html" onclick="closeMobileMenu()">About</a>
+            <a href="Join the team.html" onclick="closeMobileMenu()">Join the Team</a>
+            <a href="Sushia_v1.html#locations" onclick="closeMobileMenu()">Stores</a>
+            <a href="Contact.html" onclick="closeMobileMenu()">Contact</a>
+        </div>
+    </div>
+
+    <div class="main-wrapper">
+
+        <div class="platter-title-wrap">
+            <h2 class="party-platter-title"><span>Party Platter</span></h2>
+            <span class="platter-jp-sub">パーティー・プラッター</span>
+        </div>
+
+        <div class="store-info-simple">
+            <h1 class="store-name" id="storeName">Morayfield Shopping Centre</h1>
+            <p class="store-address" id="storeAddress">K01, 171 Morayfield Rd, Morayfield QLD</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=Sushia+Morayfield" target="_blank"
+                class="btn-direction">
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                </svg>
+                DIRECTIONS
+            </a>
+        </div>
+
+        <div class="platter-grid">
+
+            <div class="platter-card large-card" data-id="1">
+                <div class="platter-img-wrap" onclick="openModal(1)">
+                    <div class="platter-num-badge anim-gold-bg">1</div>
+                    <img src="" alt="Salmon Lover" class="img-desktop">
+                    <img src="" alt="Salmon Lover" class="img-mobile">
+                </div>
+                <div class="platter-info">
+                    <button class="btn-info" onclick="openModal(1)">i</button>
+                    <div>
+                        <h3 class="platter-name">Salmon Lover Platter</h3>
+                        <p class="platter-desc-short">Sashimi 12pcs / Roll 40pcs / Nigiri 14pcs</p>
+                    </div>
+                    <div class="action-row">
+                        <span class="platter-price">$85</span>
+                        <div style="display:flex;">
+                            <button class="btn-add-cart" onclick="addToCart(1, event)">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="platter-card small-card" data-id="2">
+                <div class="platter-img-wrap" onclick="openModal(2)">
+                    <div class="platter-num-badge anim-gold-bg">2</div>
+                    <img src="" alt="Sushia Platter" class="img-desktop">
+                    <img src="" alt="Sushia Platter" class="img-mobile">
+                </div>
+                <div class="platter-info">
+                    <button class="btn-info" onclick="openModal(2)">i</button>
+                    <div>
+                        <h3 class="platter-name">Sushia Platter</h3>
+                        <p class="platter-desc-short">Roll 30pcs / Nigiri 24pcs</p>
+                    </div>
+                    <div class="action-row">
+                        <span class="platter-price">$70</span>
+                        <div style="display:flex;">
+                            <button class="btn-add-cart" onclick="addToCart(2, event)">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="platter-card small-card" data-id="3">
+                <div class="platter-img-wrap" onclick="openModal(3)">
+                    <div class="platter-num-badge anim-gold-bg">3</div>
+                    <img src="" alt="Mixed Platter" class="img-desktop">
+                    <img src="" alt="Mixed Platter" class="img-mobile">
+                </div>
+                <div class="platter-info">
+                    <button class="btn-info" onclick="openModal(3)">i</button>
+                    <div>
+                        <h3 class="platter-name">Mixed Platter</h3>
+                        <p class="platter-desc-short">Roll 38pcs / Nigiri 23pcs</p>
+                    </div>
+                    <div class="action-row">
+                        <span class="platter-price">$70</span>
+                        <div style="display:flex;">
+                            <button class="btn-add-cart" onclick="addToCart(3, event)">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="platter-card small-card" data-id="4">
+                <div class="platter-img-wrap" onclick="openModal(4)">
+                    <div class="platter-num-badge anim-gold-bg">4</div>
+                    <img src="" alt="Chicken Lover" class="img-desktop">
+                    <img src="" alt="Chicken Lover" class="img-mobile">
+                </div>
+                <div class="platter-info">
+                    <button class="btn-info" onclick="openModal(4)">i</button>
+                    <div>
+                        <h3 class="platter-name">Chicken Lover Platter</h3>
+                        <p class="platter-desc-short">Roll 56pcs / Nigiri 6pcs</p>
+                    </div>
+                    <div class="action-row">
+                        <span class="platter-price">$70</span>
+                        <div style="display:flex;">
+                            <button class="btn-add-cart" onclick="addToCart(4, event)">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="platter-card small-card" data-id="5">
+                <div class="platter-img-wrap" onclick="openModal(5)">
+                    <div class="platter-num-badge anim-gold-bg">5</div>
+                    <img src="" alt="Roll Platter" class="img-desktop">
+                    <img src="" alt="Roll Platter" class="img-mobile">
+                </div>
+                <div class="platter-info">
+                    <button class="btn-info" onclick="openModal(5)">i</button>
+                    <div>
+                        <h3 class="platter-name">Roll Platter</h3>
+                        <p class="platter-desc-short">Roll 64pcs</p>
+                    </div>
+                    <div class="action-row">
+                        <span class="platter-price">$69</span>
+                        <div style="display:flex;">
+                            <button class="btn-add-cart" onclick="addToCart(5, event)">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="platter-card small-card" data-id="6">
+                <div class="platter-img-wrap" onclick="openModal(6)">
+                    <div class="platter-num-badge anim-gold-bg">6</div>
+                    <img src="" alt="Vege Platter" class="img-desktop">
+                    <img src="" alt="Vege Platter" class="img-mobile">
+                </div>
+                <div class="platter-info">
+                    <button class="btn-info" onclick="openModal(6)">i</button>
+                    <div>
+                        <h3 class="platter-name">Vege Platter</h3>
+                        <p class="platter-desc-short">Roll 56pcs / Plain Inari 6pcs</p>
+                    </div>
+                    <div class="action-row">
+                        <span class="platter-price">$65</span>
+                        <div style="display:flex;">
+                            <button class="btn-add-cart" onclick="addToCart(6, event)">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="platter-card small-card" data-id="7">
+                <div class="platter-img-wrap" onclick="openModal(7)">
+                    <div class="platter-num-badge anim-gold-bg">7</div>
+                    <img src="" alt="Baby Platter" class="img-desktop">
+                    <img src="" alt="Baby Platter" class="img-mobile">
+                </div>
+                <div class="platter-info">
+                    <button class="btn-info" onclick="openModal(7)">i</button>
+                    <div>
+                        <h3 class="platter-name">Baby Platter</h3>
+                        <p class="platter-desc-short">Roll 112pcs</p>
+                    </div>
+                    <div class="action-row">
+                        <span class="platter-price">$65</span>
+                        <div style="display:flex;">
+                            <button class="btn-add-cart" onclick="addToCart(7, event)">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="cart-bar" id="cartBar">
+        <div class="cart-bar-inner">
+            <div class="cart-info">
+                TOTAL <span class="cart-total" id="barTotalPrice">$0</span>
+            </div>
+            <button class="btn-view-order" onclick="openCartModal()">
+                View Order & Checkout
+            </button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="platterModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div class="modal-img-col">
+                <img id="modalImgDesktop" class="modal-img-desktop" src="" alt="">
+                <img id="modalImgMobile" class="modal-img-mobile" src="" alt="">
+            </div>
+            <div class="modal-info-col">
+                <div class="modal-scroll-area">
+                    <div class="modal-title-wrap">
+                        <span id="modalBadge" class="modal-num-badge anim-gold-bg"></span>
+                        <h2 class="modal-title" id="modalTitle">Title</h2>
+                    </div>
+                    <div class="modal-price" id="modalPrice">$00</div>
+                    <div class="modal-specs" id="modalSpecs"></div>
+                    <div class="modal-ingredients-title">INCLUDES</div>
+                    <ul class="modal-ingredients-list" id="modalIngredients"></ul>
+                </div>
+                <div class="modal-action-footer">
+                    <div class="modal-qty-wrap">
+                        <button class="modal-qty-btn" onclick="updateModalQty(-1)">-</button>
+                        <input type="text" id="modalQtyInput" class="modal-qty-input" value="1" readonly>
+                        <button class="modal-qty-btn" onclick="updateModalQty(1)">+</button>
+                    </div>
+                    <button class="btn-modal-add" onclick="addToCartFromModal()">ADD</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-modal-overlay" id="cartModalOverlay">
+        <div class="cart-modal">
+            <div class="cart-header">
+                <h3>Your Order</h3>
+                <button class="cart-close-btn" onclick="closeCartModal()">×</button>
+            </div>
+            <div class="cart-body">
+                <div class="cart-list" id="cartList"></div>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-summary">
+                    <span>Total Amount</span>
+                    <span id="modalTotalPrice">$0</span>
+                </div>
+                <button class="btn-checkout-final"
+                    onclick="alert('Proceeding to Checkout Payment Gateway...')">CHECKOUT</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-left">
+                <div>© 2025 SUSHIA. All Rights Reserved.</div>
+            </div>
+            <div class="footer-right-content">
+                <div class="footer-links">
+                    <a href="#">Terms & Conditions</a>
+                    <a href="#">Privacy Policy</a>
+                </div>
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><svg viewBox="0 0 24 24">
+                            <path
+                                d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" />
+                        </svg></a>
+                    <a href="#" class="social-icon"><svg viewBox="0 0 24 24">
+                            <path
+                                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.954 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                        </svg></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // =========================================================
+        // CONFIGURATION: MENU & IMAGES
+        // =========================================================
+        const menuData = {
+            1: {
+                title: "Salmon Lover Platter",
+                price: 85,
+                specs: "Sashimi 12pcs / Roll 40pcs / Nigiri 14pcs",
+                ingredients: "Salmon Sashimi, Fresh Nigiri, Grilled Salmon Nigiri, Spicy Salmon Nigiri, Salmon Rolls, Baby Salmon",
+                images: {
+                    gridDesktop: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Salmon-Lover_h.jpg",
+                    gridMobile: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Salmon-Lover_w_01.jpg",
+                    modalDesktop: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Salmon-Lover_h.jpg",
+                    modalMobile: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Salmon-Lover_w_01.jpg"
+                }
+            },
+            2: {
+                title: "Sushia Platter",
+                price: 70,
+                specs: "Roll 30pcs / Nigiri 24pcs",
+                ingredients: "Baby Avo Rolls, Tuna Avo Rolls, Salmon Avo Rolls, Salmon Nigiri, Prawn Nigiri, Grilled Salmon Nigiri, Grilled Prawn Nigiri",
+                images: {
+                    gridDesktop: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Sushia-Platter_w.jpg",
+                    gridMobile: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Sushia-Platter_w.jpg",
+                    modalDesktop: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Sushia-Platter_h.jpg",
+                    modalMobile: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Sushia-Platter_w.jpg"
+                }
+            },
+            3: {
+                title: "Mixed Platter",
+                price: 70,
+                specs: "Roll 38pcs / Nigiri 23pcs",
+                ingredients: "Avo Baby Rolls, Cucumber Baby Rolls, Chicken Baby Rolls, California Rolls, Chicken Tempura Nigiri, Prawn Tempura Nigiri",
+                images: {
+                    gridDesktop: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Mixed-Platter_w.jpg",
+                    gridMobile: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Mixed-Platter_w.jpg",
+                    modalDesktop: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Mixed-Platter_h.jpg",
+                    modalMobile: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Mixed-Platter_w.jpg"
+                }
+            },
+            4: {
+                title: "Chicken Lover Platter",
+                price: 70,
+                specs: "Roll 56pcs / Nigiri 6pcs / Teriyaki Chicken",
+                ingredients: "Teriyaki Chicken, Chicken Schnitzel Nigiri, Teriyaki Chicken Cucumber Rolls, Chicken Schnitzel Avo Rolls",
+                images: {
+                    gridDesktop: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Chicken-Lover_w_01.jpg",
+                    gridMobile: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Chicken-Lover_w_01.jpg",
+                    modalDesktop: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Chicken-Lover_h.jpg",
+                    modalMobile: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Chicken-Lover_w_01.jpg"
+                }
+            },
+            5: {
+                title: "Roll Platter",
+                price: 69,
+                specs: "Roll 64pcs",
+                ingredients: "Salmon Baby Rolls, Avo Baby Rolls, Tuna Cucumber Rolls, California Rolls, Salmon Avo Rolls",
+                images: {
+                    gridDesktop: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Roll-Platter_w_01.jpg",
+                    gridMobile: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Roll-Platter_w_01.jpg",
+                    modalDesktop: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Roll-Platter_h.jpg",
+                    modalMobile: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Roll-Platter_w_01.jpg"
+                }
+            },
+            6: {
+                title: "Vege Platter",
+                price: 65,
+                specs: "Roll 56pcs / Plain Inari 6pcs",
+                ingredients: "Avo Baby Rolls, Cucumber Baby Rolls, Inari Vege Rolls, Avo Cucumber Rolls, Plain Inari",
+                images: {
+                    gridDesktop: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Vege-Platter_w.jpg",
+                    gridMobile: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Vege-Platter_w.jpg",
+                    modalDesktop: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Vege-Platter_h.jpg",
+                    modalMobile: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Vege-Platter_w.jpg"
+                }
+            },
+            7: {
+                title: "Baby Platter",
+                price: 65,
+                specs: "Roll 112pcs",
+                ingredients: "Salmon Baby Rolls, Tuna Baby Rolls, Avo Baby Rolls, Cucumber Baby Rolls, Chicken Schnitzel Rolls",
+                images: {
+                    gridDesktop: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Baby-Platter_w.jpg",
+                    gridMobile: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Baby-Platter_w.jpg",
+                    modalDesktop: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Baby-Platter_h.jpg",
+                    modalMobile: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Baby-Platter_w.jpg"
+                }
+            }
+        };
+
+        // Initialize Grid Images from Data on Load
+        function initMenuImages() {
+            document.querySelectorAll('.platter-card').forEach(card => {
+                const id = card.getAttribute('data-id');
+                const data = menuData[id];
+                if (data && data.images) {
+                    const imgDesktop = card.querySelector('.img-desktop');
+                    const imgMobile = card.querySelector('.img-mobile');
+                    if (imgDesktop) imgDesktop.src = data.images.gridDesktop;
+                    if (imgMobile) imgMobile.src = data.images.gridMobile;
+                }
+            });
+        }
+        document.addEventListener('DOMContentLoaded', initMenuImages);
+        // =========================================================
+
+        // Header Scroll
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Logic
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        function openMobileMenu() { mobileMenu.classList.add('active'); }
+        function closeMobileMenu() { mobileMenu.classList.remove('active'); }
+
+        if (hamburgerBtn) hamburgerBtn.addEventListener('click', openMobileMenu);
+        if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMobileMenu);
+
+        // Store Logic
+        function getParameterByName(name) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(window.location.href);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        const storesDB = {
+            "Bathurst Armada": { address: "Shop K2, 121 Howick St, Bathurst NSW 2795" },
+            "Morayfield Shopping Centre": { address: "K01, 171 Morayfield Rd, Morayfield QLD 4506" }
+        };
+
+        function initStoreInfo() {
+            let storeName = getParameterByName('store');
+            if (!storeName || !storesDB[storeName]) {
+                storeName = "Morayfield Shopping Centre";
+            }
+            const data = storesDB[storeName] || storesDB["Morayfield Shopping Centre"];
+
+            document.getElementById('storeName').textContent = storeName;
+            document.getElementById('storeAddress').textContent = data.address;
+        }
+        window.addEventListener('DOMContentLoaded', initStoreInfo);
+
+        // --- Cart Logic ---
+        let cart = [];
+
+        function updateCardQty(btn, change) {
+            const input = btn.parentElement.querySelector('.qty-input');
+            let val = parseInt(input.value);
+            val += change;
+            if (val < 1) val = 1;
+            input.value = val;
+        }
+
+        function addToCart(id, event) {
+            // Fetch Data from Config
+            const product = menuData[id];
+            if (!product) return;
+
+            const cardActionRow = event.target.closest('.action-row');
+
+            // [MODIFIED for default quantity]
+            // Since we removed the quantity buttons/input from the HTML, 
+            // we check if it exists. If not, default to 1.
+            const qtyInput = cardActionRow.querySelector('.qty-input');
+            const qtyToAdd = qtyInput ? parseInt(qtyInput.value) : 1;
+
+            const existingItem = cart.find(item => item.id === id);
+            if (existingItem) {
+                existingItem.qty += qtyToAdd;
+            } else {
+                // Use Grid Desktop Image as thumbnail for Cart
+                cart.push({ id, name: product.title, price: product.price, qty: qtyToAdd, img: product.images.modalDesktop });
+            }
+
+            if (qtyInput) qtyInput.value = 1;
+            updateCartUI();
+        }
+
+        // Modal Logic Variables
+        let currentModalItemId = null;
+
+        function updateModalQty(change) {
+            const input = document.getElementById('modalQtyInput');
+            let val = parseInt(input.value);
+            val += change;
+            if (val < 1) val = 1;
+            input.value = val;
+        }
+
+        function addToCartFromModal() {
+            const qty = parseInt(document.getElementById('modalQtyInput').value);
+            const product = menuData[currentModalItemId];
+            if (!product) return;
+
+            const existingItem = cart.find(item => item.id === currentModalItemId);
+
+            if (existingItem) {
+                existingItem.qty += qty;
+            } else {
+                cart.push({
+                    id: currentModalItemId,
+                    name: product.title,
+                    price: product.price,
+                    qty: qty,
+                    img: product.images.gridDesktop // Thumbnail
+                });
+            }
+            updateCartUI();
+            closeModal();
+        }
+
+        function updateCartUI() {
+            let total = 0;
+            let count = 0;
+            cart.forEach(item => { total += item.price * item.qty; count += item.qty; });
+            const bar = document.getElementById('cartBar');
+            const priceEl = document.getElementById('barTotalPrice');
+            priceEl.textContent = "$" + total;
+
+            // [원복] 단순히 active 클래스만 토글 (Footer 겹침 해결 코드 제거됨)
+            if (count > 0) {
+                bar.classList.add('active');
+            } else {
+                bar.classList.remove('active');
+            }
+        }
+
+        function openCartModal() {
+            renderModalItems();
+            document.getElementById('cartModalOverlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCartModal() {
+            document.getElementById('cartModalOverlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function renderModalItems() {
+            cart.sort((a, b) => a.id - b.id);
+
+            const list = document.getElementById('cartList');
+            list.innerHTML = '';
+            let total = 0;
+
+            if (cart.length === 0) {
+                list.innerHTML = '<div style="text-align:center; padding:20px; color:#999;">Your cart is empty.</div>';
+            }
+
+            cart.forEach((item, index) => {
+                total += item.price * item.qty;
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = `
+                    <img src="${item.img}" class="cart-item-thumb">
+                    <div class="item-details">
+                        <h4>${item.id}. ${item.name}</h4>
+                        <span class="item-price">$${item.price}</span>
+                    </div>
+                    <div class="item-controls">
+                        <button class="ctrl-btn" onclick="adjustCartItem(${index}, -1)">-</button>
+                        <span class="item-qty">${item.qty}</span>
+                        <button class="ctrl-btn" onclick="adjustCartItem(${index}, 1)">+</button>
+                    </div>
+                    <button class="btn-delete-item" onclick="deleteCartItem(${index})">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                        </svg>
+                    </button>
+                `;
+                list.appendChild(div);
+            });
+
+            document.getElementById('modalTotalPrice').innerText = "$" + total;
+        }
+
+        function adjustCartItem(index, change) {
+            const item = cart[index];
+            item.qty += change;
+            if (item.qty <= 0) { cart.splice(index, 1); }
+            updateCartUI();
+            renderModalItems();
+        }
+
+        function deleteCartItem(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+            renderModalItems();
+        }
+
+        // Detail Modal Logic
+        const modal = document.getElementById('platterModal');
+        const mImgDesktop = document.getElementById('modalImgDesktop');
+        const mImgMobile = document.getElementById('modalImgMobile');
+        const mTitle = document.getElementById('modalTitle');
+        const mPrice = document.getElementById('modalPrice');
+        const mSpecs = document.getElementById('modalSpecs');
+        const mIngr = document.getElementById('modalIngredients');
+        const mBadge = document.getElementById('modalBadge');
+
+        function openModal(id) {
+            // Load Data from central Object
+            const data = menuData[id];
+            if (!data) return;
+
+            currentModalItemId = id;
+            document.getElementById('modalQtyInput').value = 1;
+
+            mTitle.innerText = data.title;
+            mPrice.innerText = "$" + data.price;
+            mBadge.innerText = id;
+
+            // Set both images (CSS handles display)
+            mImgDesktop.src = data.images.modalDesktop;
+            mImgMobile.src = data.images.modalMobile;
+
+            mSpecs.innerHTML = '';
+            data.specs.split('/').forEach(s => {
+                const span = document.createElement('span');
+                span.className = 'spec-item';
+                span.innerText = s.trim();
+                mSpecs.appendChild(span);
+            });
+
+            mIngr.innerHTML = '';
+            if (data.ingredients) {
+                data.ingredients.split(',').forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerText = item.trim();
+                    mIngr.appendChild(li);
+                });
+            }
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+        document.getElementById('cartModalOverlay').addEventListener('click', function (e) {
+            if (e.target === this) closeCartModal();
+        });
+    </script>
+</body>
+
+</html>

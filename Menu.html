@@ -1,0 +1,2279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Menu - SUSHIA</title>
+
+    <link rel="icon" href="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia-Favicon-02.svg"
+        type="image/svg+xml">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-yellow: #ffc905;
+            --text-black: #111111;
+            --bg-white: #ffffff;
+            --light-yellow-bg: #fffbf0;
+            --gray-text: #888888;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-white);
+            color: var(--text-black);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .page-header-section {
+            padding-top: 150px;
+            padding-bottom: 40px;
+            background-color: var(--light-yellow-bg);
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            color: #000;
+            line-height: 1.1;
+        }
+
+        .jp-sub {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--primary-yellow);
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .page-desc {
+            font-size: 1rem;
+            line-height: 1.6;
+            font-weight: 500;
+            color: #444;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 40px;
+            word-break: keep-all;
+        }
+
+        /* --- 1. 헤더 --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), transparent);
+            backdrop-filter: blur(0px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            transition: all 0.4s ease;
+        }
+
+        header.scrolled {
+            height: 70px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-inner {
+            width: 100%;
+            max-width: 1600px;
+            height: 100%;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 45px;
+            width: auto;
+            transition: 0.3s;
+            display: block;
+        }
+
+        header.scrolled .logo-img {
+            height: 38px;
+        }
+
+        .logo-img:hover {
+            transform: scale(0.9);
+        }
+
+        .desktop-nav {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: max-content;
+        }
+
+        .desktop-nav ul {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .desktop-nav .menu-btn {
+            background: var(--primary-yellow);
+            border: 2px solid var(--primary-yellow);
+            border-radius: 999px;
+            color: #000;
+
+            padding: 10px 18px;
+            line-height: 1;
+
+            font-weight: 800;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            transition: all .25s ease;
+        }
+
+        .desktop-nav .menu-btn:hover {
+            background: var(--primary-yellow);
+            color: #000;
+        }
+
+        .desktop-nav li a {
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #000;
+            letter-spacing: 0.5px;
+            transition: transform 0.3s, color 0.3s;
+            display: inline-block;
+        }
+
+        .desktop-nav li a:hover {
+            color: #ffc905;
+            opacity: 1;
+            transform: scale(0.95);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-reserve {
+            padding: 12px 20px;
+            background-color: var(--primary-yellow);
+            color: #000;
+            font-weight: 800;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            white-space: nowrap;
+            height: auto;
+            line-height: 1;
+            display: inline-block;
+            transition: all 0.3s;
+            z-index: 2;
+        }
+
+        .btn-reserve:hover {
+            background-color: #000;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .hamburger-menu {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            color: #000;
+        }
+
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--primary-yellow);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(-20px);
+        }
+
+        .mobile-nav-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #000;
+        }
+
+        .mobile-nav-list {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .mobile-nav-list a {
+            font-size: 24px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #000;
+        }
+
+        .mobile-nav-list a:hover {
+            opacity: 0.6;
+        }
+
+
+        .menu-nav-wrapper {
+            position: sticky;
+            top: 100px;
+            z-index: 900;
+            background: rgba(255, 201, 5, 0.98);
+            backdrop-filter: blur(5px);
+            padding: 10px 0;
+            transition: top 0.3s ease;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        body.header-scrolled .menu-nav-wrapper {
+            top: 70px;
+        }
+
+        .menu-nav-inner {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2px 40px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .menu-cat-btn {
+            padding: 10px 22px;
+            border-radius: 50px;
+            border: none;
+            background: #FFFFFF;
+            color: #000;
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+
+        .menu-cat-btn.active {
+            background: #000 !important;
+            color: #FFF !important;
+            transform: scale(1.05);
+        }
+
+        @keyframes goldShimmer {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .anim-gold-bg {
+            background: linear-gradient(130deg, #f7f1d6, #ead27c, #c9a847, #ead27c, #c9a847, #f7f1d6);
+            background-size: 300% 300%;
+            animation: goldShimmer 10s ease infinite;
+            color: #000;
+        }
+
+        #btn-platters:not(.active) {
+            background: linear-gradient(130deg, #f7f1d6, #ead27c, #c9a847, #ead27c, #c9a847, #f7f1d6);
+            background-size: 300% 300%;
+            animation: goldShimmer 5s ease infinite;
+            color: #000;
+        }
+
+        .menu-content {
+            padding: 60px 40px 40px 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+            min-height: 200px;
+        }
+
+        .menu-category-section {
+            margin-bottom: 100px;
+            scroll-margin-top: 195px;
+        }
+
+        body.header-scrolled .menu-category-section {
+            scroll-margin-top: 165px;
+        }
+
+        .cat-header {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            border-left: 8px solid var(--primary-yellow);
+            padding-left: 15px;
+            color: #000;
+            line-height: 1;
+            letter-spacing: -0.5px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+        }
+
+        .menu-item-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #eee;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            height: 100%;
+        }
+
+        .menu-item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            border-color: var(--primary-yellow);
+        }
+
+        .item-img-wrap {
+            width: 100%;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            background: #f9f9f9;
+            border-bottom: 1px solid #f9f9f9;
+        }
+
+        .item-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .menu-item-card:hover .item-img-wrap img {
+            transform: scale(1.08);
+        }
+
+        .item-info {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .item-name {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #000;
+            margin-bottom: 10px;
+        }
+
+        .item-meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .dietary-badges {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 6px;
+            border-radius: 4px;
+            color: #fff;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        .badge.gf {
+            background-color: #00aeef;
+        }
+
+        .badge.v {
+            background-color: #43a047;
+        }
+
+        .item-kj {
+            font-size: 0.9rem;
+            color: #555;
+            font-weight: 600;
+        }
+
+        /* --- Platters 섹션 전용 --- */
+        #cat-platters {
+            width: 100%;
+            margin-top: 0;
+            margin-bottom: 0 !important;
+            padding: 0 0 100px 0;
+            scroll-margin-top: 160px;
+            background: linear-gradient(130deg, #f7f1d6, #ead27c, #c9a847, #ead27c, #c9a847, #f7f1d6);
+            background-size: 400% 400%;
+            animation: goldShimmer 40s ease infinite;
+        }
+
+        body.header-scrolled #cat-platters {
+            scroll-margin-top: 130px;
+        }
+
+        .platter-inner-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .platter-title-wrap {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-top: 100px;
+        }
+
+        .party-platter-title {
+            font-size: 3rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            background: #000;
+            color: var(--primary-yellow);
+            padding: 10px 30px;
+            display: inline-block;
+            transform: rotate(-2deg);
+            letter-spacing: -1px;
+        }
+
+        .party-platter-title span {
+            background: linear-gradient(130deg, #f7f1d6, #ead27c, #c9a847, #ead27c, #c9a847, #f7f1d6);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: goldShimmer 10s ease infinite;
+        }
+
+        .platter-jp-sub {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #000;
+            margin-top: 15px;
+            letter-spacing: 2px;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+        }
+
+        .platter-desc {
+            max-width: 700px;
+            margin: 20px auto 0 auto;
+            color: #111;
+            font-size: 1rem;
+            line-height: 1.8;
+            font-weight: 600;
+            word-break: keep-all;
+        }
+
+        .platter-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
+        }
+
+        .platter-card.large-card {
+            grid-column: 1 / 2;
+            grid-row: 1 / 3;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .platter-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.3s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            height: 100%;
+        }
+
+        .platter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .platter-img-wrap {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            background: #f4f4f4;
+        }
+
+        .platter-num-badge {
+            position: absolute;
+            bottom: 10px;
+            left: 20px;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 800;
+            z-index: 10;
+            border-radius: 4px;
+        }
+
+        .large-card .platter-img-wrap {
+            width: 100%;
+            height: 603px;
+            /* 2 rows (250px each) + grid gap (20px) */
+            flex: none;
+        }
+
+        .small-card .platter-img-wrap {
+            height: 250px;
+            flex: none;
+        }
+
+        .platter-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .platter-card:hover .platter-img-wrap img {
+            transform: scale(1.05);
+        }
+
+        .platter-info {
+            padding: 15px 20px;
+            text-align: left;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+
+            /* 아래 두 줄이 핵심입니다: 늘어나지 않게 하고 바닥 정렬 */
+            justify-content: flex-end;
+            flex: 0 0 auto;
+
+            background: #fff;
+            z-index: 2;
+        }
+
+        .platter-card.small-card {
+            height: auto;
+        }
+
+        .platter-name {
+            font-size: 1.3rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 0px;
+            color: #000;
+            letter-spacing: -0.3px;
+            padding-right: 40px;
+            line-height: 1.2;
+        }
+
+        .platter-price {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--primary-yellow);
+            margin-top: 5px;
+        }
+
+        .btn-view-icon {
+            position: absolute;
+            right: 18px;
+            bottom: 18px;
+            width: 28px;
+            height: 28px;
+            background: #000;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .platter-card:hover .btn-view-icon {
+            background: var(--primary-yellow);
+            color: #000;
+        }
+
+        .btn-view-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: currentColor;
+        }
+
+        .platter-order-btn-wrap {
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .btn-order-platter-btm {
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            padding: 15px 40px;
+            font-size: 24px;
+            font-weight: 800;
+            text-transform: uppercase;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        .btn-order-platter-btm:hover {
+            background: var(--primary-yellow);
+            color: #000;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            padding: 30px 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: #000;
+            font-weight: 600;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            transition: 0.3s;
+        }
+
+        .social-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: #000;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary-yellow);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: #fff;
+            width: 900px;
+            height: 600px;
+            max-width: 95vw;
+            max-height: 90vh;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transform: translateY(20px);
+            transition: 0.3s ease;
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+
+            /* 흰색 원형 배경 스타일 */
+            background-color: #ffffff;
+            width: 44px;
+            /* 버튼 너비 */
+            height: 44px;
+            /* 버튼 높이 */
+            border-radius: 50%;
+            /* 원형 만들기 */
+
+            /* X 텍스트 중앙 정렬 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            /* 기존 설정 유지 및 조정 */
+            border: none;
+            cursor: pointer;
+            font-size: 28px;
+            /* 폰트 크기 살짝 조정 */
+            color: #000;
+            z-index: 20;
+            line-height: 1;
+            transition: all 0.3s ease;
+        }
+
+        /* 마우스 올렸을 때 효과 (선택 사항) */
+        .modal-close:hover {
+            background-color: var(--primary-yellow);
+            transform: rotate(90deg);
+        }
+
+        .modal-img-col {
+            flex: none;
+            width: 340px;
+            background: #f0f0f0;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .modal-img-col img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .modal-info-col {
+            flex: 1;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .modal-title-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .modal-num-badge {
+            width: 40px;
+            height: 40px;
+            font-size: 22px;
+            font-weight: 900;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            margin-bottom: 5px;
+        }
+
+        .modal-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.1;
+            letter-spacing: -1px;
+        }
+
+        .modal-price {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary-yellow);
+            margin-bottom: 30px;
+        }
+
+        .modal-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .spec-item {
+            background-color: var(--primary-yellow);
+            color: #000;
+            border-radius: 4px;
+            padding: 12px 12px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .modal-ingredients-title {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #999;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .modal-ingredients-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 30px;
+        }
+
+        .modal-ingredients-list li {
+            position: relative;
+            padding-left: 15px;
+            font-size: 1.0rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .modal-ingredients-list li::before {
+            content: "•";
+            color: var(--primary-yellow);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        @media (max-width: 1200px) {
+            .menu-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 15px;
+            }
+
+            .platter-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .platter-card.large-card {
+                grid-column: 1 / 3;
+                grid-row: auto;
+            }
+
+            .large-card .platter-img-wrap {
+                flex: none;
+                height: 300px;
+            }
+
+            .modal-content {
+                flex-direction: column;
+                width: 90vw;
+                height: auto;
+                max-height: 90vh;
+            }
+
+            .modal-img-col {
+                width: 100%;
+                height: 250px;
+            }
+
+            .modal-info-col {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            header {
+                height: 80px;
+            }
+
+            .desktop-nav {
+                display: none;
+            }
+
+            .hamburger-menu {
+                display: block;
+            }
+
+            .logo-img {
+                height: 40px;
+            }
+
+            header.scrolled .logo-img {
+                height: 35px;
+            }
+
+            .header-inner {
+                padding: 0 15px;
+                gap: 10px;
+            }
+
+            .btn-reserve {
+                padding: 14px 14px;
+                font-size: 13px;
+                letter-spacing: 0px;
+            }
+
+            .header-right {
+                gap: 10px;
+            }
+
+            .page-header-section {
+                padding-top: 110px;
+                padding-bottom: 30px;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+                margin-bottom: 0;
+            }
+
+            .jp-sub {
+                font-size: 1.2rem;
+                margin-bottom: 10px;
+            }
+
+            .menu-content {
+                padding: 30px 15px;
+            }
+
+            .platter-inner-content {
+                padding: 0 15px;
+            }
+
+            .platter-title-wrap {
+                padding-top: 40px;
+            }
+
+            .menu-nav-wrapper {
+                top: 90px;
+                padding: 0px
+            }
+
+            body.header-scrolled .menu-nav-wrapper {
+                top: 70px;
+            }
+
+            .menu-nav-inner {
+                padding: 10px 15px;
+                justify-content: flex-start;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                gap: 10px;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .menu-nav-inner::-webkit-scrollbar {
+                display: none;
+            }
+
+            .menu-cat-btn {
+                padding: 8px 16px;
+                font-size: 12px;
+                flex: 0 0 auto;
+            }
+
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .cat-header {
+                font-size: 1.5rem;
+                margin-bottom: 20px;
+                border-width: 4px;
+                padding-left: 10px;
+            }
+
+            .item-info {
+                padding: 12px 10px;
+            }
+
+            .item-name {
+                font-size: 0.9rem;
+                margin-bottom: 5px;
+                line-height: 1.2;
+            }
+
+            .item-meta-row .item-kj {
+                font-size: 0.8rem;
+            }
+
+            #cat-platters {
+                padding: 60px 0;
+                scroll-margin-top: 105px !important;
+            }
+
+            .platter-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                row-gap: 15px;
+            }
+
+            .platter-card.large-card {
+                grid-column: 1 / -1;
+            }
+
+            .large-card .platter-img-wrap {
+                height: auto;
+                aspect-ratio: 4 / 3;
+                flex: none;
+            }
+
+            .small-card .platter-img-wrap {
+                height: 150px;
+            }
+
+            .platter-info {
+                padding: 10px;
+                justify-content: space-between;
+                flex: 1;
+            }
+
+            .platter-name {
+                font-size: 0.95rem;
+                padding: 0;
+                margin-bottom: 2px;
+            }
+
+            .platter-price {
+                font-size: 1rem;
+                margin-top: 2px;
+            }
+
+            .platter-num-badge {
+                width: 25px;
+                height: 25px;
+                font-size: 14px;
+                left: 10px;
+                bottom: 8px;
+            }
+
+            .platter-card:hover {
+                box-shadow: 0 15px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            .btn-view-icon {
+                width: 20px;
+                height: 20px;
+                right: 8px;
+                bottom: 8px;
+            }
+
+            .btn-view-icon svg {
+                width: 28px;
+                height: 28px;
+            }
+
+            .party-platter-title {
+                font-size: 2rem;
+                padding: 8px 20px;
+            }
+
+            .platter-desc {
+                font-size: 0.9rem;
+                padding: 0 10px;
+            }
+
+            .btn-order-platter-btm {
+                font-size: 18px;
+                padding: 12px 30px;
+            }
+
+            /* 모달 전체 크기 설정 (이전 요청대로 80vw 유지) */
+            .modal-content {
+                height: auto;
+                max-height: 85vh;
+                width: 80vw;
+            }
+
+            /* [수정 1] 이미지 비율 16:9로 변경 */
+            .modal-img-col {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 16 / 9;
+            }
+
+            .modal-info-col {
+                padding: 20px;
+            }
+
+            /* [수정 2] 타이틀 래퍼를 가로 정렬(row)로 변경 */
+            .modal-title-wrap {
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+
+            /* [수정 2-1] 배지 하단 여백 제거 및 크기 미세 조정 */
+            .modal-num-badge {
+                margin-bottom: 0;
+                width: 32px;
+                height: 32px;
+                font-size: 16px;
+                flex-shrink: 0;
+                /* 줄어들지 않게 고정 */
+            }
+
+            .modal-title {
+                font-size: 1.4rem;
+                line-height: 1.2;
+                text-align: left;
+            }
+
+            .modal-price {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+            }
+
+            .modal-specs {
+                margin-bottom: 20px;
+                gap: 5px;
+            }
+
+            .spec-item {
+                font-size: 0.75rem;
+                padding: 8px 10px;
+            }
+
+            .modal-ingredients-list {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+
+            .modal-ingredients-list li {
+                font-size: 0.9rem;
+            }
+
+            .modal-close {
+                top: 10px;
+                right: 10px;
+                font-size: 30px;
+                width: 35px;
+                height: 35px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+                padding-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-inner">
+            <a href="Sushia_v1.html" class="logo-area">
+                <img src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia-Logo-1.svg" alt="SUSHIA"
+                    class="logo-img">
+            </a>
+
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="#" class="menu-btn is-active">Menu</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="Join the team.html">Join the team</a></li>
+                    <li><a href="Sushia_v1.html#locations">Stores</a></li>
+                    <li><a href="Contact.html">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-right">
+                <a href="Platter Order.html" class="btn-reserve">PLATTER ORDER</a>
+                <button class="hamburger-menu" id="hamburgerBtn" aria-label="Open Menu">
+                    <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2.5" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-nav-overlay" id="mobileMenu">
+        <button class="mobile-nav-close" id="closeMenuBtn">
+            <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2.5" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <div class="mobile-nav-list">
+            <a href="#" style="color:#fff;" onclick="closeMobileMenu()">Menu</a>
+            <a href="About.html" onclick="closeMobileMenu()">About</a>
+            <a href="Join the team.html" onclick="closeMobileMenu()">Join the Team</a>
+            <a href="Sushia_v1.html#locations" onclick="closeMobileMenu()">Stores</a>
+            <a href="Contact.html" onclick="closeMobileMenu()">Contact</a>
+        </div>
+    </div>
+
+    <section class="page-header-section">
+        <h1 class="page-title">Our Menu</h1>
+        <span class="jp-sub">メニュー</span>
+        <p class="page-desc">
+            Freshly made every day. Our chefs use the finest ingredients to bring you authentic Japanese flavors with a
+            modern twist. Enjoy the best sushi experience.
+        </p>
+    </section>
+
+    <nav class="menu-nav-wrapper">
+        <div class="menu-nav-inner">
+            <button class="menu-cat-btn active" onclick="scrollToCategory('cat-handrolls')">Hand Rolls</button>
+            <button class="menu-cat-btn" onclick="scrollToCategory('cat-box')">Box</button>
+            <button class="menu-cat-btn" onclick="scrollToCategory('cat-salad')">Salad</button>
+            <button class="menu-cat-btn" onclick="scrollToCategory('cat-donburi')">Donburi</button>
+            <button class="menu-cat-btn" onclick="scrollToCategory('cat-hotfood')">Hot Food</button>
+            <button class="menu-cat-btn" id="btn-platters" onclick="scrollToCategory('cat-platters')">PLATTERS</button>
+        </div>
+    </nav>
+
+    <div class="menu-content" id="page-top">
+
+        <div id="cat-handrolls" class="menu-category-section">
+            <h2 class="cat-header">Hand Rolls</h2>
+            <div class="menu-grid">
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Avo-Cu.jpg"
+                            alt="Avo Cucumber"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Avo Cucumber</h3>
+                        <div class="item-meta-row"><span class="item-kj">636 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span><span class="badge v">V</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/California.jpg"
+                            alt="California"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">California</h3>
+                        <div class="item-meta-row"><span class="item-kj">1279 kJ</span>
+                            <div class="dietary-badges"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Chicken-Schnitzel-Cu.jpg"
+                            alt="Chicken Schnitzel"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Chicken Schnitzel Cucumber</h3>
+                        <div class="item-meta-row"><span class="item-kj">1146 kJ</span>
+                            <div class="dietary-badges"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Tuna-avo.jpg"
+                            alt="Cooked Tuna Avo"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Cooked Tuna Avo</h3>
+                        <div class="item-meta-row"><span class="item-kj">1048 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Tuna-Cu.jpg"
+                            alt="Cooked Tuna Cucumber"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Cooked Tuna Cucumber</h3>
+                        <div class="item-meta-row"><span class="item-kj">996 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Inari-Vege.jpg"
+                            alt="Inari Vege"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Inari Vege</h3>
+                        <div class="item-meta-row"><span class="item-kj">761 kJ</span>
+                            <div class="dietary-badges"><span class="badge v">V</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Salmon-Avo.jpg"
+                            alt="Salmon Avo"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Salmon Avo</h3>
+                        <div class="item-meta-row"><span class="item-kj">902 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Spicy-Teri.jpg"
+                            alt="Spicy Teriyaki"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Spicy Teriyaki Chicken Cucumber</h3>
+                        <div class="item-meta-row"><span class="item-kj">1137 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Prawn-Avo.jpg"
+                            alt="Tempura Prawn Avo"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Tempura Prawn Avo</h3>
+                        <div class="item-meta-row"><span class="item-kj">879 kJ</span>
+                            <div class="dietary-badges"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Tempura-Vege-1.jpg"
+                            alt="Tempura Vege"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Tempura Vege</h3>
+                        <div class="item-meta-row"><span class="item-kj">914 kJ</span>
+                            <div class="dietary-badges"><span class="badge v">V</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Teri-Avo.jpg"
+                            alt="Teriyaki Chicken Avo"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Teriyaki Chicken Avo</h3>
+                        <div class="item-meta-row"><span class="item-kj">1039 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Teri-Salmon.jpg"
+                            alt="Teriyaki Salmon Avo"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Teriyaki Salmon Avo</h3>
+                        <div class="item-meta-row"><span class="item-kj">1146 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Baby-Salmon.jpg"
+                            alt="Baby Salmon"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Baby Salmon</h3>
+                        <div class="item-meta-row"><span class="item-kj">538 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Baby-Tuna.jpg"
+                            alt="Baby Tuna"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Baby Tuna</h3>
+                        <div class="item-meta-row"><span class="item-kj">539 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Baby-Avo.jpg"
+                            alt="Baby Avo"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Baby Avo</h3>
+                        <div class="item-meta-row"><span class="item-kj">478 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span><span class="badge v">V</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Baby-Cu.jpg"
+                            alt="Baby Cucumber"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Baby Cucumber</h3>
+                        <div class="item-meta-row"><span class="item-kj">325 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span><span class="badge v">V</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Baby-Chicken.jpg"
+                            alt="Baby Chicken"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Baby Chicken</h3>
+                        <div class="item-meta-row"><span class="item-kj">548 kJ</span>
+                            <div class="dietary-badges"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="cat-box" class="menu-category-section">
+            <h2 class="cat-header">Box</h2>
+            <div class="menu-grid">
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Fresh-Salmon.jpg"
+                            alt="Fresh Salmon Nigiri"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Fresh Salmon Nigiri</h3>
+                        <div class="item-meta-row"><span class="item-kj">824 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Grilled-Salmon.jpg"
+                            alt="Grilled Salmon Nigiri"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Grilled Salmon Nigiri</h3>
+                        <div class="item-meta-row"><span class="item-kj">994 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Spicy-Salmon-Nigiri.jpg"
+                            alt="Spicy Salmon Nigiri"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Spicy Salmon Nigiri</h3>
+                        <div class="item-meta-row"><span class="item-kj">1138 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Vege-Box.jpg"
+                            alt="Vege Box"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Vege Box</h3>
+                        <div class="item-meta-row"><span class="item-kj">1105 kJ</span>
+                            <div class="dietary-badges"><span class="badge v">V</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Fresh-Salmon-Box.jpg"
+                            alt="Fresh Salmon"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Fresh Salmon</h3>
+                        <div class="item-meta-row"><span class="item-kj">1849 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Grill-Salmon-Box.jpg"
+                            alt="Grilled Salmon"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Grilled Salmon</h3>
+                        <div class="item-meta-row"><span class="item-kj">2714 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Mixed.jpg"
+                            alt="Mixed Box"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Mixed</h3>
+                        <div class="item-meta-row"><span class="item-kj">2111 kJ</span>
+                            <div class="dietary-badges"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Deluxe.jpg"
+                            alt="Deluxe Box"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Deluxe</h3>
+                        <div class="item-meta-row"><span class="item-kj">2200 kJ</span>
+                            <div class="dietary-badges"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Chicken-Lover.jpg"
+                            alt="Chicken Lover"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Chicken Lover</h3>
+                        <div class="item-meta-row"><span class="item-kj">2370 kJ</span>
+                            <div class="dietary-badges"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="cat-salad" class="menu-category-section">
+            <h2 class="cat-header">Salad</h2>
+            <div class="menu-grid">
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Teriyaki_salad.jpg"
+                            alt="Teriyaki Chicken Salad"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Teriyaki Chicken Salad</h3>
+                        <div class="item-meta-row"><span class="item-kj">1325 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Chicken-Katsu_salad.jpg"
+                            alt="Chicken Katsu Salad"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Chicken Katsu Salad</h3>
+                        <div class="item-meta-row"><span class="item-kj">1836 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="cat-donburi" class="menu-category-section">
+            <h2 class="cat-header">Donburi</h2>
+            <div class="menu-grid">
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Teri-Chicken-Don.jpg"
+                            alt="Teriyaki Chicken Donburi"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Teriyaki Chicken Donburi</h3>
+                        <div class="item-meta-row"><span class="item-kj">2243 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Spicy-Chicken-Don.jpg"
+                            alt="Spicy Teriyaki Chicken Donburi"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Spicy Teriyaki Chicken Donburi</h3>
+                        <div class="item-meta-row"><span class="item-kj">2784 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Chicken-Katsu-Don.jpg"
+                            alt="Chicken Katsu Donburi"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Chicken Katsu Donburi</h3>
+                        <div class="item-meta-row"><span class="item-kj">3330 kJ</span>
+                            <div class="dietary-badges"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Salmon-Don.jpg"
+                            alt="Teriyaki Salmon Donburi"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Teriyaki Salmon Donburi</h3>
+                        <div class="item-meta-row"><span class="item-kj">2979 kJ</span>
+                            <div class="dietary-badges"><span class="badge gf">GF</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="cat-hotfood" class="menu-category-section">
+            <h2 class="cat-header">Hot Food</h2>
+            <div class="menu-grid">
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Cruch-Prawn.jpg"
+                            alt="Crunch Prawn"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Crunch Prawn</h3>
+                        <div class="item-meta-row"><span class="item-kj">840 kJ</span>
+                            <div class="dietary-badges"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Fish-Cake.jpg"
+                            alt="Fish Cake"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Fish Cake</h3>
+                        <div class="item-meta-row"><span class="item-kj">324 kJ</span>
+                            <div class="dietary-badges"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Spring-Roll.jpg"
+                            alt="Spring Roll"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Spring Roll</h3>
+                        <div class="item-meta-row"><span class="item-kj">430 kJ</span>
+                            <div class="dietary-badges"><span class="badge v">V</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Tempura-Vege.jpg"
+                            alt="Tempura Vege"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Tempura Vege</h3>
+                        <div class="item-meta-row"><span class="item-kj">233 kJ</span>
+                            <div class="dietary-badges"><span class="badge v">V</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Crab-Craw.jpg"
+                            alt="Crab Craw"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Crab Craw</h3>
+                        <div class="item-meta-row"><span class="item-kj">277 kJ</span>
+                            <div class="dietary-badges"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Prawn-Parcel.jpg"
+                            alt="Prawn Parcel"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Prawn Parcel</h3>
+                        <div class="item-meta-row"><span class="item-kj">348 kJ</span>
+                            <div class="dietary-badges"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item-card">
+                    <div class="item-img-wrap"><img
+                            src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Takoyaki.jpg"
+                            alt="Takoyaki"></div>
+                    <div class="item-info">
+                        <h3 class="item-name">Takoyaki</h3>
+                        <div class="item-meta-row"><span class="item-kj">352 kJ</span>
+                            <div class="dietary-badges"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="cat-platters" class="menu-category-section full-width-section">
+        <div class="platter-inner-content">
+            <div class="platter-title-wrap">
+                <h2 class="party-platter-title"><span>Party Platter</span></h2>
+                <span class="platter-jp-sub">パーティー・プラッター</span>
+                <p class="platter-desc">
+                    Perfect for sharing. Enjoy a variety of our best selections.
+                </p>
+            </div>
+
+            <div class="platter-grid">
+
+                <div class="platter-card large-card" data-name="Salmon Lover Platter" data-price="$85"
+                    data-specs="Sashimi 12pcs / Roll 40pcs / Nigiri 14pcs"
+                    data-ingredients="Salmon Sashimi, Fresh Nigiri, Grilled Salmon Nigiri, Spicy Salmon Nigiri, Salmon Rolls, Baby Salmon"
+                    data-desktop-modal-img="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Salmon-Lover_h.jpg"
+                    data-mobile-modal-img="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Salmon-Lover_w_01.jpg"
+                    onclick="openPlatterModal(this)">
+                    <div class="platter-img-wrap">
+                        <div class="platter-num-badge anim-gold-bg">1</div>
+                        <picture>
+                            <source media="(max-width: 900px)"
+                                srcset="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Salmon-Lover_w_01.jpg">
+                            <img src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Salmon-Lover_h.jpg"
+                                alt="Salmon Lover Platter">
+                        </picture>
+                    </div>
+                    <div class="platter-info">
+                        <h3 class="platter-name">Salmon Lover Platter</h3>
+                        <div class="platter-price">$85</div>
+                        <div class="btn-view-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M11 15h2v2h-2zm0-8h2v6h-2z" />
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                                    fill="none" />
+                                <rect x="11" y="6" width="2" height="7" rx="1"></rect>
+                                <circle cx="12" cy="16" r="1.5"></circle>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="platter-card small-card" data-name="Sushia Platter" data-price="$70"
+                    data-specs="Roll 30pcs / Nigiri 24pcs"
+                    data-ingredients="Baby Avo Rolls, Tuna Avo Rolls, Salmon Avo Rolls, Salmon Nigiri, Prawn Nigiri, Grilled Salmon Nigiri, Grilled Prawn Nigiri, Grilled Scallop Nigiri, Grilled Spicy Salmon Nigiri"
+                    data-desktop-modal-img="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Sushia-Platter_h.jpg"
+                    data-mobile-modal-img="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Sushia-Platter_w.jpg"
+                    onclick="openPlatterModal(this)">
+                    <div class="platter-img-wrap">
+                        <div class="platter-num-badge anim-gold-bg">2</div>
+                        <picture>
+                            <source media="(max-width: 900px)"
+                                srcset="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Sushia-Platter_w.jpg">
+                            <img src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Sushia-Platter_w.jpg"
+                                alt="Sushia Platter">
+                        </picture>
+                    </div>
+                    <div class="platter-info">
+                        <h3 class="platter-name">Sushia Platter</h3>
+                        <div class="platter-price">$70</div>
+                        <div class="btn-view-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M11 15h2v2h-2zm0-8h2v6h-2z" />
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                                    fill="none" />
+                                <rect x="11" y="6" width="2" height="7" rx="1"></rect>
+                                <circle cx="12" cy="16" r="1.5"></circle>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="platter-card small-card" data-name="Mixed Platter" data-price="$70"
+                    data-specs="Roll 38pcs / Nigiri 23pcs"
+                    data-ingredients="Avo Baby Rolls, Cucumber Baby Rolls, Chicken Baby Rolls, California Rolls, Chicken Tempura Nigiri, Prawn Tempura Nigiri, Seafood Tempura Nigiri, Salmon Fresh Nigiri, Prawn Fresh Nigiri, Salmon Grilled Nigiri, Prawn Grilled Nigiri, Scallop Grilled Nigiri"
+                    data-desktop-modal-img="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Mixed-Platter_h.jpg"
+                    data-mobile-modal-img="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Mixed-Platter_w.jpg"
+                    onclick="openPlatterModal(this)">
+                    <div class="platter-img-wrap">
+                        <div class="platter-num-badge anim-gold-bg">3</div>
+                        <picture>
+                            <source media="(max-width: 900px)"
+                                srcset="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Mixed-Platter_w.jpg">
+                            <img src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Mixed-Platter_w.jpg"
+                                alt="Mixed Platter">
+                        </picture>
+                    </div>
+                    <div class="platter-info">
+                        <h3 class="platter-name">Mixed Platter</h3>
+                        <div class="platter-price">$70</div>
+                        <div class="btn-view-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M11 15h2v2h-2zm0-8h2v6h-2z" />
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                                    fill="none" />
+                                <rect x="11" y="6" width="2" height="7" rx="1"></rect>
+                                <circle cx="12" cy="16" r="1.5"></circle>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="platter-card small-card" data-name="Chicken Lover Platter" data-price="$70"
+                    data-specs="Roll 56pcs / Nigiri 6pcs /Teriyaki Chicken"
+                    data-ingredients="Teriyaki Chicken, Chicken Schnitzel Nigiri, Teriyaki Chicken Cucumber Rolls, Chicken Schnitzel Avo Rolls, Teriyaki Chicken Baby Rolls, Chicken Schnitzel Baby Rolls"
+                    data-desktop-modal-img="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Chicken-Lover_h.jpg"
+                    data-mobile-modal-img="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Chicken-Lover_w_01.jpg"
+                    onclick="openPlatterModal(this)">
+                    <div class="platter-img-wrap">
+                        <div class="platter-num-badge anim-gold-bg">4</div>
+                        <picture>
+                            <source media="(max-width: 900px)"
+                                srcset="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Chicken-Lover_w_01.jpg">
+                            <img src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Chicken-Lover_w_01.jpg"
+                                alt="Chicken Lover Platter">
+                        </picture>
+                    </div>
+                    <div class="platter-info">
+                        <h3 class="platter-name">Chicken Lover Platter</h3>
+                        <div class="platter-price">$70</div>
+                        <div class="btn-view-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M11 15h2v2h-2zm0-8h2v6h-2z" />
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                                    fill="none" />
+                                <rect x="11" y="6" width="2" height="7" rx="1"></rect>
+                                <circle cx="12" cy="16" r="1.5"></circle>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="platter-card small-card" data-name="Roll Platter" data-price="$69" data-specs="Roll 64pcs"
+                    data-ingredients="Salmon Baby Rolls, Avo Baby Rolls, Tuna Cucumber Rolls, California Rolls, Salmon Avo Rolls, Tempura Prawn Rolls, Teriyaki Chicken Rolls, Chicken Schnitzel Rolls"
+                    data-desktop-modal-img="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Roll-Platter_h.jpg"
+                    data-mobile-modal-img="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Roll-Platter_w_01.jpg"
+                    onclick="openPlatterModal(this)">
+                    <div class="platter-img-wrap">
+                        <div class="platter-num-badge anim-gold-bg">5</div>
+                        <picture>
+                            <source media="(max-width: 900px)"
+                                srcset="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Roll-Platter_w_01.jpg">
+                            <img src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Roll-Platter_w_01.jpg"
+                                alt="Roll Platter">
+                        </picture>
+                    </div>
+                    <div class="platter-info">
+                        <h3 class="platter-name">Roll Platter</h3>
+                        <div class="platter-price">$69</div>
+                        <div class="btn-view-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M11 15h2v2h-2zm0-8h2v6h-2z" />
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                                    fill="none" />
+                                <rect x="11" y="6" width="2" height="7" rx="1"></rect>
+                                <circle cx="12" cy="16" r="1.5"></circle>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="platter-card small-card" data-name="Vege Platter" data-price="$65"
+                    data-specs="Roll 56pcs / Plain Inari 6pcs / Nigiri 6pcs"
+                    data-ingredients="Avo Baby Rolls, Cucumber Baby Rolls, Inari Vege Rolls, Avo Cucumber Rolls, Plain Inari, Seaweed Salad, Tempura Vege Nigiri, Tempura Vege Baby Rolls "
+                    data-desktop-modal-img="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Vege-Platter_h.jpg"
+                    data-mobile-modal-img="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Vege-Platter_w.jpg"
+                    onclick="openPlatterModal(this)">
+                    <div class="platter-img-wrap">
+                        <div class="platter-num-badge anim-gold-bg">6</div>
+                        <picture>
+                            <source media="(max-width: 900px)"
+                                srcset="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Vege-Platter_w.jpg">
+                            <img src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Vege-Platter_w.jpg"
+                                alt="Vege Platter">
+                        </picture>
+                    </div>
+                    <div class="platter-info">
+                        <h3 class="platter-name">Vege Platter</h3>
+                        <div class="platter-price">$65</div>
+                        <div class="btn-view-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M11 15h2v2h-2zm0-8h2v6h-2z" />
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                                    fill="none" />
+                                <rect x="11" y="6" width="2" height="7" rx="1"></rect>
+                                <circle cx="12" cy="16" r="1.5"></circle>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="platter-card small-card" data-name="Baby Platter" data-price="$65" data-specs="Roll 112pcs"
+                    data-ingredients="Salmon Baby Rolls, Tuna Baby Rolls, Avo Baby Rolls, Cucumber Baby Rolls, Chicken Schnitzel Rolls, Avo Cucumber Rolls, Teriyaki Chicken Baby Rolls, Chicken Schnitzel Baby Rolls "
+                    data-desktop-modal-img="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Baby-Platter_h.jpg"
+                    data-mobile-modal-img="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Baby-Platter_w.jpg"
+                    onclick="openPlatterModal(this)">
+                    <div class="platter-img-wrap">
+                        <div class="platter-num-badge anim-gold-bg">7</div>
+                        <picture>
+                            <source media="(max-width: 900px)"
+                                srcset="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Baby-Platter_w.jpg">
+                            <img src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia_Baby-Platter_w.jpg"
+                                alt="Baby Platter">
+                        </picture>
+                    </div>
+                    <div class="platter-info">
+                        <h3 class="platter-name">Baby Platter</h3>
+                        <div class="platter-price">$65</div>
+                        <div class="btn-view-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M11 15h2v2h-2zm0-8h2v6h-2z" />
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                                    fill="none" />
+                                <rect x="11" y="6" width="2" height="7" rx="1"></rect>
+                                <circle cx="12" cy="16" r="1.5"></circle>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="platter-order-btn-wrap">
+                <a href="Platter Order.html" class="btn-order-platter-btm">PLATTER ORDER</a>
+            </div>
+        </div>
+    </div>
+
+    <footer id="mainFooter">
+        <div>© 2025 SUSHIA. All Rights Reserved.</div>
+        <div class="social-icons">
+            <a href="#" class="social-icon"><svg viewBox="0 0 24 24">
+                    <path
+                        d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" />
+                </svg></a>
+            <a href="#" class="social-icon"><svg viewBox="0 0 24 24">
+                    <path
+                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg></a>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="platterModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closePlatterModal()">×</button>
+            <div class="modal-img-col">
+                <img id="modalImg" src="" alt="">
+            </div>
+            <div class="modal-info-col">
+                <div class="modal-title-wrap">
+                    <span id="modalBadge" class="modal-num-badge anim-gold-bg"></span>
+                    <h2 class="modal-title" id="modalTitle">Title</h2>
+                </div>
+                <div class="modal-price" id="modalPrice">$00</div>
+                <div class="modal-specs" id="modalSpecs"></div>
+                <div class="modal-ingredients-title">INCLUDES</div>
+                <ul class="modal-ingredients-list" id="modalIngredients"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="cookieBanner"
+        style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--primary-yellow); display: flex; justify-content: center; padding: 20px 0; z-index: 99999; transition: transform 0.4s ease-in-out; box-shadow: 0 -5px 20px rgba(0,0,0,0.1);">
+        <div
+            style="width: 100%; max-width: 1600px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap:wrap; gap:10px;">
+            <div style="color: #000; font-weight: 600; font-size: 15px;">We use cookies to improve your experience. By
+                clicking "Accept", you consent to the use of cookies.</div>
+            <div style="display: flex; gap: 20px; align-items: center;">
+                <button id="btnRejectCookie"
+                    style="background: transparent; border: none; text-decoration: underline; font-weight: 700; cursor: pointer; color: #000; font-size: 14px;">Reject</button>
+                <button id="btnAcceptCookie"
+                    style="background: #fff; color: #000; border: none; padding: 12px 35px; border-radius: 50px; font-weight: 800; font-size: 14px; cursor: pointer; transition: 0.3s;">ACCEPT</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Scroll Logic
+        let isManualScroll = false;
+        let scrollTimeout;
+
+        function onScrollUpdate() {
+            const header = document.querySelector('header');
+            const body = document.body;
+            const scrollY = window.scrollY;
+
+            if (scrollY > 50) {
+                header.classList.add('scrolled');
+                body.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('scrolled');
+                body.classList.remove('header-scrolled');
+            }
+
+            if (scrollY < 10 && !isManualScroll) {
+                const navButtons = document.querySelectorAll('.menu-cat-btn');
+                navButtons.forEach(btn => btn.classList.remove('active'));
+                if (navButtons.length > 0) navButtons[0].classList.add('active');
+            }
+        }
+
+        window.addEventListener('scroll', onScrollUpdate);
+        window.addEventListener('load', onScrollUpdate);
+
+        // Mobile Menu
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        function openMobileMenu() { mobileMenu.classList.add('active'); }
+        function closeMobileMenu() { mobileMenu.classList.remove('active'); }
+        if (hamburgerBtn) hamburgerBtn.addEventListener('click', openMobileMenu);
+        if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMobileMenu);
+
+        // Category Scroll Logic
+        function scrollToCategory(elementId) {
+            isManualScroll = true;
+
+            const navButtons = document.querySelectorAll('.menu-cat-btn');
+            navButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('onclick').includes(elementId)) btn.classList.add('active');
+            });
+
+            const el = document.getElementById(elementId);
+            if (el) {
+                let headerOffset;
+                const isScrolled = document.body.classList.contains('header-scrolled');
+
+                if (window.innerWidth > 900) {
+                    if (elementId === 'cat-platters') {
+                        // 무조건 작아진 상태(130)를 기준으로 계산하도록 고정
+                        headerOffset = 130;
+                    } else {
+                        // 다른 메뉴들도 마찬가지로 작아진 상태(165)로 고정
+                        headerOffset = 165;
+                    }
+                } else {
+                    headerOffset = 140;
+                    if (elementId === 'cat-platters') {
+                        headerOffset = 105;
+                    }
+                }
+
+                const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
+                const offsetPosition = elementPosition - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            }
+
+            if (scrollTimeout) clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => { isManualScroll = false; }, 1000);
+        }
+
+        // ScrollSpy
+        const sections = document.querySelectorAll('.menu-category-section');
+        const navButtons = document.querySelectorAll('.menu-cat-btn');
+        const observerOptions = { root: null, rootMargin: "-160px 0px -70% 0px", threshold: 0 };
+
+        const observer = new IntersectionObserver((entries) => {
+            if (isManualScroll) return;
+            if (window.scrollY >= 10) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const currentId = entry.target.getAttribute('id');
+                        navButtons.forEach(btn => {
+                            btn.classList.remove('active');
+                            if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(currentId)) {
+                                btn.classList.add('active');
+                                if (window.innerWidth <= 900) {
+                                    btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        }, observerOptions);
+        sections.forEach(section => observer.observe(section));
+
+        // Platter Modal
+        const modal = document.getElementById('platterModal');
+        const mImg = document.getElementById('modalImg');
+        const mTitle = document.getElementById('modalTitle');
+        const mPrice = document.getElementById('modalPrice');
+        const mSpecs = document.getElementById('modalSpecs');
+        const mIngr = document.getElementById('modalIngredients');
+        const mBadge = document.getElementById('modalBadge');
+
+        function openPlatterModal(element) {
+            const name = element.getAttribute('data-name');
+            const price = element.getAttribute('data-price');
+            const specs = element.getAttribute('data-specs');
+            const ingredients = element.getAttribute('data-ingredients');
+
+            // 이미지 소스 분기 로직
+            const desktopModalSrc = element.getAttribute('data-desktop-modal-img');
+            const mobileModalSrc = element.getAttribute('data-mobile-modal-img');
+            const badgeNumber = element.querySelector('.platter-num-badge').innerText;
+
+            mTitle.innerText = name;
+            mPrice.innerText = price;
+            if (mBadge) mBadge.innerText = badgeNumber;
+
+            // 현재 화면 크기에 맞춰 이미지 결정
+            if (window.innerWidth <= 900) {
+                // 모바일 이미지 (없으면 데스크탑 이미지로 대체)
+                mImg.src = mobileModalSrc ? mobileModalSrc : desktopModalSrc;
+            } else {
+                mImg.src = desktopModalSrc ? desktopModalSrc : mobileModalSrc;
+            }
+
+            mSpecs.innerHTML = '';
+            specs.split('/').forEach(s => {
+                const span = document.createElement('span');
+                span.className = 'spec-item';
+                span.innerText = s.trim();
+                mSpecs.appendChild(span);
+            });
+
+            mIngr.innerHTML = '';
+            if (ingredients) {
+                ingredients.split(',').forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerText = item.trim();
+                    mIngr.appendChild(li);
+                });
+            }
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePlatterModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closePlatterModal();
+        });
+
+        function initCookieBanner() {
+            const btnAccept = document.getElementById('btnAcceptCookie');
+            const btnReject = document.getElementById('btnRejectCookie');
+            const banner = document.getElementById('cookieBanner');
+            const footer = document.getElementById('mainFooter');
+
+            if (localStorage.getItem('sushia_cookie_consent')) {
+                banner.style.display = 'none';
+                return;
+            }
+
+            if (window.innerWidth <= 900) {
+                footer.style.paddingBottom = '100px';
+            }
+
+            if (btnAccept) {
+                btnAccept.addEventListener('click', function () {
+                    localStorage.setItem('sushia_cookie_consent', 'true');
+                    banner.style.transform = 'translateY(100%)';
+                    setTimeout(() => {
+                        banner.style.display = 'none';
+                        footer.style.paddingBottom = '30px';
+                    }, 400);
+                });
+            }
+            if (btnReject) {
+                btnReject.addEventListener('click', function () {
+                    banner.style.display = 'none';
+                    footer.style.paddingBottom = '30px';
+                });
+            }
+        }
+        initCookieBanner();
+    </script>
+</body>
+
+</html>

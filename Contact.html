@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Contact - SUSHIA</title>
+
+    <link rel="icon" href="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia-Favicon-02.svg"
+        type="image/svg+xml">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-yellow: #ffc905;
+            --text-black: #111111;
+            --bg-white: #ffffff;
+            --light-yellow-bg: #fffbf0;
+            --border-color: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-white);
+            color: var(--text-black);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        /* --- Header --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), transparent);
+            backdrop-filter: blur(0px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            transition: all 0.4s ease;
+        }
+
+        header.scrolled {
+            height: 70px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-inner {
+            width: 100%;
+            max-width: 1600px;
+            height: 100%;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 45px;
+            width: auto;
+            transition: 0.3s;
+            display: block;
+        }
+
+        header.scrolled .logo-img {
+            height: 38px;
+        }
+
+        .logo-img:hover {
+            transform: scale(0.9);
+        }
+
+        .desktop-nav {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: max-content;
+        }
+
+        .desktop-nav ul {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .desktop-nav .menu-btn {
+            background: transparent;
+            border: 2px solid var(--primary-yellow);
+            border-radius: 999px;
+            color: #000;
+
+            padding: 10px 18px;
+            line-height: 1;
+
+            font-weight: 800;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            transition: all .25s ease;
+        }
+
+        .desktop-nav .menu-btn:hover {
+            background: var(--primary-yellow);
+            color: #000;
+        }
+
+        .desktop-nav li a {
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #000;
+            letter-spacing: 0.5px;
+            transition: transform 0.3s, color 0.3s;
+            display: inline-block;
+        }
+
+        .desktop-nav li a:hover {
+            color: #ffc905;
+            opacity: 1;
+            transform: scale(0.95);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-reserve {
+            padding: 12px 20px;
+            background-color: var(--primary-yellow);
+            color: #000;
+            font-weight: 800;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            white-space: nowrap;
+            height: auto;
+            line-height: 1;
+            display: inline-block;
+            transition: all 0.3s;
+            z-index: 2;
+        }
+
+        .btn-reserve:hover {
+            background-color: #000;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .hamburger-menu {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            color: #000;
+        }
+
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--primary-yellow);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(-20px);
+        }
+
+        .mobile-nav-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #000;
+        }
+
+        .mobile-nav-list {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .mobile-nav-list a {
+            font-size: 24px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #000;
+        }
+
+        .mobile-nav-list a:hover {
+            opacity: 0.6;
+        }
+
+        /* --- Page Header --- */
+        .page-header-section {
+            padding-top: 150px;
+            padding-bottom: 60px;
+            background-color: var(--light-yellow-bg);
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            color: #000;
+            line-height: 1.1;
+        }
+
+        .jp-sub {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--primary-yellow);
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .mobile-break {
+            display: none;
+        }
+
+        /* --- Contact Form Section --- */
+        .contact-form-wrapper {
+            background-color: var(--light-yellow-bg);
+            padding: 0 40px 100px 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .contact-container {
+            width: 100%;
+            max-width: 1000px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-form-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 60px 80px;
+            position: relative;
+            overflow: hidden;
+            border: 10px solid var(--primary-yellow);
+        }
+
+        .form-title-wrap {
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 2;
+            text-align: left;
+        }
+
+        .form-h2 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .form-jp {
+            color: var(--primary-yellow);
+            font-weight: 600;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .form-row {
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+
+        .form-row.grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .form-row.single {
+            display: block;
+        }
+
+        .form-row.message-row {
+            max-width: 75%;
+        }
+
+        .form-group {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 800;
+            font-size: 13px;
+            margin-bottom: 8px;
+            color: #000;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px 18px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #fff;
+            transition: all 0.3s;
+            outline: none;
+            color: #111;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-yellow);
+            box-shadow: 0 0 0 3px rgba(255, 201, 5, 0.15);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .btn-submit {
+            background-color: var(--primary-yellow);
+            color: #000;
+            padding: 16px 60px;
+            font-size: 14px;
+            font-weight: 800;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 30px;
+            display: inline-block;
+            border: none;
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn-submit:hover {
+            background-color: #000;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .recaptcha-text {
+            margin-top: 30px;
+            font-size: 13px;
+            color: #999;
+            line-height: 1.5;
+            position: relative;
+            z-index: 2;
+        }
+
+        .recaptcha-text a {
+            text-decoration: underline;
+            color: #777;
+        }
+
+        /* Character Image Position (Desktop Default) */
+        .form-deco-img {
+            position: absolute;
+            bottom: 0px;
+            right: 20px;
+            width: 250px;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 1;
+        }
+
+        /* --- Store Locator Section --- */
+        .locator-section {
+            padding: 100px 0;
+            background-color: #f9f9f9;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .locator-wrapper {
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .locator-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .locator-header h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            color: #000;
+        }
+
+        .locator-header p {
+            font-size: 1.4rem;
+            color: var(--primary-yellow);
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .locator-container {
+            display: flex;
+            height: 700px;
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .locator-sidebar {
+            width: 450px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border-color);
+            background: #fff;
+        }
+
+        .sidebar-controls {
+            padding: 25px;
+            border-bottom: 1px solid var(--border-color);
+            z-index: 10;
+            background: #fff;
+        }
+
+        .search-wrap {
+            position: relative;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 80px 14px 45px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            background: #fdfdfd;
+            transition: 0.3s;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-yellow);
+            background: #fff;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            fill: #aaa;
+            pointer-events: none;
+        }
+
+        .search-btn-group {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-search-action {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            border-radius: 50%;
+            transition: 0.2s;
+            color: #999;
+        }
+
+        .btn-search-action:hover {
+            background-color: #f0f0f0;
+            color: var(--primary-yellow);
+        }
+
+        #btnClearSearch {
+            font-size: 18px;
+            line-height: 1;
+            display: none;
+        }
+
+        .btn-locate-me svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            font-family: 'Montserrat', sans-serif;
+            padding: 8px 18px;
+            border: 1px solid #eee;
+            background: #fff;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 800;
+            color: #555;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .filter-btn:hover {
+            background: #f4f4f4;
+        }
+
+        .filter-btn.active {
+            background: var(--primary-yellow);
+            border-color: var(--primary-yellow);
+            color: #000;
+        }
+
+        .store-list-scroll {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 0;
+            scrollbar-width: thin;
+            scrollbar-color: #ccc #f0f0f0;
+        }
+
+        .store-list-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .store-list-scroll::-webkit-scrollbar-track {
+            background: #f0f0f0;
+        }
+
+        .store-list-scroll::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 3px;
+        }
+
+        .list-count-bar {
+            padding: 10px 25px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #999;
+            text-transform: uppercase;
+            background: #fafafa;
+            border-bottom: 1px solid #eee;
+        }
+
+        .store-card {
+            padding: 20px 25px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: 0.2s;
+            position: relative;
+        }
+
+        .store-card:hover {
+            background-color: #fffcee;
+        }
+
+        .store-card.selected {
+            background-color: #fffcee;
+            border-left: 5px solid var(--primary-yellow);
+        }
+
+        .store-card h4 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: #000;
+            line-height: 1.3;
+        }
+
+        .store-card p {
+            font-size: 0.85rem;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .card-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge-state {
+            font-size: 10px;
+            font-weight: 800;
+            color: #000;
+            background: var(--primary-yellow);
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .badge-open {
+            font-size: 10px;
+            font-weight: 700;
+            color: #000;
+            background: transparent;
+            border: 1px solid var(--primary-yellow);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .btn-map-link {
+            font-size: 11px;
+            font-weight: 700;
+            color: #000;
+            text-transform: uppercase;
+            text-decoration: underline;
+        }
+
+        .btn-map-link:hover {
+            color: var(--primary-yellow);
+        }
+
+        .locator-map {
+            flex-grow: 1;
+            background: #fff;
+            position: relative;
+            height: 100%;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* [UPDATED] Map Popup Custom Style (Same as Sushia_v1.html) */
+        .gm-ui-hover-effect {
+            position: absolute !important;
+            top: 5px !important;
+            right: 5px !important;
+            z-index: 10 !important;
+            opacity: 0.6 !important;
+            background: transparent !important;
+        }
+
+        .gm-style .gm-style-iw-d {
+            overflow: visible !important;
+            padding: 0 !important;
+            max-height: none !important;
+        }
+
+        .gm-style .gm-style-iw-c {
+            padding: 0 !important;
+            border-radius: 12px !important;
+            box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2) !important;
+            max-width: 280px !important;
+        }
+
+        .custom-popup {
+            padding: 10px 20px 30px 20px;
+            width: 280px;
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            background: #fff;
+            position: relative;
+        }
+
+        .popup-icon-wrap {
+            margin-bottom: 15px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .custom-popup h3 {
+            font-size: 16px;
+            font-weight: 800;
+            color: #000;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .custom-popup p.addr {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+
+        .popup-btns {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .popup-btn {
+            display: block;
+            width: 200px;
+            padding: 12px 0;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .popup-btn.primary {
+            background-color: var(--primary-yellow);
+            color: #000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .popup-btn.primary:hover {
+            background-color: #e6b400;
+            transform: translateY(-1px);
+        }
+
+        /* --- Elleo Head Office Section --- */
+        .elleo-section {
+            padding: 100px 0;
+            background-color: #fff;
+            width: 100%;
+            border-top: 1px solid #eee;
+        }
+
+        .elleo-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .elleo-col {
+            text-align: left;
+        }
+
+        .elleo-logo-img {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            display: block;
+        }
+
+        .elleo-col h4 {
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            color: #a09dc9;
+            letter-spacing: 1px;
+        }
+
+        .elleo-col p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #000;
+            font-weight: 600;
+        }
+
+        .elleo-col a {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .elleo-col a:hover {
+            border-color: #000;
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 30px 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: #000;
+            font-weight: 600;
+            background: #fff;
+            border-top: 1px solid #eee;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: #000;
+            transition: fill 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary-yellow);
+        }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 900px) {
+            header {
+                height: 80px;
+            }
+
+            .desktop-nav {
+                display: none;
+            }
+
+            .hamburger-menu {
+                display: block;
+            }
+
+            .header-inner {
+                padding: 0 15px;
+            }
+
+            .logo-img {
+                height: 40px;
+            }
+
+            header.scrolled {
+                height: 60px;
+            }
+
+            .btn-reserve {
+                padding: 14px 14px;
+                font-size: 13px;
+                letter-spacing: 0px;
+            }
+
+            .page-header-section {
+                padding-top: 110px;
+                padding-bottom: 40px;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .mobile-break {
+                display: block;
+            }
+
+            .contact-form-wrapper {
+                padding: 0 15px 60px 15px;
+            }
+
+            .contact-form-card {
+                padding: 40px 20px 60px 20px;
+                width: 100%;
+                border: 10px solid var(--primary-yellow);
+            }
+
+            /* Form Mobile Adaptation */
+            .form-row,
+            .form-row.grid-2 {
+                display: block;
+                /* Stack everything */
+                margin-bottom: 0;
+            }
+
+            .form-group {
+                margin-bottom: 22px;
+            }
+
+            .form-row.message-row {
+                max-width: 100%;
+                margin-bottom: 22px;
+            }
+
+            .form-h2 {
+                font-size: 1.8rem;
+            }
+
+            .form-label {
+                font-size: 12px;
+                margin-bottom: 6px;
+            }
+
+            .form-control {
+                padding: 14px;
+                min-height: 48px;
+            }
+
+            .btn-submit {
+                width: 200px;
+                display: block;
+                /* 블록 요소로 변경 */
+                margin: 35px auto;
+                /* 위아래는 20px, 좌우는 auto(중앙정렬) */
+            }
+
+            .recaptcha-text {
+                margin-top: 20px;
+            }
+
+            .form-deco-img {
+                position: relative;
+                width: 180px;
+                right: auto;
+                bottom: auto;
+                opacity: 1;
+                display: block;
+                margin: 40px auto -60px auto;
+                left: 20px;
+            }
+
+            .store-card {
+                padding: 25px;
+            }
+
+            .page-header-section p {
+                line-height: 1.6;
+                /* 숫자 1.6을 1.8이나 2.0으로 늘리면 더 넓어집니다 */
+            }
+
+            .locator-section {
+                padding: 40px 0;
+            }
+
+            .locator-wrapper {
+                padding: 0 15px;
+            }
+
+            .locator-header h2 {
+                font-size: 2.0rem;
+            }
+
+            .filter-tabs {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                gap: 5px;
+                padding-bottom: 5px;
+                -webkit-overflow-scrolling: touch;
+                justify-content: flex-start;
+            }
+
+            .filter-tabs::-webkit-scrollbar {
+                display: none;
+            }
+
+            .filter-btn {
+                flex: 0 0 auto;
+                padding: 8px 18px;
+                font-size: 11px;
+                white-space: nowrap;
+            }
+
+            .locator-container {
+                flex-direction: column-reverse;
+                height: auto;
+                border: none;
+                background: transparent;
+            }
+
+            .locator-map {
+                height: 400px;
+                margin-bottom: 20px;
+                border-radius: 12px;
+                border: 1px solid #e0e0e0;
+                overflow: hidden;
+            }
+
+            .locator-sidebar {
+                width: 100%;
+                border-radius: 12px;
+                border: 1px solid #e0e0e0;
+                overflow: hidden;
+            }
+
+            .store-list-scroll {
+                max-height: 400px;
+            }
+
+            /* [UPDATED] Mobile specific popup styles (From Sushia_v1.html) */
+            .gm-style .gm-style-iw-c {
+                max-width: 260px !important;
+            }
+
+            .custom-popup {
+                padding: 10px 15px 25px 15px;
+                width: 100%;
+            }
+
+            .popup-icon-wrap {
+                margin-bottom: 10px;
+                height: 30px;
+            }
+
+            .custom-popup h3 {
+                font-size: 15px;
+                margin-bottom: 4px;
+            }
+
+            .custom-popup p.addr {
+                font-size: 12px;
+                margin-bottom: 10px;
+            }
+
+            .popup-btn {
+                width: 170px;
+                padding: 10px 0;
+                font-size: 11px;
+                border-radius: 4px;
+            }
+
+            .elleo-section {
+                padding: 60px 0;
+            }
+
+            .elleo-inner {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 0 25px;
+                text-align: center;
+            }
+
+            .elleo-col {
+                text-align: center;
+            }
+
+            .elleo-logo-img {
+                margin: 0 auto 20px auto;
+                max-width: 180px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+                padding-bottom: 40px;
+            }
+
+            .elleo-col h4 {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-inner">
+            <a href="Sushia_v1.html" class="logo-area">
+                <img src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia-Logo-1.svg" alt="SUSHIA"
+                    class="logo-img">
+            </a>
+
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="Menu.html" class="menu-btn">Menu</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="Join the team.html">Join the team</a></li>
+                    <li><a href="Sushia_v1.html#locations">Stores</a></li>
+                    <li><a href="#" style="color:var(--primary-yellow);">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-right">
+                <a href="Platter Order.html" class="btn-reserve">PLATTER ORDER</a>
+                <button class="hamburger-menu" id="hamburgerBtn" aria-label="Open Menu">
+                    <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2.5" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-nav-overlay" id="mobileMenu">
+        <button class="mobile-nav-close" id="closeMenuBtn">
+            <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2.5" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <div class="mobile-nav-list">
+            <a href="Menu.html" onclick="closeMobileMenu()">Menu</a>
+            <a href="About.html" onclick="closeMobileMenu()">About</a>
+            <a href="Join the team.html" onclick="closeMobileMenu()">Join the Team</a>
+            <a href="Sushia_v1.html#locations" onclick="closeMobileMenu()">Stores</a>
+            <a href="#" style="color:#fff;" onclick="closeMobileMenu()">Contact</a>
+        </div>
+    </div>
+
+    <section class="page-header-section">
+        <h1 class="page-title">Contact Us</h1>
+        <span class="jp-sub">お問い合わせ</span>
+        <p style="font-size: 1rem; font-weight: 500; color: #555;">
+            We'd love to hear from you. <br class="mobile-break"> Please fill out the form below.
+        </p>
+    </section>
+
+    <section class="contact-form-wrapper">
+        <div class="contact-container">
+            <div class="contact-form-card">
+                <div class="form-title-wrap">
+                    <h2 class="form-h2">Get in touch!</h2>
+                    <span class="form-jp">今日連絡してください</span>
+                </div>
+
+                <form id="contactForm">
+                    <div class="form-row grid-2">
+                        <div class="form-group">
+                            <label class="form-label">First Name *</label>
+                            <input type="text" id="firstName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Last Name *</label>
+                            <input type="text" id="lastName" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row grid-2">
+                        <div class="form-group">
+                            <label class="form-label">Email Address *</label>
+                            <input type="email" id="email" class="form-control" placeholder="example@email.com"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Phone Number *</label>
+                            <input type="tel" id="phone" class="form-control" placeholder="0400 000 000" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row single">
+                        <div class="form-group">
+                            <label class="form-label">Subject *</label>
+                            <input type="text" id="subject" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row single message-row">
+                        <div class="form-group">
+                            <label class="form-label">Message *</label>
+                            <textarea id="message" class="form-control" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="recaptcha-text">
+                        This site is protected by reCAPTCHA and the Google <a href="#">Privacy Policy</a> and <a
+                            href="#">Terms of Service</a> apply.
+                    </div>
+
+                    <button type="submit" class="btn-submit">SUBMIT</button>
+                </form>
+
+                <picture>
+                    <source media="(max-width: 900px)"
+                        srcset="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia-man_hello-2.svg">
+
+                    <img src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia-man_hello.svg"
+                        alt="Sushia Character" class="form-deco-img">
+                </picture>
+            </div>
+        </div>
+    </section>
+
+    <section id="locations" class="locator-section">
+        <div class="locator-wrapper">
+            <div class="locator-header">
+                <h2>Find a Sushia</h2>
+                <p>お近くの店舗を探す</p>
+            </div>
+
+            <div class="locator-container">
+                <div class="locator-sidebar">
+                    <div class="sidebar-controls">
+                        <div class="search-wrap">
+                            <svg class="search-icon" viewBox="0 0 24 24">
+                                <path
+                                    d="M23.707 22.293l-5.969-5.969a10.016 10.016 0 10-1.414 1.414l5.969 5.969a1 1 0 001.414-1.414zM10 18a8 8 0 118-8 8.009 8.009 0 01-8 8z" />
+                            </svg>
+                            <input type="text" id="storeSearch" class="search-input"
+                                placeholder="Search by suburb or store name...">
+                            <div class="search-btn-group">
+                                <button type="button" id="btnClearSearch" class="btn-search-action">×</button>
+                                <button type="button" id="btnLocateMe" class="btn-search-action btn-locate-me"><svg
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z" />
+                                    </svg></button>
+                            </div>
+                        </div>
+                        <div class="filter-tabs">
+                            <button class="filter-btn active" data-filter="ALL">ALL</button>
+                            <button class="filter-btn" data-filter="NSW">NSW</button>
+                            <button class="filter-btn" data-filter="WA">WA</button>
+                            <button class="filter-btn" data-filter="QLD">QLD</button>
+                            <button class="filter-btn" data-filter="VIC">VIC</button>
+                        </div>
+                    </div>
+
+                    <div class="list-count-bar" id="listCount">Loading...</div>
+                    <div class="store-list-scroll" id="storeListContainer"></div>
+                </div>
+
+                <div class="locator-map">
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="elleo-section">
+        <div class="elleo-inner">
+            <div class="elleo-col">
+                <img src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Elleo-Group_Logo.svg"
+                    alt="Elleo Group" class="elleo-logo-img">
+            </div>
+
+            <div class="elleo-col">
+                <h4>Elleo Head Office</h4>
+                <p>
+                    Level 2, 570 Blaxland Road<br>
+                    Eastwood NSW 2122
+                </p>
+            </div>
+
+            <div class="elleo-col">
+                <h4>Postal Address</h4>
+                <p>
+                    PO Box 409<br>
+                    West Ryde NSW 1685
+                </p>
+            </div>
+
+            <div class="elleo-col">
+                <h4>Contact</h4>
+                <p>
+                    02 9858 1749<br>
+                    <a href="mailto:info@elleo.com.au">info@elleo.com.au</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div>© 2025 SUSHIA. All Rights Reserved.</div>
+        <div class="social-icons">
+            <a href="#" class="social-icon"><svg viewBox="0 0 24 24">
+                    <path
+                        d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" />
+                </svg></a>
+            <a href="#" class="social-icon"><svg viewBox="0 0 24 24">
+                    <path
+                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.954 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg></a>
+        </div>
+    </footer>
+
+    <script>
+        // Header Scroll Logic
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Logic
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        function openMobileMenu() { mobileMenu.classList.add('active'); }
+        function closeMobileMenu() { mobileMenu.classList.remove('active'); }
+
+        if (hamburgerBtn) hamburgerBtn.addEventListener('click', openMobileMenu);
+        if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMobileMenu);
+
+        // Simple Form Submission Alert
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('Thank you for contacting us! We will get back to you shortly.');
+            this.reset();
+        });
+
+        // --- Store Locator Logic ---
+        const stores = [
+            // NSW
+            { state: 'NSW', name: 'Albury Myer Centrepoint', address: 'Shop T14, 525 David St, Albury NSW 2640', lat: -36.0813, lng: 146.9159, mapLink: 'https://www.google.com/maps/place/Sushia+Albury/@-36.0801872,146.9192527,17z/data=!3m2!4b1!5s0x6b215f63f16d9f99:0xa9bc8ac4a7372818!4m6!3m5!1s0x6b215fe273ea3eb5:0x35bc90ac32d4129!8m2!3d-36.0801872!4d146.9192527!16s%2Fg%2F11q1vmr__2?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Bathurst Armada', address: 'Shop K2, 121 Howick St, Bathurst NSW 2795', lat: -33.417832404073515, lng: 149.58385040313334, mapLink: 'https://www.google.com/maps/place/Sushia+Bathurst/@-33.417913,149.5805674,17z/data=!3m2!4b1!5s0x6b11e4343cd58c29:0x55f0c588279dd710!4m6!3m5!1s0x6b11e4341bac02a5:0x1d9c8ba589b3a4b5!8m2!3d-33.417913!4d149.5831423!16s%2Fg%2F1hhgmc8s6?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Belconnen Westfield', address: 'Shop 34, Benjamin Way, Belconnen ACT 2617', note: 'Opening MAR 2026', lat: -35.2384, lng: 149.0642, mapLink: 'https://www.google.com/maps/place/34+Benjamin+Way,+Belconnen+ACT+2617/@-35.2382931,149.0626168,17z/data=!3m1!4b1!4m6!3m5!1s0x6b17ad70dcf18319:0xdbbbccff54692dee!8m2!3d-35.2382931!4d149.0651917!16s%2Fg%2F11j1yzjbz7?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Birkenhead Point', address: 'Shop 153, 19 Roseby St, Drummoyne NSW 2047', lat: -33.85530635702436, lng: 151.1620572558232, mapLink: 'https://www.google.com/maps/place/Sushia+Birkenhead+Point/@-33.8555291,151.159536,17z/data=!3m2!4b1!5s0x6b0b2507ad810e31:0x1209d9e82c3d6021!4m6!3m5!1s0x6b12af3ca5345dbb:0xab2b06f56a69675a!8m2!3d-33.8555291!4d151.1621109!16s%2Fg%2F11kx5w6pp0?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Broadway Sydney', address: 'Shop G25, 1 Bay St, Glebe NSW 2037', lat: -33.8838, lng: 151.1946, mapLink: 'https://www.google.com/maps/place/Sushia+Broadway/@-33.8834839,151.1913475,17z/data=!3m2!4b1!5s0x6b12ae30c308faa5:0x687e123d3ecc0cb3!4m6!3m5!1s0x6b12afc0705ac477:0xdbc548214bcbc14a!8m2!3d-33.8834839!4d151.1939224!16s%2Fg%2F11w35lnv7_?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Darling Square', address: 'Shop T-12, 35 Tumbalong Bvd, Haymarket NSW 2000', lat: -33.8780, lng: 151.2019, mapLink: 'https://www.google.com/maps/place/Sushia+Darling+Square/@-33.8779498,151.1996375,17z/data=!3m1!4b1!4m6!3m5!1s0x6b12af873f93f45b:0x952a21ae786a597b!8m2!3d-33.8779498!4d151.2022124!16s%2Fg%2F11w35f25dg?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Dubbo The Village Southlakes', address: 'K3, 1 Stream Ave, Dubbo NSW 2830', note: 'Opening AUG 2026', lat: -32.2569, lng: 148.6011, mapLink: 'https://www.google.com/maps/place/k3%2F1+Stream+Ave,+Dubbo+NSW+2830/@-32.2731938,148.6339916,17z/data=!3m1!4b1!4m5!3m4!1s0x6b0f717a375f5593:0xc71104a944af99c7!8m2!3d-32.2731938!4d148.6365665?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Glendale City Centre', address: 'Shop 034A, 387 Lake Rd, Glendale NSW 2285', lat: -32.9349, lng: 151.6329, mapLink: 'https://www.google.com/maps/place/Sushia+Glendale/@-32.9348496,151.6390132,17z/data=!3m2!4b1!5s0x6b733c2f605695b3:0x55f0c588f8a29440!4m6!3m5!1s0x6b733d61efd809e1:0x563caaf1f2274a5b!8m2!3d-32.9348496!4d151.6415881!16s%2Fg%2F11ks6h0hbl?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Goulburn Marketplace', address: 'Shop T10, 12 Verner St, Goulburn NSW 2580', lat: -34.7545, lng: 149.7180, mapLink: 'https://www.google.com/maps/place/Sushia+Goulburn+Marketplace/@-34.7576478,149.7133902,17z/data=!3m2!4b1!5s0x6b16af1b8ba1c403:0x9186598bed82d4a!4m6!3m5!1s0x6b16afd98dca84a1:0x23d081c72bd46aad!8m2!3d-34.7576479!4d149.7182611!16s%2Fg%2F11tfk3vxg6?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Hurstville Central', address: 'Shop K3A, 225H Forest Rd, Hurstville NSW 2220', lat: -33.967370460886166, lng: 151.10236792883603, mapLink: 'https://www.google.com/maps/place/Sushia+Hurstville/@-33.9674194,151.0997823,17z/data=!3m2!4b1!5s0x6b12b08267d96d6d:0xace63418bc18380c!4m6!3m5!1s0x6b12b99690a99727:0xbba0e56a9995b842!8m2!3d-33.9674194!4d151.1023572!16s%2Fg%2F11xz3p199j?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Kellyville Village', address: 'Shop 7, 90 Wrights Rd, Kellyville NSW 2155', lat: -33.71317426414987, lng: 150.97192156176928, mapLink: 'https://www.google.com/maps/place/Sushia+Kellyville/@-33.7132055,150.969343,17z/data=!3m1!4b1!4m6!3m5!1s0x6b12a18d10e741d7:0xe9c0eb45c9499009!8m2!3d-33.7132055!4d150.9719179!16s%2Fg%2F11vspkb2t8?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Lavington Square', address: 'K004, 351 Griffith Rd, Lavington NSW 2641', lat: -36.0490, lng: 146.9352, mapLink: 'https://www.google.com/maps/place/Sushia+Lavington/@-36.0487056,146.9318471,17z/data=!3m1!4b1!4m6!3m5!1s0x6b23e174b0c4d101:0x4e692a93621736a0!8m2!3d-36.0487056!4d146.934422!16s%2Fg%2F11t2fk2dhn?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Muswellbrook Fair', address: 'Shop 4A, 19-29 Rutherford Rd, Muswellbrook NSW 2333', lat: -32.282883400011784, lng: 150.89633029515045, mapLink: 'https://www.google.com/maps/place/Sushia+Muswellbrook/@-32.2825272,150.8930399,17z/data=!3m1!4b1!4m6!3m5!1s0x6b0b6161a4690c09:0x7458bc871ed9c7f1!8m2!3d-32.2825272!4d150.8956148!16s%2Fg%2F11xfryp1qg?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Narellan Town Centre', address: 'K207, 326 Camden Valley Way, Narellan NSW 2567', lat: -34.0415, lng: 150.7358, mapLink: 'https://www.google.com/maps/place/Sushia+Narellan/@-34.0395741,150.7343534,16z/data=!3m2!4b1!5s0x6b12f1f891a1982d:0xad8644d34dc313c6!4m6!3m5!1s0x6b12f1bba26682af:0x6043484e31d7ce4!8m2!3d-34.0395741!4d150.7369283!16s%2Fg%2F11dy1k1njs?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Orange City Centre', address: 'K2, 190 Anson St, Orange NSW 2800', lat: -33.2838, lng: 149.1004, mapLink: 'https://www.google.com/maps/place/Sushia+Orange/@-33.2844756,149.0970237,17z/data=!3m1!4b1!4m6!3m5!1s0x6b102d12281ebacf:0x58fbbc5ecd10ca9!8m2!3d-33.2844756!4d149.0995986!16s%2Fg%2F11q8x58xql?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Port Central', address: 'Shop 45, 40 Horton St, Port Macquarie NSW 2444', lat: -31.4318, lng: 152.9086, mapLink: 'https://www.google.com/maps/place/Sushia+Port+Central/@-31.4297621,152.9036387,17z/data=!3m1!4b1!4m6!3m5!1s0x6b9dff4e45609917:0x128885bcb377e69!8m2!3d-31.4297622!4d152.9085096!16s%2Fg%2F11jyg8tdmb?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Rhodes Waterside', address: 'Shop 81, 1 Rider Blvd, Rhodes NSW 2138', lat: -33.8348, lng: 151.0873, mapLink: 'https://www.google.com/maps/place/Sushia+Rhodes/@-33.8351248,151.0818981,17z/data=!3m1!4b1!4m6!3m5!1s0x6b12a4e7003bcac3:0x66cbc4f2c82610ed!8m2!3d-33.8351248!4d151.084473!16s%2Fg%2F11g659vfh4?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Salamander Bay', address: 'Shop 23, 2 Town Centre Cct, Salamander Bay NSW 2317', lat: -32.7307, lng: 152.0889, mapLink: 'https://www.google.com/maps/place/Sushia+Salamander+Bay/@-32.7349241,152.1041992,17z/data=!3m1!4b1!4m6!3m5!1s0x6b738397220f450d:0xc7ae6e2fbe57bab1!8m2!3d-32.7349241!4d152.1067741!16s%2Fg%2F11s9dbmfj0?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Singleton Square', address: 'Shop T39A, 1 Gowrie St, Singleton NSW 2330', lat: -32.5629, lng: 151.1732, mapLink: 'https://www.google.com/maps/place/Sushia+Singleton/@-32.566397,151.161401,17z/data=!3m2!4b1!5s0x6b0cb022230648a3:0x9cda8ce13ee3a373!4m6!3m5!1s0x6b0cb119c1f12771:0x7829a88a1a385cf6!8m2!3d-32.566397!4d151.1639759!16s%2Fg%2F11vs22tnkx?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Southcity Shopping Centre', address: 'Kiosk 1, 1 Tanda Pl, Glenfield Park NSW 2650', lat: -35.1361, lng: 147.3384, mapLink: 'https://www.google.com/maps/place/Sushia+South+City/@-35.1375235,147.3296082,17z/data=!3m1!4b1!4m6!3m5!1s0x6b1899be5361ddfd:0x7b47d8a942192b11!8m2!3d-35.1375235!4d147.3321831!16s%2Fg%2F11s2sdpcyx?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Sturt Mall', address: 'Shop 17, 135 Baylis St, Wagga Wagga NSW 2650', lat: -35.1114, lng: 147.3699, mapLink: 'https://www.google.com/maps/place/Sushia+Sturt+Mall/@-35.1133951,147.3681783,17z/data=!3m1!4b1!4m6!3m5!1s0x6b189974670a4229:0xa70117a442043b88!8m2!3d-35.1133951!4d147.3707532!16s%2Fg%2F11s2sck84z?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Sydney Airport (Airside)', address: 'BF26, T1 International Terminal, Mascot NSW 2020', lat: -33.9399, lng: 151.1753, mapLink: 'https://www.google.com/maps/place/Sushia+(Sydney+Int+Airport)/@-33.937079,151.1662833,17z/data=!3m1!4b1!4m6!3m5!1s0x6b12b0ebd01034eb:0xa4b2d96a5beb0cd9!8m2!3d-33.937079!4d151.1688582!16s%2Fg%2F11c5_vv5g0?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Sydney Airport (Landside)', address: '2-1901, T1 Sydney International Terminal, Mascot NSW 2020', lat: -33.9399, lng: 151.1753, mapLink: 'https://www.google.com/maps/place/Sushia+Sydney+Airport+Landside/@-33.9375158,151.1628347,17z/data=!3m1!4b1!4m6!3m5!1s0x6b12b1a2fc9ac3c5:0xe6cda72ad48634a1!8m2!3d-33.9375158!4d151.1654096!16s%2Fg%2F11yqpqhx1h?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'NSW', name: 'Wagga Wagga Marketplace', address: 'K3, 87 Baylis St, Wagga Wagga NSW 2650', lat: -35.1137, lng: 147.3714, mapLink: 'https://www.google.com/maps/place/Sushia+Wagga+Market+Place/@-35.1151052,147.3653083,17z/data=!3m2!4b1!5s0x6b18997e6b469841:0x27033d4fa90788!4m6!3m5!1s0x6b18997c23a93f71:0xa9639329e9798127!8m2!3d-35.1151053!4d147.3701792!16s%2Fg%2F11f1wbhk0z?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            // WA
+            { state: 'WA', name: 'Belmont Forum', address: 'K0008, 227 Belmont Ave, Cloverdale WA 6105', lat: -31.96452204806919, lng: 115.93464538642063, mapLink: 'https://www.google.com/maps/place/Sushia+Belmont+Forum/@-31.9647495,115.9297423,17z/data=!3m1!4b1!4m6!3m5!1s0x2a32bb0ee0c4038d:0x3360289bd5789b1a!8m2!3d-31.9647496!4d115.9346132!16s%2Fg%2F11kqcw1ndy?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'WA', name: 'Central Park', address: 'Shop 8, 152-158 St Georges Tce, Perth WA 6000', note: 'Opening APR 2026', lat: -31.9544, lng: 115.8550, mapLink: 'https://www.google.com/maps/place/Central+Park,+Shop+8%2F152-158+St+Georges+Terrace,+Perth+WA+6000/@-31.9536595,115.8531531,17z/data=!3m1!4b1!4m5!3m4!1s0x2a32bad452dce1d7:0x1950101b6870e3a2!8m2!3d-31.9536595!4d115.855728?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'WA', name: 'Cloisters Plaza', address: 'Shop 11, 200 St Georges Tce, Perth WA 6000', lat: -31.9535, lng: 115.8537, mapLink: 'https://www.google.com/maps/place/Sushia+Cloisters+Plaza/@-31.9530524,115.8507568,17z/data=!3m2!4b1!5s0x2a32bad5a569a6c7:0x4c583da9f67f7fae!4m6!3m5!1s0x2a32bad4bbac6f73:0xd655ce89a7739a67!8m2!3d-31.9530524!4d115.8533317!16s%2Fg%2F11gfcc7v9s?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'WA', name: 'Cockburn Gateway', address: 'K0026, 816 Beeliar Dr, Success WA 6164', lat: -32.13121549747125, lng: 115.8573114859492, mapLink: 'https://www.google.com/maps/place/Sushia+Cockburn/@-32.1314803,115.8547771,17z/data=!3m1!4b1!4m6!3m5!1s0x2a329778abc8b5a9:0xd71cf2d6e2e86746!8m2!3d-32.1314803!4d115.857352!16s%2Fg%2F11kr8c75rr?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'WA', name: 'Enex', address: 'Shop K131, 100 St Georges Tce, Perth WA 6000', lat: -31.9538, lng: 115.8578, mapLink: 'https://www.google.com/maps/place/Sushia+(Enex)/@-31.9543484,115.8550224,17z/data=!3m2!4b1!5s0x2a32bad676584a6d:0xda86c56c5011a247!4m6!3m5!1s0x2a32bad5e73aa1b7:0x7fd6f267d623f77b!8m2!3d-31.9543484!4d115.8575973!16s%2Fg%2F11bc7t6bnf?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'WA', name: 'Enex 100', address: 'Shop FB04, 100 St Georges Tce, Perth WA 6000', lat: -31.9538, lng: 115.8578, mapLink: 'google.com/maps/place/Sushia+Enex+Canteen/@-31.9543484,115.8550224,17z/data=!3m1!5s0x2a32bad676584a6d:0xda86c56c5011a247!4m6!3m5!1s0x2a32bb41d53bf02f:0x66c0870fc0a2205d!8m2!3d-31.9544212!4d115.8579341!16s%2Fg%2F11x16hfr1g?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'WA', name: 'Karrinyup Centre', address: 'K0044, 200 Karrinyup Rd, Karrinyup WA 6018', lat: -31.877156508632893, lng: 115.77661244232795, mapLink: 'https://www.google.com/maps/place/Sushia+Karrinyup/@-31.8773615,115.774059,17z/data=!3m2!4b1!5s0x2a32aec2cdfe4f55:0x64dbfeea734c142f!4m6!3m5!1s0x2a32af5ba25b83a3:0xb8d9b777b41e6f1a!8m2!3d-31.8773615!4d115.7766339!16s%2Fg%2F11txtb_1p5?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'WA', name: 'Mandurah Forum', address: 'K0036, 330 Pinjarra Rd, Mandurah WA 6210', lat: -32.53492446593712, lng: 115.74164241349187, mapLink: 'https://www.google.com/maps/place/Sushia+Mandurah/@-32.5350918,115.7390997,17z/data=!3m1!4b1!4m6!3m5!1s0x2a32794fbaafdf0b:0xb79b996254bfbd85!8m2!3d-32.5350918!4d115.7416746!16s%2Fg%2F11y4bbzdb3?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'WA', name: 'Murdoch Square', address: 'Shop 10, 48 Barry Marshall Pde, Murdoch 6150', lat: -32.068292202117895, lng: 115.84719805767207, mapLink: 'https://www.google.com/maps/place/Sushia+Murdoch+Square/@-32.0684604,115.8446017,17z/data=!3m1!4b1!4m6!3m5!1s0x2a32a386e2c31b67:0xc32d52cf4228c9e!8m2!3d-32.0684604!4d115.8471766!16s%2Fg%2F11jyg8s_mw?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'WA', name: 'Perth Airport T2', address: 'RGC43, T2 Airside, Perth Airport WA 6105', lat: -31.94417707832223, lng: 115.97160854232794, mapLink: 'https://www.google.com/maps/place/Sushia+Perth+Airport/@-31.9443363,115.9667591,17z/data=!3m2!4b1!5s0x2a32b91327bf4deb:0xc794c81e263bb915!4m6!3m5!1s0x2a32b9d7840d314b:0x3f7cdb497eacdd1f!8m2!3d-31.9443364!4d115.97163!16s%2Fg%2F11ml90zgjl?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'WA', name: 'Subiaco Square', address: 'Shop 7, 29 Station St, Subiaco WA 6008', lat: -31.943595881460567, lng: 115.82445085344126, mapLink: 'https://www.google.com/maps/place/Sushia+Subiaco/@-31.9437461,115.8214468,17z/data=!3m2!4b1!5s0x2a32a51492e51f33:0xc10fa4a2a8ec95bd!4m6!3m5!1s0x2a32a56c49e71605:0x25320ae81b6496f7!8m2!3d-31.9437461!4d115.8240217!16s%2Fg%2F11wtkc6z6b?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'WA', name: 'Watertown Outlet', address: 'Shop A031, 840 Wellington St, West Perth WA 6005', lat: -31.94715048347776, lng: 115.84778611534414, mapLink: 'https://www.google.com/maps/place/Sushia+Watertown/@-31.9473098,115.8451683,17z/data=!3m1!4b1!4m6!3m5!1s0x2a32a5fdc1bd434b:0x9ff18b63f1993bc3!8m2!3d-31.9473098!4d115.8477432!16s%2Fg%2F11jyg90pys?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            // QLD
+            { state: 'QLD', name: 'Garden City Westfield', address: 'K166, Cnr Logan & Kessels Rd, Upper Mt Gravatt QLD 4122', lat: -27.5618, lng: 153.0818, mapLink: 'https://www.google.com/maps/place/Sushia+Garden+City/@-27.5624991,153.0796049,17z/data=!3m2!4b1!5s0x6b9144cada11dec1:0x64dca8532965d380!4m6!3m5!1s0x6b915b4147c79721:0x68192f45a504a84a!8m2!3d-27.5624991!4d153.0821798!16s%2Fg%2F11s2sb3l3m?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'QLD', name: 'Kawana Shopping World', address: 'Kiosk 01, 119 Point Cartwright Dr, Buddina QLD 4575', lat: -26.702958223121797, lng: 153.13124662883604, mapLink: 'https://www.google.com/maps/place/Sushia+Kawana/@-26.7029726,153.128661,17z/data=!3m1!4b1!4m6!3m5!1s0x6b939f9a2a69988d:0x8a24e5d9d4cc1b30!8m2!3d-26.7029726!4d153.1312359!16s%2Fg%2F11t0wbvbgl?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'QLD', name: 'Morayfield Centre', address: 'K01, 171 Morayfield Rd, Morayfield QLD 4506', lat: -27.104291221240874, lng: 152.95009077116396, mapLink: 'https://www.google.com/maps/place/Sushia+Morayfield/@-27.1043532,152.9452306,17z/data=!3m1!4b1!4m6!3m5!1s0x6b93f109a62a3ed7:0xebd4dac9265e8e67!8m2!3d-27.1043533!4d152.9501015!16s%2Fg%2F11hjfk98w3?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'QLD', name: 'Myer Centre', address: 'Shop KE05, 91 Queen St, Brisbane QLD 4000', lat: -27.4705, lng: 153.0265, mapLink: 'https://www.google.com/maps/place/Sushia+(Myer+Brisbane)/@-27.4706069,153.022302,17z/data=!3m2!4b1!5s0x6b915a04eae8108d:0x2bd0cb04bef7dabe!4m6!3m5!1s0x6b915a04c01a18c9:0x937fea8eedf8efc8!8m2!3d-27.4706069!4d153.0248769!16s%2Fg%2F11csrd120_?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'QLD', name: 'QLD State Government S1', address: 'Retail D, 1 William St, Brisbane QLD 4000', lat: -27.4727, lng: 153.0255, mapLink: 'https://www.google.com/maps/place/Sushia+William/@-27.4751011,153.0231288,17z/data=!3m1!4b1!4m6!3m5!1s0x6b915b7461c06529:0x11b7ca803d9744e5!8m2!3d-27.4751011!4d153.0257037!16s%2Fg%2F11gy8nknj2?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'QLD', name: 'Queens Plaza', address: 'Shop LG05, 226 Queen St, Brisbane QLD 4000', lat: -27.4662, lng: 153.0272, mapLink: 'https://www.google.com/maps/place/Sushia+Queens+Plaza/@-27.4682882,153.0240597,17z/data=!3m1!4b1!4m6!3m5!1s0x6b915bb13e78e7c3:0xe235e10779cf7b0e!8m2!3d-27.4682882!4d153.0266346!16s%2Fg%2F11q8x_l_0_?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'QLD', name: 'Riverlink Shopping Centre', address: 'Shop FC01A, North Ipswich QLD 4305', lat: -27.6097, lng: 152.7621, mapLink: 'https://www.google.com/maps/place/Sushia+Riverlink/@-27.6078585,152.7558093,17z/data=!3m1!4b1!4m6!3m5!1s0x6b96b51ac14dfe71:0xb9ee2eea5b83a707!8m2!3d-27.6078585!4d152.7583842!16s%2Fg%2F11rtth6xnq?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'QLD', name: 'Robina Town Centre', address: 'Kiosk K2-7, Robina Town Centre Dr, Robina QLD 4226', note: 'Opening SEP 2026', lat: -28.0713, lng: 153.3922, mapLink: 'https://www.google.com/maps/place/Kiosk+K2%2F7+Robina+Town+Centre+Dr,+Robina+QLD+4226/@-28.0753106,153.3850218,17z/data=!3m1!4b1!4m5!3m4!1s0x6b911cb392f8ee01:0x38d0a0576c3d5028!8m2!3d-28.0753106!4d153.3875967?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'QLD', name: 'Sunshine Plaza', address: 'Shop GD K161B, Maroochydore QLD 4558', lat: -26.654837251164878, lng: 153.08713544232796, mapLink: 'https://www.google.com/maps/place/Sushia+Sunshine+Plaza/@-26.6548803,153.082286,17z/data=!3m1!4b1!4m6!3m5!1s0x6b937660d8a9a141:0x1a3d9240b7305034!8m2!3d-26.6548804!4d153.0871569!16s%2Fg%2F11dxb27bhj?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            // VIC
+            { state: 'VIC', name: 'Mildura Central', address: 'Shop K005, 831 Fifteenth St, Mildura VIC 3500', note: 'Opening FEB 2026', lat: -34.2068, lng: 142.1390, mapLink: 'https://www.google.com/maps/place/Shop+K005%2F831+Fifteenth+St,+Mildura+VIC+3500/@-34.2064246,142.1355554,17z/data=!3m1!4b1!4m5!3m4!1s0x6ac3046f7dfb8eb7:0x8b1a7f5c0e71269c!8m2!3d-34.2064246!4d142.1381303?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' },
+            { state: 'VIC', name: 'Wodonga Plaza', address: 'SP037, 71 Elgin Blvd, Wodonga VIC 3690', note: 'Opening FEB 2026', lat: -36.1230, lng: 146.8924, mapLink: 'https://www.google.com/maps/search/SP037,+71+Elgin+Blvd,+Wodonga+VIC+3690/@-36.1210025,146.8828892,17z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D' }
+        ];
+
+        let map;
+        let markers = [];
+        let currentFilter = 'ALL';
+        let searchQuery = '';
+        let activeInfoWindow = null;
+        let activeMarker = null;
+
+        const mapStyles = [
+            { "elementType": "geometry", "stylers": [{ "color": "#f5f5f5" }] },
+            { "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] },
+            { "elementType": "labels.text.fill", "stylers": [{ "color": "#616161" }] },
+            { "elementType": "labels.text.stroke", "stylers": [{ "color": "#f5f5f5" }] },
+            { "featureType": "administrative.land_parcel", "elementType": "labels.text.fill", "stylers": [{ "color": "#bdbdbd" }] },
+            { "featureType": "poi", "elementType": "geometry", "stylers": [{ "color": "#eeeeee" }] },
+            { "featureType": "poi", "elementType": "labels.text.fill", "stylers": [{ "color": "#757575" }] },
+            { "featureType": "poi.park", "elementType": "geometry", "stylers": [{ "color": "#e5e5e5" }] },
+            { "featureType": "poi.park", "elementType": "labels.text.fill", "stylers": [{ "color": "#9e9e9e" }] },
+            { "featureType": "road", "elementType": "geometry", "stylers": [{ "color": "#ffffff" }] },
+            { "featureType": "road.arterial", "elementType": "labels.text.fill", "stylers": [{ "color": "#757575" }] },
+            { "featureType": "road.highway", "elementType": "geometry", "stylers": [{ "color": "#dadada" }] },
+            { "featureType": "road.highway", "elementType": "labels.text.fill", "stylers": [{ "color": "#616161" }] },
+            { "featureType": "road.local", "elementType": "labels.text.fill", "stylers": [{ "color": "#9e9e9e" }] },
+            { "featureType": "transit.line", "elementType": "geometry", "stylers": [{ "color": "#e5e5e5" }] },
+            { "featureType": "transit.station", "elementType": "geometry", "stylers": [{ "color": "#eeeeee" }] },
+            { "featureType": "water", "elementType": "geometry", "stylers": [{ "color": "#eaeaea" }] },
+            { "featureType": "water", "elementType": "labels.text.fill", "stylers": [{ "color": "#9e9e9e" }] }
+        ];
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: -28.0000, lng: 135.0000 },
+                zoom: 5,
+                styles: mapStyles,
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: false
+            });
+
+            map.addListener('click', function () {
+                if (activeInfoWindow) {
+                    activeInfoWindow.close();
+                    if (activeMarker) {
+                        activeMarker.setIcon(iconHeart);
+                    }
+                    activeInfoWindow = null;
+                    activeMarker = null;
+                }
+            });
+
+            const iconHeart = {
+                url: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/heart.svg",
+                scaledSize: new google.maps.Size(20, 20),
+                anchor: new google.maps.Point(10, 10)
+            };
+            const iconMan = {
+                url: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia-face-02.svg",
+                scaledSize: new google.maps.Size(64, 64),
+                anchor: new google.maps.Point(32, 64)
+            };
+
+            stores.forEach(store => {
+                const marker = new google.maps.Marker({
+                    position: { lat: store.lat, lng: store.lng },
+                    map: map,
+                    title: store.name,
+                    icon: iconHeart
+                });
+                markers.push(marker);
+
+                let dirLink = '';
+                if (store.mapLink && store.mapLink.trim() !== '') {
+                    dirLink = store.mapLink;
+                } else {
+                    dirLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(store.name + " " + store.address)}`;
+                }
+
+                // [수정됨] 주소 줄바꿈 로직 추가
+                let formattedAddress = store.address;
+                // 마지막 쉼표(,)의 위치를 찾습니다.
+                const lastCommaIndex = store.address.lastIndexOf(',');
+
+                // 쉼표가 존재한다면 분리합니다.
+                if (lastCommaIndex !== -1) {
+                    // 쉼표까지 포함한 앞부분 (예: K207, 326 Camden Valley Way,)
+                    const part1 = store.address.substring(0, lastCommaIndex + 1);
+                    // 쉼표 뒷부분 + 양옆 공백제거 (예: Narellan NSW 2567)
+                    const part2 = store.address.substring(lastCommaIndex + 1).trim();
+
+                    // HTML <br> 태그로 줄바꿈 적용
+                    formattedAddress = `${part1}<br>${part2}`;
+                }
+
+                const contentString = `
+                    <div class="custom-popup">
+                        <div class="popup-icon-wrap">
+                            <img src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia-Logo-1.svg" style="height:100%; width:auto;">
+                        </div>
+                        <h3>${store.name}</h3>
+                        <p class="addr">${formattedAddress}</p>
+                        
+                        <div class="popup-btns">
+                            <a href="${dirLink}" target="_blank" class="popup-btn primary">Directions</a>
+                        </div>
+                    </div>
+                `;
+
+                const infoWindow = new google.maps.InfoWindow({
+                    content: contentString,
+                    maxWidth: 280,
+                    pixelOffset: new google.maps.Size(-5, -5)
+                });
+
+                marker.addListener("click", () => {
+                    if (activeInfoWindow) {
+                        activeInfoWindow.close();
+                    }
+                    if (activeMarker) {
+                        activeMarker.setIcon(iconHeart);
+                    }
+
+                    infoWindow.open(map, marker);
+                    marker.setIcon(iconMan);
+
+                    activeInfoWindow = infoWindow;
+                    activeMarker = marker;
+
+                    infoWindow.addListener('closeclick', () => {
+                        marker.setIcon(iconHeart);
+                        activeMarker = null;
+                    });
+                });
+            });
+
+            initStoreLocator();
+        }
+
+        function initStoreLocator() {
+            const listContainer = document.getElementById('storeListContainer');
+            const countLabel = document.getElementById('listCount');
+            const searchInput = document.getElementById('storeSearch');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const btnClear = document.getElementById('btnClearSearch');
+            const btnLocate = document.getElementById('btnLocateMe');
+
+            if (!listContainer) return;
+
+            function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+                var R = 6371; var dLat = deg2rad(lat2 - lat1); var dLon = deg2rad(lon2 - lon1);
+                var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                return R * c;
+            }
+            function deg2rad(deg) { return deg * (Math.PI / 180); }
+
+            function renderStores(shouldFitBounds = false, userLat = null, userLng = null) {
+                listContainer.innerHTML = '';
+
+                let filtered = stores.filter(store => {
+                    const matchState = (currentFilter === 'ALL') || (store.state === currentFilter);
+                    const matchSearch = store.name.toLowerCase().includes(searchQuery) || store.address.toLowerCase().includes(searchQuery);
+                    return matchState && matchSearch;
+                });
+
+                if (userLat && userLng) {
+                    filtered.forEach(store => { store.distance = getDistanceFromLatLonInKm(userLat, userLng, store.lat, store.lng); });
+                    filtered.sort((a, b) => a.distance - b.distance);
+                }
+
+                countLabel.innerText = `Showing ${filtered.length} locations`;
+
+                if (filtered.length === 0) {
+                    listContainer.innerHTML = '<div style="padding:30px; text-align:center; color:#999;">No locations found.</div>';
+                } else {
+                    filtered.forEach(store => {
+                        const card = document.createElement('div');
+                        card.className = 'store-card';
+
+                        let badges = `<span class="badge-state">${store.state}</span>`;
+                        if (store.note) badges += ` <span class="badge-open">${store.note}</span>`;
+
+                        let distText = '';
+                        if (store.distance !== undefined) {
+                            distText = `<span style="font-size:11px; color:#ffc905; font-weight:700; margin-left:5px;">(${store.distance.toFixed(1)}km away)</span>`;
+                        }
+
+                        card.innerHTML = `
+                            <div style="margin-bottom:8px;">${badges} ${distText}</div>
+                            <h4>${store.name}</h4>
+                            <p>${store.address}</p>
+                            <div class="card-actions"><span class="btn-map-link">View on Map</span></div>
+                        `;
+
+                        card.addEventListener('click', () => {
+                            map.panTo({ lat: store.lat, lng: store.lng });
+                            map.setZoom(16);
+                            document.querySelectorAll('.store-card').forEach(c => c.classList.remove('selected'));
+                            card.classList.add('selected');
+
+                            const targetMarker = markers.find(m => m.getTitle() === store.name);
+                            if (targetMarker) { google.maps.event.trigger(targetMarker, 'click'); }
+
+                            if (window.innerWidth <= 900) { document.querySelector('.locator-container').scrollIntoView({ behavior: 'smooth' }); }
+                        });
+
+                        listContainer.appendChild(card);
+                    });
+                }
+
+                markers.forEach(marker => {
+                    const isVisible = filtered.some(store => store.name === marker.getTitle());
+                    marker.setVisible(isVisible);
+                });
+
+                if (shouldFitBounds && filtered.length > 0) {
+                    const bounds = new google.maps.LatLngBounds();
+                    if (userLat && userLng) { bounds.extend(new google.maps.LatLng(userLat, userLng)); }
+                    filtered.forEach(store => { bounds.extend(new google.maps.LatLng(store.lat, store.lng)); });
+                    map.fitBounds(bounds);
+                } else if (currentFilter === 'ALL' && searchQuery === '' && !userLat && shouldFitBounds) {
+                    map.setCenter({ lat: -28.0000, lng: 135.0000 });
+                    map.setZoom(5);
+                }
+            }
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.getAttribute('data-filter');
+
+                    searchInput.value = '';
+                    searchQuery = '';
+                    btnClear.style.display = 'none';
+                    renderStores(true);
+                });
+            });
+
+            searchInput.addEventListener('keyup', (e) => {
+                searchQuery = e.target.value.toLowerCase();
+                btnClear.style.display = searchQuery.length > 0 ? 'block' : 'none';
+                if (searchQuery.length > 0 && currentFilter !== 'ALL') {
+                    currentFilter = 'ALL';
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    document.querySelector('[data-filter="ALL"]').classList.add('active');
+                }
+                renderStores(false);
+            });
+
+            btnClear.addEventListener('click', () => {
+                searchInput.value = '';
+                searchQuery = '';
+                btnClear.style.display = 'none';
+                searchInput.focus();
+                renderStores(true);
+            });
+
+            btnLocate.addEventListener('click', () => {
+                if (navigator.geolocation) {
+                    btnLocate.style.color = '#ffc905';
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            const userLat = position.coords.latitude;
+                            const userLng = position.coords.longitude;
+                            currentFilter = 'ALL';
+                            filterBtns.forEach(b => b.classList.remove('active'));
+                            document.querySelector('[data-filter="ALL"]').classList.add('active');
+                            searchInput.value = ''; searchQuery = ''; btnClear.style.display = 'none';
+                            new google.maps.Marker({
+                                position: { lat: userLat, lng: userLng }, map: map,
+                                icon: { path: google.maps.SymbolPath.CIRCLE, scale: 8, fillColor: "#4285F4", fillOpacity: 1, strokeWeight: 2, strokeColor: "white" },
+                                title: "You are here"
+                            });
+                            renderStores(true, userLat, userLng);
+                            btnLocate.style.color = '#999';
+                        },
+                        () => { alert("Location access denied."); btnLocate.style.color = '#999'; }
+                    );
+                } else { alert("Geolocation not supported."); }
+            });
+
+            renderStores(true);
+        }
+    </script>
+
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmNVOzDit0xnC5-ZbC2BmMk5OZtV_WEp0&callback=initMap">
+            //src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFAMs-9UM7Nvsc-Si682HsSTIFG_jWSwc&callback=initMap">
+        </script>
+</body>
+
+</html>

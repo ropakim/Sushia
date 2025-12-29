@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Platter Order - SUSHIA</title>
+
+    <link rel="icon" href="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia-Favicon-02.svg"
+        type="image/svg+xml">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-yellow: #ffc905;
+            --text-black: #111111;
+            --bg-white: #ffffff;
+            --light-yellow-bg: #fffbf0;
+            --border-color: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* 배경 그라데이션 적용: 상단 흰색 -> 하단 연한 노란색 */
+            background: linear-gradient(180deg, #ffffff 0%, #ffffff 100px, var(--light-yellow-bg) 600px, var(--light-yellow-bg) 100%);
+            background-attachment: fixed;
+            color: var(--text-black);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        /* --- Header (Common) --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+            backdrop-filter: blur(2px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            transition: all 0.4s ease;
+        }
+
+        header.scrolled {
+            height: 70px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-inner {
+            width: 100%;
+            max-width: 1600px;
+            height: 100%;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 45px;
+            width: auto;
+            transition: 0.3s;
+            display: block;
+        }
+
+        header.scrolled .logo-img {
+            height: 38px;
+        }
+
+        .logo-img:hover {
+            transform: scale(0.9);
+        }
+
+        .desktop-nav {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: max-content;
+        }
+
+        .desktop-nav ul {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .desktop-nav .menu-btn {
+            background: transparent;
+            border: 2px solid var(--primary-yellow);
+            border-radius: 999px;
+            color: #000;
+            padding: 10px 18px;
+            line-height: 1;
+            font-weight: 800;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .25s ease;
+        }
+
+        .desktop-nav .menu-btn:hover {
+            background: var(--primary-yellow);
+            color: #000;
+        }
+
+        .desktop-nav li a {
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #000;
+            letter-spacing: 0.5px;
+            transition: transform 0.3s, color 0.3s;
+            display: inline-block;
+        }
+
+        .desktop-nav li a:hover {
+            color: #ffc905;
+            opacity: 1;
+            transform: scale(0.95);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-reserve {
+            padding: 12px 20px;
+            background-color: var(--primary-yellow);
+            color: #000;
+            font-weight: 800;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            white-space: nowrap;
+            height: auto;
+            line-height: 1;
+            display: inline-block;
+            transition: all 0.3s;
+            z-index: 2;
+        }
+
+        .btn-reserve:hover {
+            background-color: #000;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .hamburger-menu {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            color: #000;
+        }
+
+        /* --- Mobile Nav Overlay --- */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--primary-yellow);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(-20px);
+        }
+
+        .mobile-nav-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #000;
+        }
+
+        .mobile-nav-list {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .mobile-nav-list a {
+            font-size: 24px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #000;
+        }
+
+        /* --- Page Header Section --- */
+        .page-header-section {
+            padding-top: 150px;
+            padding-bottom: 60px;
+            background-color: transparent;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            color: #000;
+            line-height: 1.1;
+        }
+
+        .jp-sub {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--primary-yellow);
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .page-desc {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* --- Locator/Order Section --- */
+        .locator-section {
+            padding: 30px 0 100px 0;
+            background-color: transparent;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .locator-wrapper {
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .locator-container {
+            display: flex;
+            height: 750px;
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .locator-sidebar {
+            width: 480px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border-color);
+            background: #fff;
+        }
+
+        .sidebar-controls {
+            padding: 25px;
+            border-bottom: 1px solid var(--border-color);
+            z-index: 10;
+            background: #fff;
+        }
+
+        .search-wrap {
+            position: relative;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 80px 14px 45px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            background: #fdfdfd;
+            transition: 0.3s;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-yellow);
+            background: #fff;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            fill: #aaa;
+            pointer-events: none;
+        }
+
+        .search-btn-group {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-search-action {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            border-radius: 50%;
+            transition: 0.2s;
+            color: #999;
+        }
+
+        .btn-search-action:hover {
+            background-color: #f0f0f0;
+            color: var(--primary-yellow);
+        }
+
+        #btnClearSearch {
+            display: none;
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            font-family: 'Montserrat', sans-serif;
+            padding: 8px 18px;
+            border: 1px solid #eee;
+            background: #fff;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 800;
+            color: #555;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .filter-btn:hover {
+            background: #f4f4f4;
+        }
+
+        .filter-btn.active {
+            background: var(--primary-yellow);
+            border-color: var(--primary-yellow);
+            color: #000;
+        }
+
+        .store-list-scroll {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 0;
+            scrollbar-width: thin;
+            scrollbar-color: #ccc #f0f0f0;
+        }
+
+        .list-count-bar {
+            padding: 10px 25px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #999;
+            text-transform: uppercase;
+            background: #fafafa;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Order Card Styling */
+        .store-card {
+            padding: 25px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: 0.2s;
+            position: relative;
+        }
+
+        .store-card:hover {
+            background-color: #fffcee;
+        }
+
+        .store-card.selected {
+            background-color: #fffcee;
+            border-left: 5px solid var(--primary-yellow);
+        }
+
+        .store-card h4 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: #000;
+            line-height: 1.3;
+        }
+
+        .store-card p {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        /* Desktop: Row layout, space-between */
+        .card-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .badge-state {
+            font-size: 10px;
+            font-weight: 800;
+            color: #000;
+            background: var(--primary-yellow);
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .btn-order-now {
+            background-color: var(--primary-yellow);
+            color: #000;
+            font-size: 13px;
+            font-weight: 800;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: 0.3s;
+            display: inline-block;
+            border: 1px solid var(--primary-yellow);
+            text-decoration: none;
+        }
+
+        .btn-order-now:hover {
+            background-color: #000;
+            color: #fff;
+            border-color: #000;
+            transform: translateY(-2px);
+        }
+
+        .btn-map-link {
+            font-size: 11px;
+            font-weight: 700;
+            color: #888;
+            text-decoration: underline;
+            text-transform: uppercase;
+        }
+
+        .btn-map-link:hover {
+            color: #000;
+        }
+
+        .locator-map {
+            flex-grow: 1;
+            background: #f0f0f0;
+            position: relative;
+            height: 100%;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .gm-ui-hover-effect {
+            position: absolute !important;
+            top: 5px !important;
+            right: 5px !important;
+            z-index: 10 !important;
+            opacity: 0.6 !important;
+            background: transparent !important;
+        }
+
+        .gm-style .gm-style-iw-d {
+            overflow: visible !important;
+            padding: 0 !important;
+            max-height: none !important;
+        }
+
+        .gm-style .gm-style-iw-c {
+            padding: 0 !important;
+            border-radius: 12px !important;
+            box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2) !important;
+            max-width: 280px !important;
+        }
+
+        .custom-popup {
+            padding: 10px 20px 30px 20px;
+            width: 280px;
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            background: #fff;
+            position: relative;
+        }
+
+        .popup-icon-wrap {
+            margin-bottom: 15px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .custom-popup h3 {
+            font-size: 16px;
+            font-weight: 800;
+            color: #000;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .custom-popup p.addr {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+
+        .popup-btns {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .popup-btn {
+            display: block;
+            width: 200px;
+            padding: 12px 0;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.2s;
+            border: none;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .popup-btn.primary {
+            background-color: var(--primary-yellow);
+            color: #000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .popup-btn.primary:hover {
+            background-color: #000;
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 30px 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: #000;
+            font-weight: 600;
+            background: #fff;
+            border-top: 1px solid #eee;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: #000;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary-yellow);
+        }
+
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 900px) {
+            header {
+                height: 80px;
+            }
+
+            .desktop-nav {
+                display: none;
+            }
+
+            .hamburger-menu {
+                display: block;
+            }
+
+            .header-inner {
+                padding: 0 15px;
+            }
+
+            .logo-img {
+                height: 40px;
+            }
+
+            header.scrolled {
+                height: 60px;
+            }
+
+            header.scrolled .logo-img {
+                height: 35px;
+            }
+
+            .btn-reserve {
+                padding: 14px 14px;
+                font-size: 13px;
+                letter-spacing: 0px;
+            }
+
+            .page-header-section {
+                padding-top: 110px;
+                padding-bottom: 40px;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .page-desc {
+                padding: 0 20px;
+                font-size: 0.95rem;
+            }
+
+            .locator-section {
+                padding: 0 0 60px 0;
+            }
+
+            .locator-wrapper {
+                padding: 0 15px;
+            }
+
+            .locator-container {
+                flex-direction: column-reverse;
+                /* Map on top, List below */
+                height: auto;
+                border: none;
+                background: transparent;
+                box-shadow: none;
+                overflow: visible;
+            }
+
+            .locator-map {
+                height: 350px;
+                width: 100%;
+                border-radius: 12px;
+                border: 1px solid #e0e0e0;
+                margin-bottom: 20px;
+                overflow: hidden;
+            }
+
+            .locator-sidebar {
+                width: 100%;
+                border: 1px solid #e0e0e0;
+                border-radius: 12px;
+                overflow: hidden;
+                height: auto;
+                background: #fff;
+            }
+
+            .store-list-scroll {
+                max-height: 500px;
+            }
+
+            .filter-tabs {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+
+            .filter-tabs::-webkit-scrollbar {
+                display: none;
+            }
+
+            .filter-btn {
+                white-space: nowrap;
+                padding: 8px 16px;
+            }
+
+            .store-card {
+                padding: 20px;
+            }
+
+            /* [수정 3] 모바일 UI 스타일링 - 데스크탑과 동일하게 (가로 배치) */
+            .card-actions {
+                /* 모바일에서도 Row 형태 유지, 양쪽 정렬 */
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+                margin-top: 15px;
+            }
+
+            .btn-order-now {
+                /* 버튼 너비 자동 (꽉 차지 않게) */
+                width: auto;
+                display: inline-block;
+                text-align: center;
+                padding: 10px 20px;
+            }
+
+            .btn-map-link {
+                /* 기본 스타일(데스크탑 스타일) 유지 */
+                text-align: right;
+                display: inline-block;
+                width: auto;
+                padding: 0;
+                font-size: 11px;
+                text-decoration: underline;
+                color: #888;
+            }
+
+            /* [모바일 전용 팝업] 작고 컴팩트하게 */
+            .gm-style .gm-style-iw-c {
+                max-width: 260px !important;
+            }
+
+            .custom-popup {
+                padding: 10px 15px 25px 15px;
+                width: 100%;
+            }
+
+            .popup-icon-wrap {
+                margin-bottom: 10px;
+                height: 30px;
+            }
+
+            .custom-popup h3 {
+                font-size: 15px;
+                margin-bottom: 4px;
+            }
+
+            .custom-popup p.addr {
+                font-size: 12px;
+                margin-bottom: 10px;
+            }
+
+            .popup-btn {
+                width: 170px;
+                padding: 10px 0;
+                font-size: 11px;
+                border-radius: 4px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+                padding-bottom: 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-inner">
+            <a href="Sushia_v1.html" class="logo-area">
+                <img src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia-Logo-1.svg" alt="SUSHIA"
+                    class="logo-img">
+            </a>
+
+            <nav class="desktop-nav">
+                <ul>
+                    <li><a href="Menu.html" class="menu-btn">Menu</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="Join the team.html">Join the team</a></li>
+                    <li><a href="Sushia_v1.html#locations">Stores</a></li>
+                    <li><a href="Contact.html">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-right">
+                <a href="Platter Order.html" class="btn-reserve">PLATTER ORDER</a>
+                <button class="hamburger-menu" id="hamburgerBtn" aria-label="Open Menu">
+                    <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2.5" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-nav-overlay" id="mobileMenu">
+        <button class="mobile-nav-close" id="closeMenuBtn">
+            <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2.5" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <div class="mobile-nav-list">
+            <a href="Menu.html" onclick="closeMobileMenu()">Menu</a>
+            <a href="About.html" onclick="closeMobileMenu()">About</a>
+            <a href="Join the team.html" onclick="closeMobileMenu()">Join the Team</a>
+            <a href="Sushia_v1.html#locations" onclick="closeMobileMenu()">Stores</a>
+            <a href="Contact.html" onclick="closeMobileMenu()">Contact</a>
+        </div>
+    </div>
+
+    <section class="page-header-section">
+        <h1 class="page-title">Select a Store</h1>
+        <span class="jp-sub">注文する店舗を選択</span>
+        <p class="page-desc">
+            Find your nearest Sushia location to start your platter order.<br>
+            Please select a store from the list or map below.
+        </p>
+    </section>
+
+    <section class="locator-section">
+        <div class="locator-wrapper">
+
+            <div class="locator-container">
+                <div class="locator-sidebar">
+                    <div class="sidebar-controls">
+                        <div class="search-wrap">
+                            <svg class="search-icon" viewBox="0 0 24 24">
+                                <path
+                                    d="M23.707 22.293l-5.969-5.969a10.016 10.016 0 10-1.414 1.414l5.969 5.969a1 1 0 001.414-1.414zM10 18a8 8 0 118-8 8.009 8.009 0 01-8 8z" />
+                            </svg>
+
+                            <input type="text" id="storeSearch" class="search-input"
+                                placeholder="Search by suburb or store name...">
+
+                            <div class="search-btn-group">
+                                <button type="button" id="btnClearSearch" class="btn-search-action"
+                                    aria-label="Clear search">
+                                    ×
+                                </button>
+
+                                <button type="button" id="btnLocateMe" class="btn-search-action btn-locate-me"
+                                    title="Find near me">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                                        <path
+                                            d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="filter-tabs">
+                            <button class="filter-btn active" data-filter="ALL">ALL</button>
+                            <button class="filter-btn" data-filter="NSW">NSW</button>
+                            <button class="filter-btn" data-filter="WA">WA</button>
+                            <button class="filter-btn" data-filter="QLD">QLD</button>
+                            <button class="filter-btn" data-filter="VIC">VIC</button>
+                        </div>
+                    </div>
+
+                    <div class="list-count-bar" id="listCount">Loading locations...</div>
+
+                    <div class="store-list-scroll" id="storeListContainer">
+                    </div>
+                </div>
+
+                <div class="locator-map">
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div>© 2025 SUSHIA. All Rights Reserved.</div>
+        <div class="social-icons">
+            <a href="#" class="social-icon" aria-label="Instagram">
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" />
+                </svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="Facebook">
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.954 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // Header Scroll
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 20);
+        });
+
+        // Mobile Menu
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        function openMobileMenu() { mobileMenu.classList.add('active'); }
+        function closeMobileMenu() { mobileMenu.classList.remove('active'); }
+        if (hamburgerBtn) hamburgerBtn.addEventListener('click', openMobileMenu);
+        if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMobileMenu);
+
+        // --- Stores Data (Same as Sushia_v1) ---
+        // Note: For demonstration, all order links point to the generic order URL.
+        const orderBaseUrl = "Order Now.html";
+
+        const stores = [
+            // NSW
+            { state: 'NSW', name: 'Albury Myer Centrepoint', address: 'Shop T14, 525 David St, Albury NSW 2640', lat: -36.0813, lng: 146.9159 },
+            { state: 'NSW', name: 'Bathurst Armada', address: 'Shop K2, 121 Howick St, Bathurst NSW 2795', lat: -33.417832404073515, lng: 149.58385040313334 },
+            { state: 'NSW', name: 'Belconnen Westfield', address: 'Shop 34, Benjamin Way, Belconnen ACT 2617', note: 'Opening MAR 2026', lat: -35.2384, lng: 149.0642 },
+            { state: 'NSW', name: 'Birkenhead Point', address: 'Shop 153, 19 Roseby St, Drummoyne NSW 2047', lat: -33.85530635702436, lng: 151.1620572558232 },
+            { state: 'NSW', name: 'Broadway Sydney', address: 'Shop G25, 1 Bay St, Glebe NSW 2037', lat: -33.8838, lng: 151.1946 },
+            { state: 'NSW', name: 'Darling Square', address: 'Shop T-12, 35 Tumbalong Bvd, Haymarket NSW 2000', lat: -33.8780, lng: 151.2019 },
+            { state: 'NSW', name: 'Dubbo The Village Southlakes', address: 'K3, 1 Stream Ave, Dubbo NSW 2830', note: 'Opening AUG 2026', lat: -32.2569, lng: 148.6011 },
+            { state: 'NSW', name: 'Glendale City Centre', address: 'Shop 034A, 387 Lake Rd, Glendale NSW 2285', lat: -32.9349, lng: 151.6329 },
+            { state: 'NSW', name: 'Goulburn Marketplace', address: 'Shop T10, 12 Verner St, Goulburn NSW 2580', lat: -34.7545, lng: 149.7180 },
+            { state: 'NSW', name: 'Hurstville Central', address: 'Shop K3A, 225H Forest Rd, Hurstville NSW 2220', lat: -33.967370460886166, lng: 151.10236792883603 },
+            { state: 'NSW', name: 'Kellyville Village', address: 'Shop 7, 90 Wrights Rd, Kellyville NSW 2155', lat: -33.71317426414987, lng: 150.97192156176928 },
+            { state: 'NSW', name: 'Lavington Square', address: 'K004, 351 Griffith Rd, Lavington NSW 2641', lat: -36.0490, lng: 146.9352 },
+            { state: 'NSW', name: 'Muswellbrook Fair', address: 'Shop 4A, 19-29 Rutherford Rd, Muswellbrook NSW 2333', lat: -32.282883400011784, lng: 150.89633029515045 },
+            { state: 'NSW', name: 'Narellan Town Centre', address: 'K207, 326 Camden Valley Way, Narellan NSW 2567', lat: -34.0415, lng: 150.7358 },
+            { state: 'NSW', name: 'Orange City Centre', address: 'K2, 190 Anson St, Orange NSW 2800', lat: -33.2838, lng: 149.1004 },
+            { state: 'NSW', name: 'Port Central', address: 'Shop 45, 40 Horton St, Port Macquarie NSW 2444', lat: -31.4318, lng: 152.9086 },
+            { state: 'NSW', name: 'Rhodes Waterside', address: 'Shop 81, 1 Rider Blvd, Rhodes NSW 2138', lat: -33.8348, lng: 151.0873 },
+            { state: 'NSW', name: 'Salamander Bay', address: 'Shop 23, 2 Town Centre Cct, Salamander Bay NSW 2317', lat: -32.7307, lng: 152.0889 },
+            { state: 'NSW', name: 'Singleton Square', address: 'Shop T39A, 1 Gowrie St, Singleton NSW 2330', lat: -32.5629, lng: 151.1732 },
+            { state: 'NSW', name: 'Southcity Shopping Centre', address: 'Kiosk 1, 1 Tanda Pl, Glenfield Park NSW 2650', lat: -35.1361, lng: 147.3384 },
+            { state: 'NSW', name: 'Sturt Mall', address: 'Shop 17, 135 Baylis St, Wagga Wagga NSW 2650', lat: -35.1114, lng: 147.3699 },
+            { state: 'NSW', name: 'Sydney Airport (Airside)', address: 'BF26, T1 International Terminal, Mascot NSW 2020', lat: -33.9399, lng: 151.1753 },
+            { state: 'NSW', name: 'Sydney Airport (Landside)', address: '2-1901, T1 Sydney International Terminal, Mascot NSW 2020', lat: -33.9399, lng: 151.1753 },
+            { state: 'NSW', name: 'Wagga Wagga Marketplace', address: 'K3, 87 Baylis St, Wagga Wagga NSW 2650', lat: -35.1137, lng: 147.3714 },
+            // WA
+            { state: 'WA', name: 'Belmont Forum', address: 'K0008, 227 Belmont Ave, Cloverdale WA 6105', lat: -31.96452204806919, lng: 115.93464538642063 },
+            { state: 'WA', name: 'Central Park', address: 'Shop 8, 152-158 St Georges Tce, Perth WA 6000', note: 'Opening APR 2026', lat: -31.9544, lng: 115.8550 },
+            { state: 'WA', name: 'Cloisters Plaza', address: 'Shop 11, 200 St Georges Tce, Perth WA 6000', lat: -31.9535, lng: 115.8537 },
+            { state: 'WA', name: 'Cockburn Gateway', address: 'K0026, 816 Beeliar Dr, Success WA 6164', lat: -32.13121549747125, lng: 115.8573114859492 },
+            { state: 'WA', name: 'Enex', address: 'Shop K131, 100 St Georges Tce, Perth WA 6000', lat: -31.9538, lng: 115.8578 },
+            { state: 'WA', name: 'Enex 100', address: 'Shop FB04, 100 St Georges Tce, Perth WA 6000', lat: -31.9538, lng: 115.8578 },
+            { state: 'WA', name: 'Karrinyup Centre', address: 'K0044, 200 Karrinyup Rd, Karrinyup WA 6018', lat: -31.877156508632893, lng: 115.77661244232795 },
+            { state: 'WA', name: 'Mandurah Forum', address: 'K0036, 330 Pinjarra Rd, Mandurah WA 6210', lat: -32.53492446593712, lng: 115.74164241349187 },
+            { state: 'WA', name: 'Murdoch Square', address: 'Shop 10, 48 Barry Marshall Pde, Murdoch 6150', lat: -32.068292202117895, lng: 115.84719805767207 },
+            { state: 'WA', name: 'Perth Airport T2', address: 'RGC43, T2 Airside, Perth Airport WA 6105', lat: -31.94417707832223, lng: 115.97160854232794 },
+            { state: 'WA', name: 'Subiaco Square', address: 'Shop 7, 29 Station St, Subiaco WA 6008', lat: -31.943595881460567, lng: 151.82445085344126 },
+            { state: 'WA', name: 'Watertown Outlet', address: 'Shop A031, 840 Wellington St, West Perth WA 6005', lat: -31.94715048347776, lng: 115.84778611534414 },
+            // QLD
+            { state: 'QLD', name: 'Garden City Westfield', address: 'K166, Cnr Logan & Kessels Rd, Upper Mt Gravatt QLD 4122', lat: -27.5618, lng: 153.0818 },
+            { state: 'QLD', name: 'Kawana Shopping World', address: 'Kiosk 01, 119 Point Cartwright Dr, Buddina QLD 4575', lat: -26.702958223121797, lng: 153.13124662883604 },
+            { state: 'QLD', name: 'Morayfield Centre', address: 'K01, 171 Morayfield Rd, Morayfield QLD 4506', lat: -27.104291221240874, lng: 152.95009077116396 },
+            { state: 'QLD', name: 'Myer Centre', address: 'Shop KE05, 91 Queen St, Brisbane QLD 4000', lat: -27.4705, lng: 153.0265 },
+            { state: 'QLD', name: 'QLD State Government S1', address: 'Retail D, 1 William St, Brisbane QLD 4000', lat: -27.4727, lng: 153.0255 },
+            { state: 'QLD', name: 'Queens Plaza', address: 'Shop LG05, 226 Queen St, Brisbane QLD 4000', lat: -27.4662, lng: 153.0272 },
+            { state: 'QLD', name: 'Riverlink Shopping Centre', address: 'Shop FC01A, North Ipswich QLD 4305', lat: -27.6097, lng: 152.7621 },
+            { state: 'QLD', name: 'Robina Town Centre', address: 'Kiosk K2-7, Robina Town Centre Dr, Robina QLD 4226', note: 'Opening SEP 2026', lat: -28.0713, lng: 153.3922 },
+            { state: 'QLD', name: 'Sunshine Plaza', address: 'Shop GD K161B, Maroochydore QLD 4558', lat: -26.654837251164878, lng: 153.08713544232796 },
+            // VIC
+            { state: 'VIC', name: 'Mildura Central', address: 'Shop K005, 831 Fifteenth St, Mildura VIC 3500', note: 'Opening FEB 2026', lat: -34.2068, lng: 142.1390 },
+            { state: 'VIC', name: 'Wodonga Plaza', address: 'SP037, 71 Elgin Blvd, Wodonga VIC 3690', note: 'Opening FEB 2026', lat: -36.1230, lng: 146.8924 }
+        ];
+
+        let map;
+        let markers = [];
+        let currentFilter = 'ALL';
+        let searchQuery = '';
+        let activeInfoWindow = null;
+        let activeMarker = null;
+
+        const mapStyles = [
+            { "elementType": "geometry", "stylers": [{ "color": "#f5f5f5" }] },
+            { "elementType": "labels.icon", "stylers": [{ "visibility": "off" }] },
+            { "elementType": "labels.text.fill", "stylers": [{ "color": "#616161" }] },
+            { "elementType": "labels.text.stroke", "stylers": [{ "color": "#f5f5f5" }] },
+            { "featureType": "poi", "elementType": "geometry", "stylers": [{ "color": "#eeeeee" }] },
+            { "featureType": "poi", "elementType": "labels.text.fill", "stylers": [{ "color": "#757575" }] },
+            { "featureType": "road", "elementType": "geometry", "stylers": [{ "color": "#ffffff" }] },
+            { "featureType": "road.highway", "elementType": "geometry", "stylers": [{ "color": "#dadada" }] },
+            { "featureType": "water", "elementType": "geometry", "stylers": [{ "color": "#eaeaea" }] }
+        ];
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: -28.0000, lng: 135.0000 },
+                zoom: 4,
+                styles: mapStyles,
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: false
+            });
+
+            map.addListener('click', function () {
+                if (activeInfoWindow) {
+                    activeInfoWindow.close();
+                    if (activeMarker) activeMarker.setIcon(iconHeart);
+                    activeInfoWindow = null;
+                    activeMarker = null;
+                }
+            });
+
+            const iconHeart = {
+                url: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/heart.svg",
+                scaledSize: new google.maps.Size(20, 20),
+                anchor: new google.maps.Point(10, 10)
+            };
+            const iconMan = {
+                url: "https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia-face-02.svg",
+                scaledSize: new google.maps.Size(64, 64),
+                anchor: new google.maps.Point(32, 64)
+            };
+
+            stores.forEach(store => {
+                const marker = new google.maps.Marker({
+                    position: { lat: store.lat, lng: store.lng },
+                    map: map,
+                    title: store.name,
+                    icon: iconHeart
+                });
+                markers.push(marker);
+
+                let formattedAddress = store.address;
+                const lastCommaIndex = store.address.lastIndexOf(',');
+                if (lastCommaIndex !== -1) {
+                    const part1 = store.address.substring(0, lastCommaIndex + 1);
+                    const part2 = store.address.substring(lastCommaIndex + 1).trim();
+                    formattedAddress = `${part1}<br>${part2}`;
+                }
+
+                const contentString = `
+                    <div class="custom-popup">
+                        <div class="popup-icon-wrap">
+                            <img src="https://www.sushia.com.au/wp-content/uploads/sites/4/2025/12/Sushia-Logo-1.svg" style="height:100%; width:auto;">
+                        </div>
+                        <h3>${store.name}</h3>
+                        <p class="addr">${formattedAddress}</p>
+                        
+                        <div class="popup-btns">
+                            <a href="${orderBaseUrl}" class="popup-btn primary">ORDER NOW</a>
+                        </div>
+                    </div>
+                `;
+
+                const infoWindow = new google.maps.InfoWindow({
+                    content: contentString,
+                    maxWidth: 280,
+                    pixelOffset: new google.maps.Size(-5, -5)
+                });
+
+                marker.addListener("click", () => {
+                    if (activeInfoWindow) activeInfoWindow.close();
+                    if (activeMarker) activeMarker.setIcon(iconHeart);
+
+                    infoWindow.open(map, marker);
+                    marker.setIcon(iconMan);
+
+                    activeInfoWindow = infoWindow;
+                    activeMarker = marker;
+
+                    infoWindow.addListener('closeclick', () => {
+                        marker.setIcon(iconHeart);
+                        activeMarker = null;
+                    });
+                });
+            });
+
+            initStoreList();
+        }
+
+        function initStoreList() {
+            const listContainer = document.getElementById('storeListContainer');
+            const countLabel = document.getElementById('listCount');
+            const searchInput = document.getElementById('storeSearch');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const btnClear = document.getElementById('btnClearSearch');
+            const btnLocate = document.getElementById('btnLocateMe');
+
+            if (!listContainer) return;
+
+            function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+                var R = 6371; var dLat = deg2rad(lat2 - lat1); var dLon = deg2rad(lon2 - lon1);
+                var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                return R * c;
+            }
+            function deg2rad(deg) { return deg * (Math.PI / 180); }
+
+            function renderStores(shouldFitBounds = false, userLat = null, userLng = null) {
+                listContainer.innerHTML = '';
+
+                let filtered = stores.filter(store => {
+                    const matchState = (currentFilter === 'ALL') || (store.state === currentFilter);
+                    const matchSearch = store.name.toLowerCase().includes(searchQuery) || store.address.toLowerCase().includes(searchQuery);
+                    return matchState && matchSearch;
+                });
+
+                if (userLat && userLng) {
+                    filtered.forEach(store => { store.distance = getDistanceFromLatLonInKm(userLat, userLng, store.lat, store.lng); });
+                    filtered.sort((a, b) => a.distance - b.distance);
+                }
+
+                countLabel.innerText = `Showing ${filtered.length} locations`;
+
+                if (filtered.length === 0) {
+                    listContainer.innerHTML = '<div style="padding:30px; text-align:center; color:#999;">No locations found.</div>';
+                } else {
+                    filtered.forEach(store => {
+                        const card = document.createElement('div');
+                        card.className = 'store-card';
+
+                        let badges = `<span class="badge-state">${store.state}</span>`;
+                        if (store.note) badges += ` <span class="badge-state" style="background:#fff; border:1px solid #000; color:#000;">${store.note}</span>`;
+
+                        let distText = '';
+                        if (store.distance !== undefined) {
+                            distText = `<span style="font-size:11px; color:#ffc905; font-weight:700; margin-left:5px;">(${store.distance.toFixed(1)}km)</span>`;
+                        }
+
+                        // Order functionality modification
+                        const isComingSoon = store.note && store.note.includes('Opening');
+                        let orderButtonHtml = '';
+
+                        if (isComingSoon) {
+                            orderButtonHtml = `<button class="btn-order-now" style="background:#ccc; border-color:#ccc; cursor:not-allowed;" disabled>COMING SOON</button>`;
+                        } else {
+                            // target="_blank" 제거 -> 현재 창에서 이동
+                            orderButtonHtml = `<a href="${orderBaseUrl}" class="btn-order-now">ORDER NOW</a>`;
+                        }
+
+                        card.innerHTML = `
+                            <div style="margin-bottom:8px;">${badges} ${distText}</div>
+                            <h4>${store.name}</h4>
+                            <p>${store.address}</p>
+                            <div class="card-actions">
+                                ${orderButtonHtml}
+                                <span class="btn-map-link">View on Map</span>
+                            </div>
+                        `;
+
+                        // Clicking card centers map (secondary action)
+                        card.addEventListener('click', (e) => {
+                            // If order button clicked, don't trigger map pan
+                            if (e.target.closest('.btn-order-now')) return;
+
+                            map.panTo({ lat: store.lat, lng: store.lng });
+                            map.setZoom(16);
+                            document.querySelectorAll('.store-card').forEach(c => c.classList.remove('selected'));
+                            card.classList.add('selected');
+
+                            const targetMarker = markers.find(m => m.getTitle() === store.name);
+                            if (targetMarker) { google.maps.event.trigger(targetMarker, 'click'); }
+
+                            if (window.innerWidth <= 900) { document.querySelector('.locator-map').scrollIntoView({ behavior: 'smooth' }); }
+                        });
+
+                        listContainer.appendChild(card);
+                    });
+                }
+
+                markers.forEach(marker => {
+                    const isVisible = filtered.some(store => store.name === marker.getTitle());
+                    marker.setVisible(isVisible);
+                });
+
+                if (shouldFitBounds && filtered.length > 0) {
+                    const bounds = new google.maps.LatLngBounds();
+                    if (userLat && userLng) { bounds.extend(new google.maps.LatLng(userLat, userLng)); }
+                    filtered.forEach(store => { bounds.extend(new google.maps.LatLng(store.lat, store.lng)); });
+                    map.fitBounds(bounds);
+                } else if (currentFilter === 'ALL' && searchQuery === '' && !userLat && shouldFitBounds) {
+                    map.setCenter({ lat: -28.0000, lng: 135.0000 });
+                    map.setZoom(4);
+                }
+            }
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.getAttribute('data-filter');
+                    searchInput.value = ''; searchQuery = ''; btnClear.style.display = 'none';
+                    renderStores(true);
+                });
+            });
+
+            searchInput.addEventListener('keyup', (e) => {
+                searchQuery = e.target.value.toLowerCase();
+                btnClear.style.display = searchQuery.length > 0 ? 'block' : 'none';
+                if (searchQuery.length > 0 && currentFilter !== 'ALL') {
+                    currentFilter = 'ALL';
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    document.querySelector('[data-filter="ALL"]').classList.add('active');
+                }
+                renderStores(false);
+            });
+
+            btnClear.addEventListener('click', () => {
+                searchInput.value = ''; searchQuery = ''; btnClear.style.display = 'none';
+                searchInput.focus(); renderStores(true);
+            });
+
+            btnLocate.addEventListener('click', () => {
+                if (navigator.geolocation) {
+                    btnLocate.style.color = '#ffc905';
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            const userLat = position.coords.latitude;
+                            const userLng = position.coords.longitude;
+                            currentFilter = 'ALL';
+                            filterBtns.forEach(b => b.classList.remove('active'));
+                            document.querySelector('[data-filter="ALL"]').classList.add('active');
+                            searchInput.value = ''; searchQuery = ''; btnClear.style.display = 'none';
+
+                            new google.maps.Marker({
+                                position: { lat: userLat, lng: userLng }, map: map,
+                                icon: { path: google.maps.SymbolPath.CIRCLE, scale: 8, fillColor: "#4285F4", fillOpacity: 1, strokeWeight: 2, strokeColor: "white" },
+                                title: "You are here"
+                            });
+
+                            renderStores(true, userLat, userLng);
+                            btnLocate.style.color = '#999';
+                        },
+                        () => { alert("Location access denied."); btnLocate.style.color = '#999'; }
+                    );
+                } else { alert("Geolocation not supported."); }
+            });
+
+            renderStores(true);
+        }
+    </script>
+
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmNVOzDit0xnC5-ZbC2BmMk5OZtV_WEp0&callback=initMap">
+        </script>
+
+</body>
+
+</html>
